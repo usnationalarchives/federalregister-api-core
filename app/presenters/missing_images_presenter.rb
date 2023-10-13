@@ -10,23 +10,11 @@ class MissingImagesPresenter
       end
   end
 
-  def link_images_if_original?
-    streamlined_image_pipeline?
-  end
-
   def usages
-    if streamlined_image_pipeline?
-      image_usages
-    else
-      gpo_graphic_usages
-    end
+    image_usages
   end
 
   private
-
-  def streamlined_image_pipeline?
-    Settings.cron.images.streamlined_image_pipeline
-  end
 
   def gpo_graphic_usages
     GpoGraphic.
@@ -75,7 +63,7 @@ class MissingImagesPresenter
     memoize :usages_by_document
 
     private
-    
+
     attr_reader :usages
   end
 

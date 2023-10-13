@@ -102,10 +102,6 @@ class ProblematicDocumentPresenter
     end
   end
 
-  def link_images_if_original?
-    missing_images_presenter.link_images_if_original?
-  end
-
   def missing_gpo_graphics
     missing_images_presenter.dates_missing_images.find{|d| d.date == date}
   end

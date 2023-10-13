@@ -207,12 +207,8 @@
               <tr style="<%= cycle(nil, light_gray) %>">
                 <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
                 <td style="width: 300px;" align="left">
-                  <% if @problematic_document_presenter.link_images_if_original? %>
-                    <% document.usages.map do |usage| %>
-                      <%= link_to_if usage.image.try(:image_file_name).present?, usage.identifier, admin_missing_image_url(usage.identifier) %>
-                    <% end %>
-                  <% else %>
-                    <%= document.usages.map(&:identifier).map{|id| id}.join(', ') %>
+                  <% document.usages.map do |usage| %>
+                    <%= link_to_if usage.image.try(:image_file_name).present?, usage.identifier, admin_missing_image_url(usage.identifier) %>
                   <% end %>
                 </td>
               </tr>
