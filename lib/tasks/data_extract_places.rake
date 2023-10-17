@@ -26,7 +26,8 @@ namespace :data do
 
     desc "Extract places for historical documents."
     task :places_for_historical_documents => :environment do
-      # NOTE: Intended to run on days when an import does not occur so we can make use of our OpenCalais API quota
+      # NOTE: Intended to run on days when an import does not occur
+      # so we can make use of our OpenCalais API quota
       PlaceDeterminerEnqueuer.new(Settings.open_calais.daily_api_call_limit).perform
     end
   end

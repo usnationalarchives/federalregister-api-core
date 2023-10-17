@@ -84,4 +84,5 @@ Rails.application.configure do
 
   config.hosts << "docker.for.mac.host.internal"
   config.hosts << 'host.docker.internal'
+  config.hosts << "dev-fr2.criticaljuncture.org"
 end

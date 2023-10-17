@@ -2,12 +2,10 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include UploaderUtils
 
-  if Settings.cron.images.auto_generate_image_variants
-    after :store, :regenerate_variants!
-  end
+  after :store, :regenerate_variants!
 
   # Choose what kind of storage to use for this uploader:
-  if Settings.images.store_in_filesystem
+  if Settings.app.images.store_in_filesystem
     storage :file
   else
     storage :fog
@@ -22,11 +20,11 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
       :aws_secret_access_key  => Rails.application.secrets[:aws][:secret_access_key], # required
       :region => 'us-east-1'
     }
-    self.fog_directory = Settings.s3_buckets.original_images
+    self.fog_directory = Settings.app.aws.s3.buckets.original_images
   end
 
   def store_dir
-    if Settings.images.store_in_filesystem
+    if Settings.app.images.store_in_filesystem
       "#{Rails.root}/data/#{model.class.to_s.underscore}/#{model.identifier}"
     else
       nil #ie store at root level
@@ -40,7 +38,7 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
 
   def filename
     if original_filename
-      "#{model.identifier}#{file_extension}" 
+      "#{model.identifier}#{file_extension}"
     end
   end
 

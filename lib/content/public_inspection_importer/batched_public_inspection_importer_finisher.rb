@@ -1,6 +1,6 @@
 class Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher
 
-  def on_complete(status, options) 
+  def on_complete(status, options)
     begin
       @start_time    = options.fetch('start_time')
       @session_token = options.fetch('session_token')
@@ -27,7 +27,7 @@ class Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher
   attr_reader :start_time, :session_token
 
   def notify_slack!(status)
-    notifier = Slack::Notifier.new Settings.slack_webhook_url do
+    notifier = Slack::Notifier.new Rails.application.credentials.slack.webhook_url do
       defaults channel: "#federalregister",
                username: "PIL Import Notifier"
     end
@@ -59,7 +59,7 @@ class Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher
       # Remove old agency letters
       PilAgencyLetterJanitor.new.perform
 
-      remaining_retries = ES_RETRY_ATTEMPTS 
+      remaining_retries = ES_RETRY_ATTEMPTS
       begin
         PublicInspectionIndexer.reindex!
       rescue StandardError => e

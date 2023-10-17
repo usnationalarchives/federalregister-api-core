@@ -1,21 +1,23 @@
 shared: &shared
-  adapter: mysql2
-  database: <%= ENV["MYSQL_DATABASE"] || 'federalregister-api-core' %>
-  username: <%= ENV["MYSQL_USERNAME"] || 'root' %>
-  password: <%= ENV["MYSQL_PASSWORD"] %>
-  port: <%= ENV["MYSQL_PORT_3306_TCP_PORT"] || 3306 %>
-  host: '<%= ENV["MYSQL_PORT_3306_TCP_ADDR"] || '127.0.0.1' %>'
-  reconnect: true
-  encoding: utf8
+  adapter: <%= Settings.database.adapter %>
+  database: <%= Settings.database.name %>
+  username: <%= Rails.application.credentials.dig(:database, :username) %>
+  password: <%= Rails.application.credentials.dig(:database, :password) %>
+  port: <%= Settings.database.port %>
+  host: '<%= Rails.application.credentials.dig(:database, :host) %>'
+  reconnect: <%= Settings.database.reconnect %>
+  encoding: <%= Settings.database.encoding %>
 
 development:
   <<: *shared
-  database:  fr2_development
-  init_command: <%= (ActiveModel::Type::Boolean.new.cast(ENV["MYSQL_57_STRICT_SETTINGS"]) ? "SET @@SESSION.sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'" : "SELECT 1") %>
+  host: '<%= Settings.database.host %>'
+  password: <%= Settings.database.password %>
+  username: <%= Settings.database.username %>
 
 test:
   <<: *shared
-  database: <%= ENV["MYSQL_DATABASE"] || 'fr2' %>_test<%= (ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'] %>
+  host: '<%= Settings.database.host || Rails.application.credentials.dig(:database, :host) %>'
+  database: <%= Settings.database.name %>_test<%= (ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'] %>
 
 staging:
   <<: *shared

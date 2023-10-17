@@ -174,7 +174,7 @@ class RegulationsDotGov::V4::Client
   end
 
   def connection
-    Faraday.new(:url => 'https://api.regulations.gov/v4') do |faraday|
+    Faraday.new(url: Settings.regulations_dot_gov.api_base_url) do |faraday|
       faraday.response :logger, logger
       faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
     end

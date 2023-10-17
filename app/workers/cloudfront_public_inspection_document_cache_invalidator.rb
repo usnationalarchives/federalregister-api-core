@@ -5,7 +5,7 @@ class CloudfrontPublicInspectionDocumentCacheInvalidator
 
   def perform(document_numbers)
     create_invalidation(
-      Settings.s3_buckets.public_inspection,
+      Settings.app.aws.s3.buckets.public_inspection,
       document_numbers.map{|document_number| "/#{document_number}.pdf" }
     )
   end

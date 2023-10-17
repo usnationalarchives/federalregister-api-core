@@ -7,9 +7,9 @@ class PublicInspectionDocument < ApplicationModel
                       :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
                       :s3_region => 'us-east-1'
                     },
-                    :s3_host_alias => Settings.s3_host_aliases.public_inspection,
+                    :s3_host_alias => Settings.app.aws.s3.host_aliases.public_inspection,
                     :s3_protocol => 'https',
-                    :bucket => Settings.s3_buckets.public_inspection,
+                    :bucket => Settings.app.aws.s3.buckets.public_inspection,
                     :path => ":style_if_not_with_banner:document_number.pdf",
                     :default_style => :with_banner,
                     :styles => {
@@ -69,20 +69,22 @@ class PublicInspectionDocument < ApplicationModel
     base_scope = PublicInspectionDocument.
       joins("INNER JOIN public_inspection_postings ON public_inspection_documents.id = public_inspection_postings.document_id")
 
-    if Settings.elasticsearch.pil_index_since_date
+    if Settings.app.public_inspection_documents.index_since_date
+      index_since_date = Date.parse(Settings.app.public_inspection_documents.index_since_date)
+
       base_scope.
         where(<<-SQL
           public_inspection_postings.issue_id =
             (
               SELECT id
               FROM public_inspection_issues
-              WHERE published_at >= #{Settings.elasticsearch.pil_index_since_date}
+              WHERE published_at >= #{index_since_date}
               ORDER BY publication_date DESC
               LIMIT 1
             )
           AND (
             publication_date IS NULL
-            OR publication_date > #{Settings.elasticsearch.pil_index_since_date}
+            OR publication_date > #{index_since_date}
           )
         SQL
       )

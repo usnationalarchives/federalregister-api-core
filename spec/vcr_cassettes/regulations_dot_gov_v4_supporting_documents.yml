@@ -227,4 +227,235 @@ http_interactions:
           }
         }
   recorded_at: Thu, 02 Feb 2023 01:52:48 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/EPA-HQ-OAR-2003-0129?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:11:53 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '1664'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92qic2n4pb8u2au0pg
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - ff317506-5d27-498d-566f-14d7cd481c02
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "EPA-HQ-OAR-2003-0129",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ {
+                "name" : "generic",
+                "label" : "Location",
+                "tooltip" : "Agency specific program associated with a docket (regulatory action); equivalents: Bureau, Docket Item Code, Program Area."
+              }, {
+                "name" : "abstract",
+                "label" : "Description",
+                "tooltip" : "Describes an agency's specific regulatory action; equivalents: Abstract, Docket Subject, General Info, Related To, Summary."
+              }, {
+                "name" : "shortTitle",
+                "label" : "Short Title",
+                "tooltip" : "A combination of letters and or numbers assigned to an agency's regulatory action for purposes of brevity."
+              } ],
+              "keywords" : null,
+              "modifyDate" : "2022-04-13T01:10:49Z",
+              "dkAbstract" : "Point of Contact: James W. Caldwell, TRPD/OTAQ/OAR  Mailcode:6406J (202) 564-9303, fax (202) 565-2085",
+              "agencyId" : "EPA",
+              "program" : null,
+              "shortTitle" : "ICR #0309.10",
+              "subType2" : null,
+              "title" : "Registration of Fuels and Fuels Additives (Application for Registration of Manufacturers) (ICR # 0309.10, OMB Control # 2060-0150)",
+              "generic" : "HQ-OAR",
+              "field1" : null,
+              "docketType" : "Nonrulemaking",
+              "petitionNbr" : null,
+              "rin" : null,
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b000064800bb6f6"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/EPA-HQ-OAR-2003-0129"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:11:53 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=EPA-HQ-OAR-2003-0129&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:11:53 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '2485'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92qie0ctfgoqq7vmi0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - e79049d6-562b-44de-4882-541687082f61
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "EPA-HQ-OAR-2003-0129-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Supporting & Related Material",
+              "lastModifiedDate" : "2006-09-02T15:10:34Z",
+              "highlightedContent" : "",
+              "frDocNum" : null,
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : null,
+              "title" : "Supporting Statement for ICR# 0309.10",
+              "postedDate" : "2003-04-24T04:00:00Z",
+              "docketId" : "EPA-HQ-OAR-2003-0129",
+              "subtype" : "Office of Management and Budget (OMB)",
+              "commentStartDate" : null,
+              "openForComment" : false,
+              "objectId" : "09000064800bb6fe"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2003-0129-0001"
+            }
+          }, {
+            "id" : "EPA-HQ-OAR-2003-0129-0002",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Supporting & Related Material",
+              "lastModifiedDate" : "2006-09-02T15:10:34Z",
+              "highlightedContent" : "",
+              "frDocNum" : null,
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : null,
+              "title" : "Form 83-I for ICR # 0309.10",
+              "postedDate" : "2003-04-24T04:00:00Z",
+              "docketId" : "EPA-HQ-OAR-2003-0129",
+              "subtype" : "Office of Management and Budget (OMB)",
+              "commentStartDate" : null,
+              "openForComment" : false,
+              "objectId" : "09000064800bb706"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2003-0129-0002"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 2,
+                "label" : "Supporting & Related Material"
+              } ],
+              "subtype" : [ {
+                "docCount" : 2,
+                "label" : "Office of Management and Budget (OMB)"
+              } ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 2,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 2,
+                "value" : "EPA"
+              } ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 2,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 2,
+            "totalPages" : 1,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:11:53 GMT
 recorded_with: VCR 6.0.0

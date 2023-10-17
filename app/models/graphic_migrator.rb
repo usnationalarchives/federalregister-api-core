@@ -10,7 +10,7 @@ class GraphicMigrator
   def perform(graphic_id)
     graphic                     = Graphic.find(graphic_id)
     normalized_image_identifier = graphic.identifier.upcase
-   
+
     image = Image.find_or_initialize_by(
       identifier: normalized_image_identifier,
     )
@@ -42,14 +42,14 @@ class GraphicMigrator
       image_variant.image.fog_public = true
 
       image_variant.save!
-      create_invalidation(Settings.s3_buckets.image_variants, ["/#{image_variant.image.path}"])
+      create_invalidation(Settings.app.aws.s3.buckets.image_variants, ["/#{image_variant.image.path}"])
     end
   end
 
   private
 
   def valid_url?(url)
-    begin 
+    begin
       Faraday.head(url).status == 200
     rescue Faraday::ConnectionFailed
       false

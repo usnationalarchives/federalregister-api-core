@@ -22,7 +22,7 @@ class XmlCorrection
   # Opens each directory's patches and applies them sequentially
   def apply
     patch_files.select{|p| p.applicable?}.each do |patch_file|
-      puts "Applying #{patch_file.file_path}..."
+      Rails.logger.info("Applying #{patch_file.file_path}...")
       patch_file.try(:apply, document_issue_xml_path)
     end
   end

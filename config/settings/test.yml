@@ -1,11 +1,16 @@
+app:
+  images:
+    store_in_filesystem: true
+  public_inspection_documents:
+    index_since_date: "2019-04-08"
+    page_view_start_date: "2020-10-02"
+
 elasticsearch:
-  host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
-  pil_index_since_date: '2019-04-08'
+  host: http://admin:admin@elasticsearch:9200
+
 lograge:
   enabled: false
-public_inspection_document_page_view_start_date: <%= Date.new(2020,10,2) %>
-s3_buckets:
-  public_inspection: public-inspection.example.org
-  zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
-s3_host_aliases:
-  public_inspection: public-inspection.example.org
+
+regulations_dot_gov:
+  # cassettes have this url stored and is used for non-comment related items
+  api_base_url: https://api.regulations.gov/v4

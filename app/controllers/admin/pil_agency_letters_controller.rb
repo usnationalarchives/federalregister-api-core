@@ -30,7 +30,7 @@ class Admin::PilAgencyLettersController < AdminController
     @pil_agency_letter.destroy!
     expire_pil_doc_cache
     create_invalidation(
-      Settings.s3_buckets.public_inspection,
+      Settings.app.aws.s3.buckets.public_inspection,
       Array.wrap(path)
     )
     flash[:notice] = "PIL agency letter deleted"

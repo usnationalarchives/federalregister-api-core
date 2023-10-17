@@ -6,9 +6,9 @@ class GpoImages::Sftp
     @password = password
   end
 
-  def list_directories(dir)
+  def list_directories(dir="/")
     directories = []
-    connection.dir.foreach('/') do |sftp_object|
+    connection.dir.foreach(dir) do |sftp_object|
       if sftp_object.directory? && ['..','.'].exclude?(sftp_object.name)
         directories << sftp_object.name
       end
@@ -16,6 +16,8 @@ class GpoImages::Sftp
     directories
   end
 
+  # SFTP root directory is based on the credentials used to sign in, so "/" will
+  # be dependent on the connection in use when this method is called
   def filenames_with_sizes(dir="/", recursive_directory_search=false, exclude_empty_files=true)
     sftp_directories     = [dir]
     filenames_with_sizes = []
@@ -67,7 +69,7 @@ class GpoImages::Sftp
 
   def start_connection
     Net::SFTP.start(
-      Settings.cron.images.sftp_hostname,
+      Rails.application.credentials.dig(:gpo, :images, :sftp_hostname),
       username,
       :password => password,
       :auth_methods => ["password"],

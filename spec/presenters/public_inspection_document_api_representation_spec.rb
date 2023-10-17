@@ -16,12 +16,13 @@ describe PublicInspectionDocumentSerializer do
     let(:public_inspection_document) { Factory(:public_inspection_document, filed_at: Date.new(2020,9,22)) }
 
     it "returns page views " do
-      allow(Settings).to receive(:public_inspection_document_page_view_start_date).and_return(Date.parse("2020-09-21"))
+      allow(Settings.app.public_inspection_documents).to receive(:page_view_start_date).and_return("2020-09-21")
       result = serializer_value(:page_views, public_inspection_document)
       expect(result).to eq({count: 0, last_updated: nil})
     end
 
-    it "returns nil when a public_inspection_document_page_view_start_date isn't set" do
+    it "returns nil when a public_inspection_documents.page_view_start_date isn't set" do
+      allow(Settings.app.public_inspection_documents).to receive(:page_view_start_date).and_return(nil)
       result = serializer_value(:page_views, public_inspection_document)
 
       expect(result).to eq(nil)
@@ -37,7 +38,7 @@ describe PublicInspectionDocumentSerializer do
       expect(result).to eq([
         {
           title: 'letter_2019-07119_USGS.pdf',
-          url: "https://public-inspection.example.org/pil_agency_letters/1/letter_2019-07119_USGS.pdf",
+          url: "https://public-inspection.example.com/pil_agency_letters/1/letter_2019-07119_USGS.pdf",
         }
       ])
     end

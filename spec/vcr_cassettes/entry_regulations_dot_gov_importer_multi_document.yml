@@ -1082,4 +1082,1521 @@ http_interactions:
       encoding: UTF-8
       string: '{"data":{"id":"VA-2023-VACO-0006-0001","type":"document-comments-received-counts","attributes":{"count":0},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/VA-2023-VACO-0006-0001"}}}'
   recorded_at: Tue, 31 Jan 2023 18:15:56 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/HHS_FRDOC_0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 00:01:08 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '818'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb8ku6coafq0bu7341k0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '0'
+      x-vcap-request-id:
+      - eff6a19a-d709-48d3-6e59-c8e7e0e8c2b1
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "HHS_FRDOC_0001",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-10-12T08:14:25Z",
+              "dkAbstract" : null,
+              "agencyId" : "HHS",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Recently Posted HHS Rules and Notices.",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b00006480375a5b"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/HHS_FRDOC_0001"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 00:01:08 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=HHS_FRDOC_0001&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:00 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '866'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r2nvibbni8kc30n0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '37'
+      x-vcap-request-id:
+      - ede4047b-091d-4175-71d5-687fe7e38010
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 15,
+                "label" : "Proposed Rule"
+              }, {
+                "docCount" : 11,
+                "label" : "Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:00 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/AID_FRDOC_0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:00 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '825'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r2q0qqtan1d15aig
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '37'
+      x-vcap-request-id:
+      - 5de3af64-bb6c-4de3-45c4-7b670ccd22e3
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "AID_FRDOC_0001",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : [ "USAID" ],
+              "modifyDate" : "2023-10-18T08:22:10Z",
+              "dkAbstract" : null,
+              "agencyId" : "AID",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Recently Posted AID Rules and Notices.",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b000064801f3b03"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/AID_FRDOC_0001"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:00 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=AID_FRDOC_0001&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:00 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '858'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r2rpieshiibbq0d0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '36'
+      x-vcap-request-id:
+      - d365e553-0952-476b-7699-3d21b3ee43ef
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 53,
+                "label" : "Notice"
+              }, {
+                "docCount" : 3,
+                "label" : "Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:00 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/USDA_FRDOC_0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:01 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '822'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r2u1rlhqtcddtv60
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '34'
+      x-vcap-request-id:
+      - 5bb3b94b-5fa5-48b7-69ae-1abff73497a4
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "USDA_FRDOC_0001",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-10-18T08:22:54Z",
+              "dkAbstract" : null,
+              "agencyId" : "USDA",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Recently Posted USDA Rules and Notices.",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b000064801eaa92"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/USDA_FRDOC_0001"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:01 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=USDA_FRDOC_0001&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:01 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '932'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r2vtrbk1iao0e7mg
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '33'
+      x-vcap-request-id:
+      - e65148ea-87b3-4779-428d-fc12b9a6f5f4
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 2650,
+                "label" : "Notice"
+              }, {
+                "docCount" : 101,
+                "label" : "Rule"
+              }, {
+                "docCount" : 32,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:01 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/DOJ_FRDOC_0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:01 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '804'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r322nno9ee36o28g
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '32'
+      x-vcap-request-id:
+      - 4ab7b150-fd68-4ef5-79cd-21c871558aa7
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "DOJ_FRDOC_0001",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-10-12T08:14:44Z",
+              "dkAbstract" : null,
+              "agencyId" : "DOJ",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Temporary Holding Docket",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b00006480254a4c"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/DOJ_FRDOC_0001"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:01 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=DOJ_FRDOC_0001&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:01 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '865'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r33quuu54a526vpg
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '31'
+      x-vcap-request-id:
+      - 8b8c36f8-b9f5-464e-65b1-b3b95e840f8f
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 65,
+                "label" : "Rule"
+              }, {
+                "docCount" : 7,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:01 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/DHS-2023-0006?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:02 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '838'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3645lc1okn8auug
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '30'
+      x-vcap-request-id:
+      - 8705e65d-f5a4-4000-729c-f7510c945c5c
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "DHS-2023-0006",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-04-28T11:45:22Z",
+              "dkAbstract" : null,
+              "agencyId" : "DHS",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b000064855ebb5f"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/DHS-2023-0006"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:02 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=DHS-2023-0006&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:02 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '804'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r37ut8so2ajd82sg
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '29'
+      x-vcap-request-id:
+      - a454b8b0-4cb2-40d2-501d-391cb668fbe4
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 1,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:02 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/DOL_FRDOC_0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:02 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '823'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3a6ddqnc8nh6spg
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '29'
+      x-vcap-request-id:
+      - ca2a68c8-4616-44f5-47c6-99a2a22a57c2
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "DOL_FRDOC_0001",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-10-17T09:17:46Z",
+              "dkAbstract" : "FR Feed",
+              "agencyId" : "DOL",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Recently Posted DOL Rules and Notices.",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b000064801cfdff"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/DOL_FRDOC_0001"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:02 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=DOL_FRDOC_0001&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:03 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '931'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '2'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3buu2mru6r8i1b0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '28'
+      x-vcap-request-id:
+      - ad8eca63-e063-4068-4626-e11823f4a446
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 1808,
+                "label" : "Notice"
+              }, {
+                "docCount" : 52,
+                "label" : "Rule"
+              }, {
+                "docCount" : 24,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:03 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/ED_FRDOC_0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:03 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '814'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3enofuujc8jp38g
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '26'
+      x-vcap-request-id:
+      - ea28bd0f-ab0d-4aed-6092-aa0fa6240f83
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "ED_FRDOC_0001",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-10-10T09:41:35Z",
+              "dkAbstract" : null,
+              "agencyId" : "ED",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Recently Posted ED Rules and Notices.",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b00006480215f7f"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/ED_FRDOC_0001"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:03 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=ED_FRDOC_0001&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:03 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '930'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3hdu7heatvn7nn0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '25'
+      x-vcap-request-id:
+      - 922f896b-1c40-410c-6126-ebfe9e88e1b1
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 352,
+                "label" : "Notice"
+              }, {
+                "docCount" : 94,
+                "label" : "Rule"
+              }, {
+                "docCount" : 21,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:03 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/HUD-2023-0003?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:03 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '838'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3jqo3vjpoig28bg
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '24'
+      x-vcap-request-id:
+      - 102d2ed2-9539-47d0-6f91-6732f3c52e99
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "HUD-2023-0003",
+            "type" : "dockets",
+            "attributes" : {
+              "displayProperties" : [ ],
+              "keywords" : null,
+              "modifyDate" : "2023-06-21T15:42:27Z",
+              "dkAbstract" : null,
+              "agencyId" : "HUD",
+              "program" : null,
+              "shortTitle" : null,
+              "subType2" : null,
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "generic" : null,
+              "field1" : null,
+              "docketType" : "Rulemaking",
+              "petitionNbr" : null,
+              "rin" : "Not Assigned",
+              "organization" : null,
+              "legacyId" : null,
+              "subType" : null,
+              "category" : null,
+              "field2" : null,
+              "effectiveDate" : null,
+              "objectId" : "0b000064855eb003"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/dockets/HUD-2023-0003"
+            }
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:03 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=HUD-2023-0003&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:04 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '804'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3lcr80amk9n2ke0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '24'
+      x-vcap-request-id:
+      - 315c4ce4-972a-4427-6d6c-9dfcbb44c66c
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 1,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:04 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/dockets/VA-2023-VACO-0006?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:04 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '1497'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3nsrqjqmffpgqug
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '22'
+      x-vcap-request-id:
+      - 6cf43a7e-28fd-4b64-5729-d7b3ed3fe514
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJkYXRhIiA6IHsKICAgICJpZCIgOiAiVkEtMjAyMy1WQUNPLTAwMDYiLAogICAgInR5cGUiIDogImRvY2tldHMiLAogICAgImF0dHJpYnV0ZXMiIDogewogICAgICAiZGlzcGxheVByb3BlcnRpZXMiIDogWyBdLAogICAgICAia2V5d29yZHMiIDogbnVsbCwKICAgICAgIm1vZGlmeURhdGUiIDogIjIwMjMtMDMtMTVUMDg6MjM6MTJaIiwKICAgICAgImRrQWJzdHJhY3QiIDogIlRoZSBhZ2VuY2llcyBsaXN0ZWQgYWJvdmUgKHRoZSDigJxBZ2VuY2llc+KAnSkgcHJvcG9zZSB0byBhbWVuZCB0aGVpciByZWd1bGF0aW9ucyB0byBjbGFyaWZ5IHByb3RlY3Rpb25zIGZvciBiZW5lZmljaWFyaWVzIGFuZCBwb3RlbnRpYWwgYmVuZWZpY2lhcmllcyByZWNlaXZpbmcgZmVkZXJhbGx5IGZ1bmRlZCBzb2NpYWwgc2VydmljZXMgYW5kIHRoZSByaWdodHMgYW5kIG9ibGlnYXRpb25zIG9mIG9yZ2FuaXphdGlvbnMgcHJvdmlkaW5nIHN1Y2ggc2VydmljZXMuICBJbiBhY2NvcmRhbmNlIHdpdGggdGhlIEV4ZWN1dGl2ZSBvcmRlciBvZiBGZWJydWFyeSAxNCwgMjAyMSAoRXN0YWJsaXNobWVudCBvZiB0aGUgV2hpdGUgSG91c2UgT2ZmaWNlIG9mIEZhaXRoLUJhc2VkIGFuZCBOZWlnaGJvcmhvb2QgUGFydG5lcnNoaXBzKSwgdGhpcyBjbGFyaWZpY2F0aW9uIHNob3VsZCBwcm9tb3RlIG1heGltdW0gcGFydGljaXBhdGlvbiBieSBiZW5lZmljaWFyaWVzIGFuZCBwcm92aWRlcnMgaW4gdGhlIEFnZW5jaWVz4oCZIGNvdmVyZWQgcHJvZ3JhbXMgYW5kIGFjdGl2aXRpZXMgYW5kIGVuc3VyZSBjb25zaXN0ZW5jeSBpbiB0aGUgaW1wbGVtZW50YXRpb24gb2YgdGhvc2UgcHJvZ3JhbXMgYW5kIGFjdGl2aXRpZXMuIiwKICAgICAgImFnZW5jeUlkIiA6ICJWQSIsCiAgICAgICJwcm9ncmFtIiA6IG51bGwsCiAgICAgICJzaG9ydFRpdGxlIiA6IG51bGwsCiAgICAgICJzdWJUeXBlMiIgOiBudWxsLAogICAgICAidGl0bGUiIDogIkFSMjMtSm9pbnQgUHJvcG9zZWQgUnVsZS1QYXJ0bmVyc2hpcHMgd2l0aCBGYWl0aC1CYXNlZCBhbmQgTmVpZ2hib3Job29kIE9yZ2FuaXphdGlvbnMiLAogICAgICAiZ2VuZXJpYyIgOiBudWxsLAogICAgICAiZmllbGQxIiA6IG51bGwsCiAgICAgICJkb2NrZXRUeXBlIiA6ICJSdWxlbWFraW5nIiwKICAgICAgInBldGl0aW9uTmJyIiA6IG51bGwsCiAgICAgICJyaW4iIDogIjI5MDAtQVIyMyIsCiAgICAgICJvcmdhbml6YXRpb24iIDogbnVsbCwKICAgICAgImxlZ2FjeUlkIiA6IG51bGwsCiAgICAgICJzdWJUeXBlIiA6IG51bGwsCiAgICAgICJjYXRlZ29yeSIgOiBudWxsLAogICAgICAiZmllbGQyIiA6IG51bGwsCiAgICAgICJlZmZlY3RpdmVEYXRlIiA6IG51bGwsCiAgICAgICJvYmplY3RJZCIgOiAiMGIwMDAwNjQ4NTVlYjdhOCIKICAgIH0sCiAgICAibGlua3MiIDogewogICAgICAic2VsZiIgOiAiaHR0cHM6Ly9hcGkucmVndWxhdGlvbnMuZ292L3Y0L2RvY2tldHMvVkEtMjAyMy1WQUNPLTAwMDYiCiAgICB9CiAgfQp9
+  recorded_at: Thu, 19 Oct 2023 16:13:04 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BdocketId%5D=VA-2023-VACO-0006&filter%5BdocumentType%5D=Supporting+%26+Related+Material
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 19 Oct 2023 16:13:04 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '804'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - cb92r3ph94632qdrk3b0
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '22'
+      x-vcap-request-id:
+      - 76469d32-dd52-4f8c-418c-56d88a05bc4f
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 1,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "documentType" : [ {
+                "label" : "Supporting & Related Material",
+                "value" : "Supporting & Related Material"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 19 Oct 2023 16:13:04 GMT
 recorded_with: VCR 6.0.0

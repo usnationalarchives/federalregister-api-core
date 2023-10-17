@@ -51,7 +51,7 @@ class FrIndexCompiler
 
     if last_published_date
       index[:pdf] = {
-        url: "#{Settings.app.canonical_url}#{path_manager.index_pdf_path(last_published_date).gsub(path_manager.send(:data_file_path),'')}",
+        url: "#{Settings.services.fr.web.base_url}#{path_manager.index_pdf_path(last_published_date).gsub(path_manager.send(:data_file_path),'')}",
         approval_date: last_published_date.to_s(:iso),
       }
     else

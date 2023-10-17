@@ -14,9 +14,9 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :subject_2,
     :subject_3,
     :title
- 
+
   # NOTE: We still need to support AR-based serialization for agencies
-  attribute(:agencies, :include => {:agency_names => :agency}, if: Proc.new { |document, params| params[:active_record_retrieval] }) do |document| 
+  attribute(:agencies, :include => {:agency_names => :agency}, if: Proc.new { |document, params| params[:active_record_retrieval] }) do |document|
     document.agency_names.map do |agency_name|
       agency = agency_name.agency
       if agency
@@ -77,7 +77,8 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
 
   attribute :page_views, if: Proc.new { |document, params| params[:active_record_retrieval] },
     :select => [:document_number, :filed_at] do |document|
-    start_date = Settings.public_inspection_document_page_view_start_date
+    start_date = Settings.app.public_inspection_documents.page_view_start_date
+    start_date = Date.parse(start_date) if start_date
 
     if document.filed_at && start_date && (document.filed_at.to_date >= start_date)
       {
@@ -100,7 +101,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   end
 
   attribute :publication_date  do |document|
-    document.publication_date&.to_s(:iso) 
+    document.publication_date&.to_s(:iso)
   end
 
   attribute :public_inspection_document_id do |object|

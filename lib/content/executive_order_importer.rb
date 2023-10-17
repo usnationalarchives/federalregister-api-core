@@ -23,7 +23,7 @@ module Content::ExecutiveOrderImporter
       document_number = eo['document_number']
       next if document_number.blank?
 
-      puts "Attempting update of #{document_number}..."
+      Rails.logger.info("Attempting update of #{document_number}...")
 
       begin
         publication_date = Date.parse(eo['publication_date'].try(:strip))
@@ -38,7 +38,7 @@ module Content::ExecutiveOrderImporter
       end
 
       if entry
-        puts "Entry found..."
+        Rails.logger.info("Document #{document_number} found...")
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
         attr = {
           :presidential_document_number => eo['executive_order_number'],
@@ -51,9 +51,9 @@ module Content::ExecutiveOrderImporter
           attr[:citation] = eo['citation'].strip
         end
         entry.update(attr)
-        puts "Entry updated."
+        Rails.logger.info("Document #{document_number} updated.")
       else
-        puts "'#{document_number}' not found!"
+        Rails.logger.info("Document #{document_number} not found!")
       end
     end
   end

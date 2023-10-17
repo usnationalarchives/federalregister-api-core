@@ -54,7 +54,8 @@ class Image < ApplicationModel
   end
 
   def invalidate_image_identifier_keyspace!
-    create_invalidation(Settings.s3_buckets.image_variants, ["/#{identifier}*"]) #NOTE: S3 documentation suggests * expiries only count o
+    #NOTE: S3 documentation suggests * expiries only count o
+    create_invalidation(Settings.app.aws.s3.buckets.image_variants, ["/#{identifier}*"])
   end
 
   private
@@ -64,9 +65,9 @@ class Image < ApplicationModel
       return
     end
 
-    s3_object = GpoImages::FogAwsConnection.new.get_s3_object(image_file_name, Settings.s3_buckets.original_images)
+    s3_object = GpoImages::FogAwsConnection.new.get_s3_object(image_file_name, Settings.app.aws.s3.buckets.original_images)
     if s3_object.nil?
-      Honeybadger.notify("Unable to find S3 object '#{image_file_name}' in bucket #{Settings.s3_buckets.original_images}") 
+      Honeybadger.notify("Unable to find S3 object '#{image_file_name}' in bucket #{Settings.app.aws.s3.buckets.original_images}")
       return
     end
     s3_object.acl = acl

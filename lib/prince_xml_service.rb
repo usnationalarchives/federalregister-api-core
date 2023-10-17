@@ -11,7 +11,7 @@ class PrinceXmlService
   end
 
   def self.url
-    "#{Settings.prince.url}:#{Settings.prince.port}"
+    "#{Settings.prince.host}:#{Settings.prince.port}"
   end
 
 end

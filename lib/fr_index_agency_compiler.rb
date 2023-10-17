@@ -61,9 +61,9 @@ class FrIndexAgencyCompiler
         where("entries.publication_date <= ?", "#{year}-12-31").
         group("entries.id").
         to_sql
-    ]). 
+    ]).
     group_by{|entry|entry["granule_class"]}
-  end 
+  end
 
   def process_entries
     entries.each do |doc_type, doc_representations|
@@ -164,7 +164,7 @@ class FrIndexAgencyCompiler
 
     if last_published_date
       @doc_data[:pdf] = {
-        url: "#{Settings.app.canonical_url}#{path_manager.index_agency_pdf_path(agency, last_published_date).gsub(path_manager.send(:data_file_path),'')}",
+        url: "#{Settings.services.fr.web.base_url}#{path_manager.index_agency_pdf_path(agency, last_published_date).gsub(path_manager.send(:data_file_path),'')}",
         approval_date: last_published_date.to_s(:iso),
       }
     else

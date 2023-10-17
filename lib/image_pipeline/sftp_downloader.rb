@@ -9,7 +9,7 @@ class ImagePipeline::SftpDownloader
       GpoImages::Sftp.new(
         username: Rails.application.secrets[:gpo_historical_images_sftp][:username],
         password: Rails.application.secrets[:gpo_historical_images_sftp][:password]
-      ) 
+      )
     end
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @image_source       = ImageSource.find_by_id!(options.fetch(:image_source_id))
@@ -41,7 +41,7 @@ class ImagePipeline::SftpDownloader
               bucket_directory_connection,
               filename_without_path,
               File.join(temp_images_path, filename_without_path)
-            ) 
+            )
           end
         rescue StandardError => exception
           raise "A failure occurred when uploading an original image file to S3: #{exception.backtrace}: #{exception.message} (#{exception.class})"
@@ -79,11 +79,15 @@ class ImagePipeline::SftpDownloader
 
   def directories
     if image_source.batch_download_from_sftp_by_subdirectory
-      # Handle an SFTP directory structure like: FR-2014-01-01/graphics-submitted/test_image.eps (batch handle directories for performance/fault-tolerance)
+      # Handle an SFTP directory structure like:
+      # FR-2014-01-01/graphics-submitted/test_image.eps
+      # (batch handle directories for performance/fault-tolerance)
       sftp_connection.
         list_directories('/').
         sort.
-        select{|date_string| Date.parse(date_string.gsub('FR-', "")) < GpoImages::DailyIssueImageProcessor::GPO_IMAGE_START_DATE }
+        select do |date_string|
+          Date.parse(date_string.gsub('FR-', "")) < GpoImages::DailyIssueImageProcessor::GPO_IMAGE_START_DATE
+        end
     else
       # Handle an SFTP directory structure like /test_image.eps
       ['/']
@@ -100,7 +104,7 @@ class ImagePipeline::SftpDownloader
   end
 
   def bucket_name
-    Settings.s3_buckets.image_holding_tank
+    Settings.app.aws.s3.buckets.image_holding_tank
   end
 
   def temp_images_path
@@ -116,7 +120,9 @@ class ImagePipeline::SftpDownloader
         data = sftp_connection.download!(filename, "#{temp_images_path}/#{File.basename(filename)}")
       end
     rescue StandardError => exception
-      #NOTE: sftp_connection#download! sometimes raises a non-specific RuntimeError due to permission denials.  Raise our custom error so we can skip to the next batch of images
+      # NOTE: sftp_connection#download! sometimes raises a non-specific
+      # RuntimeError due to permission denials.  Raise our custom error so we
+      # can skip to the next batch of images
       delete_directory_contents(temp_images_path)
       raise SftpDownloadFailure.new("A failure occurred when downloading a file from historical GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})")
     end

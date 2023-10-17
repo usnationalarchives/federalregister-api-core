@@ -82,11 +82,12 @@ class ApplicationModel < ActiveRecord::Base
       request_body << { update: { _index: repository.index_name, _id: instance.id } }
       request_body << {:doc => {attribute.key => attribute.method.call(instance)}}
     end
- 
+
     remaining_retries = ES_INDEXING_RETRY_LIMIT
     begin
       response = repository.client.bulk body: body, refresh: refresh
-      puts response
+      Rails.logger.info(response)
+
       if response.fetch('errors')
         if Rails.env.development?
           raise response.fetch('errors')
@@ -103,7 +104,7 @@ class ApplicationModel < ActiveRecord::Base
         raise e
       end
     end
-  
+
     if refresh
       repository.refresh_index!
     end

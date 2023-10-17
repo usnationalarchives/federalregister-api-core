@@ -12,7 +12,7 @@ class AgencyNameChangeReindexer
     if current_agency.blank? && prior_agency_id.blank?
       # No need to reindex anything
       entry_ids = []
-    elsif Settings.feature_flags.reindex_all_agency_name_entries
+    elsif Settings.app.reindex_all_agency_name_entries
       # This setting can be toggled as a means for aggressively reindexing all associated entries
       entry_ids = agency_name.entry_ids
     elsif current_agency.blank? && prior_agency
@@ -50,7 +50,7 @@ class AgencyNameChangeReindexer
     else
       raise NotImplementedError
     end
-    
+
     if entry_ids.present?
       attribute = EntrySerializer.attributes_to_serialize.find{|k,v| k == :agency_ids}.last
       Entry.where(id: entry_ids).includes(:agencies).find_in_batches(batch_size: 10000) do |entry_batch|

@@ -1,5 +1,5 @@
 ==========================
-  URGENT  URGENT  URGENT  
+  URGENT  URGENT  URGENT
 ==========================
 
 FederalRegister.gov Unexpected eDocs Public Inspection API Error:
@@ -13,8 +13,8 @@ The daily import system attempts to download public inspection documents Monday 
 This is an automated message from the FederalRegister.gov daily import system.
 As such, you may already be aware of the following issues that are preventing the import of Federal Register public inspection documents.
 
-For more information, refer to the <%= link_to "How PIL Content is Imported", Settings.admin.pil_documentation_url %> documentation.
+For more information, refer to the <%= link_to "How PIL Content is Imported", Rails.application.credentials.dig(:app, :admin, :pil_documentation_url) %> documentation.
 
 ==========================
-  URGENT  URGENT  URGENT  
+  URGENT  URGENT  URGENT
 ==========================

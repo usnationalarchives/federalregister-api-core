@@ -29,7 +29,7 @@ module ElasticsearchIndexer
     Entry.pre_joined_for_es_indexing.find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
       Entry.bulk_index(entry_batch, refresh: false)
       entries_completed += BATCH_SIZE
-      puts "Entry Indexing #{(entries_completed.to_f/total_entries * 100).round(2)}% complete"
+      Rails.logger.info("Entry Indexing #{(entries_completed.to_f/total_entries * 100).round(2)}% complete")
     end
 
     $entry_repository.refresh_index!

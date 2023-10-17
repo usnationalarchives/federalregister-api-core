@@ -2,7 +2,7 @@ class EntryRepository < BaseRepository
   index_name [
     'fr-entries',
     (Rails.env.test? ? "test#{((ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'])}" : Rails.env),
-    Settings.elasticsearch.deployment_environment
+    Settings.deployment_environment
   ].compact.join('-')
   klass Entry
 

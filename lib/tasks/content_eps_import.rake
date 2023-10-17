@@ -2,29 +2,29 @@ namespace :content do
 
   namespace :images do
     desc "Lock-safe download of ongoing images"
-    task :lock_safe_download_ongoing_images => :environment do
+    task :download_daily_images_from_sftp => :environment do
       Content::ImportDriver::OngoingImageImportDriver.new.perform
     end
 
     desc "Lock-safe download of historical images (uses different credentials)"
-    task :lock_safe_download_historical_images => :environment do
+    task :download_historical_images_from_sftp => :environment do
       Content::ImportDriver::HistoricalImageImportDriver.new.perform
     end
 
     desc "Download images from SFTP and save them to the image holding tank"
     task :download_originals_to_holding_tank => :environment do
       image_source_id = ENV['IMAGE_SOURCE_ID']
-      sftp_connection = case image_source_id 
+      sftp_connection = case image_source_id
       when ImageSource::GPO_SFTP_HISTORICAL_IMAGES.id.to_s
         GpoImages::Sftp.new(
           username: Rails.application.secrets[:gpo_historical_images_sftp][:username],
           password: Rails.application.secrets[:gpo_historical_images_sftp][:password]
-        ) 
+        )
       when ImageSource::GPO_SFTP.id.to_s
         GpoImages::Sftp.new(
           username: Rails.application.secrets[:gpo_sftp][:username],
           password: Rails.application.secrets[:gpo_sftp][:password]
-        ) 
+        )
       else
         raise NotImplementedError
       end
@@ -36,18 +36,22 @@ namespace :content do
     end
 
     desc "Enqueue environment-specific jobs for downloading/processing from the image holding tank"
-    task :enqueue_environment_specific_image_downloads => :environment do
+    task :download_and_process_from_holding_tank => :environment do
       enqueued_s3_keys = Set.new
+
+      # get already enqueued image import jobs
       Sidekiq::Queue.new('gpo_image_import').each do |job|
         enqueued_s3_keys << job.args.first
       end
 
       invalid_filenames = [".BridgeSort"]
 
+      # enqueue a new job for valid images that haven't already been enqueued
+      # or enqueue a removal for invalid files
       GpoImages::FogAwsConnection.
         new.
         connection.
-        directories.new(:key => Settings.s3_buckets.image_holding_tank).
+        directories.new(key: Settings.app.aws.s3.buckets.image_holding_tank).
           files.
           map{|file| file.key}.
           select{|s3_key| enqueued_s3_keys.exclude?(s3_key) }.

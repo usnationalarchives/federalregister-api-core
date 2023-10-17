@@ -11,7 +11,7 @@ class PilAgencyLetterJanitor
       # Deleting from S3 doesn't appear to automatically expire Cloudfront.
       begin
         create_invalidation(
-          Settings.s3_buckets.public_inspection,
+          Settings.app.aws.s3.buckets.public_inspection,
           paths_for_expiry
         )
       rescue StandardError => e

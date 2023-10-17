@@ -1,78 +1,107 @@
 app:
-  canonical_url: "https://www.federalregister.gov"
-admin:
-  basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
-  pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
-  pil_documentation_url: <%= ENV['PIL_DOCUMENTATION_URL'] || "/" %>
-  documentation_url: <%= ENV['DOCUMENTATION_URL'] %>
+  aws:
+    s3:
+      buckets:
+        agency_logos: agency-logos.example.com
+        image_holding_tank: image-holding-tank.example.com
+        image_variants: img.example.com
+        original_images: img-orig.example.com
+        private_images: private.images.example.com
+        public_images: images.example.com
+        public_inspection: public-inspection.example.com
+      host_aliases:
+        agency_logos: agency-logos.example.com
+        image_variants: img.example.com
+        private_images: s3.amazonaws.com
+        public_images: images.example.com
+        public_inspection: public-inspection.example.com
+  deliver_daily_import_email: true
+  deliver_late_content_notifications: true
+  deployment_environment: blue
+  google_analytics:
+    update_document_counts: true
+  images:
+    download_daily_images_from_sftp: false
+    download_historical_images_from_sftp: false
+    download_and_process_from_holding_tank: false
+    environments_requiring_image_download: ['Staging', 'Production']
+    store_in_filesystem: false
+  import:
+    content: true
+    public_inspection: true
+  public_inspection_documents:
+    page_view_start_date: "2020-10-09"
+  regulations_dot_gov:
+    update_documents: true
+    update_dockets: true
+  reindex_all_agency_name_entries: false
+
+# host, password and username are retrived from credentials
+# development environment uses ENV vars for these so keys are defined here
+database:
+  adapter: mysql2
+  encoding: utf8
+  host:
+  name: federal_register_api_core
+  password:
+  port: 3306
+  reconnect: true
+  username:
+
+# host is retrived from credentials
+# development environment uses ENV vars for these that key is defined here
 elasticsearch:
-  deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
-  host: <%= ENV['ELASTICSEARCH_HOST'] %>
+  host:
   trace: false
-  enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
-  entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
-  public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
+  enabled: true
+  entry_index_shards: 1
+  public_inspection_document_index_shards: 1
+
+
+# feature flags should ideally be short lived switches before full rollout
+# long-lived switches should placed in the `app` settings block
 feature_flags:
-  use_carrierwave_images_in_api: <%= ActiveModel::Type::Boolean.new.cast(ENV['USE_CARRIERWAVE_IMAGES_IN_API']) || false %>
-  reindex_all_agency_name_entries: <%= ActiveModel::Type::Boolean.new.cast(ENV['REINDEX_ALL_AGENCY_NAME_ENTRIES']) || false %>
-images:
-  store_in_filesystem: true
+  # TODO: this is now the default and we should be able to remove all the old code
+  use_carrierwave_images_in_api: true
+
 lograge:
   enabled: true
+
+# this can be turned on during a rails upgrade to detect deprecations
+# ex: enable on staging to check the daily imports, etc.
+rails:
+  report_deprecations: false
+
 open_calais:
-  daily_api_call_limit: <%= ENV["OPEN_CALAIS_DAILY_API_CALL_LIMIT"] || 500 %>
+  daily_api_call_limit: 500
   throttle:
-    concurrency: <%= ENV["OPEN_CALAIS_JOBS_CONCURRENCY"] || 1 %>
-    at: <%= ENV["OPEN_CALAIS_JOBS_THROTTLE_AT"] || 1 %>
-    per: <%= (ENV["OPEN_CALAIS_JOBS_THROTTLE_PER"] || 1).send(:seconds) %>
-public_inspection:
-  failure_notification_recipients:  <%= ENV['FAILURE_NOTIFICATION_RECIPIENTS']&.split(",") || [] %>
-varnish:
-  host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
-  port: 6082
-regulations_dot_gov:
-  base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
-  throttle:
-    at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
-    per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
-  use_v4_api: <%= ENV.fetch("USE_REG_GOV_V4_API", false) %>
-cron:
-  delta_auditing: true
-  google_analytics: true
-  gpo_images:
-    import_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_IMPORT_EPS', true)) %>
-    convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
-    reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
-  images:
-    auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %>
-    download_historical_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_HISTORICAL_IMAGES']) || false %>
-    download_ongoing_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_ONGOING_IMAGES']) || false %>
-    environments_requiring_image_download: <%= ENV['ENVIRONMENTS_REQUIRING_IMAGE_DOWNLOAD'].try(:split, ',') || ['Staging', 'Production'] %>
-    sftp_hostname: <%= ENV['SFTP_HOSTNAME'] %>
-    streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
-  import: true
-  late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
-  public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
-  regulations_dot_gov:
-    comments: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_COMMENTS_ENABLED', true)) %>
-    dockets: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCKETS_ENABLED', true)) %>
-    documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
-  # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
+    concurrency: 1
+    at: 1
+    per: 1
+
 paperclip:
-  abort_on_s3_error: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('ABORT_PAPERCLIP_PROCESSING_ON_S3_ERRORS', false)) %>
+  abort_on_s3_error: false
+
 prince:
-  url: <%= ENV.fetch('PRINCE_XML_URL', nil) %>
-  port: <%= ENV.fetch('PRINCE_PORT', 5000) %>
-deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
-public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_PAGE_VIEW_START_DATE', nil) %>
-report_deprecations: <%= ActiveModel::Type::Boolean.new.cast( ENV.fetch("REPORT_DEPRECATIONS", false) ) %>
-s3_host_aliases:
-  agency_logos: agency-logos.fr2.local
-  lede_photos: lede-photos.fr2.local
-  private_images: s3.amazonaws.com
-  public_images: images.fr2.local
-  public_inspection: public-inspection.fr2.local
+  host: prince.fr-prod.svc.cluster.local
+  port: 3000
+
+services:
+  fr:
+    web:
+      base_url: https://www.federalregister.gov
+
 sidekiq:
   # kilobytes (integer) like 1048576 (1GB)
-  memory_threshold: '<%= ENV["SIDEKIQ_MEMORY_THRESHOLD"] %>'
-slack_webhook_url: <%= ENV["SLACK_WEBHOOK_URL"] || 'https://hooks.slack.com/services/abc/123' %>
+  memory_threshold: 1048576
+
+regulations_dot_gov:
+  api_base_url: "https://api-staging.regulations.gov/v4"
+  throttle:
+    at: 1
+    per: 5
+
+varnish:
+  # expected to be set by helm/deployment
+  host: varnish.fr-prod.svc.cluster.local
+  port: 6082

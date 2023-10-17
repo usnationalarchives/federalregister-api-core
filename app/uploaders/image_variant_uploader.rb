@@ -3,7 +3,7 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
   include UploaderUtils
 
   # Choose what kind of storage to use for this uploader:
-  if Settings.images.store_in_filesystem
+  if Settings.app.images.store_in_filesystem
     storage :file
   else
     storage :fog
@@ -20,14 +20,14 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
       :aws_secret_access_key  => Rails.application.secrets[:aws][:secret_access_key], # required
       :region => 'us-east-1'
     }
-    self.fog_directory = Settings.s3_buckets.image_variants
-    self.asset_host = Settings.s3_host_aliases.image_variants #eg Cloudfront
+    self.fog_directory = Settings.app.aws.s3.buckets.image_variants
+    self.asset_host = Settings.app.aws.s3.host_aliases.image_variants #eg Cloudfront
   end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    if Settings.images.store_in_filesystem
+    if Settings.app.images.store_in_filesystem
       "#{Rails.root}/data/#{model.class.to_s.underscore}/#{model.identifier}"
     else
       "#{model.identifier}"
@@ -64,7 +64,7 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
 
     stdout, stderr, status = Open3.capture3(
       "convert #{image_magick_settings} '#{current_path}' #{model.image_style.image_magick_operators} '#{output_path}'" #NOTE: "Generally speaking a setting should come before an image filename and an image operator after the image filename."
-    ) 
+    )
     if status.success?
       File.rename output_path, current_path
     else
@@ -92,9 +92,9 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
   def filename
     if original_filename
       if dynamically_determine_file_extension?
-        "#{model.identifier}_#{model.style}.#{file.extension}" 
+        "#{model.identifier}_#{model.style}.#{file.extension}"
       else
-        "#{model.identifier}_#{model.style}.png" 
+        "#{model.identifier}_#{model.style}.png"
       end
     end
   end

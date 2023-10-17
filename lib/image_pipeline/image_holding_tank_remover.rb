@@ -1,24 +1,21 @@
-# This job deletes images from the image holding tank if both production and staging have already downloaded them.
+# This job deletes images from the image holding tank if all the configured
+# environments have already downloaded them (usually production and staging)
 class ImagePipeline::ImageHoldingTankRemover
   include Sidekiq::Worker
 
   sidekiq_options :queue => :gpo_image_import, :retry => 0
 
-  def perform(s3_key, force_destroy = nil )
-    @s3_key     = s3_key
+  def perform(s3_key, force_destroy = nil)
+    @s3_key = s3_key
     @connection = GpoImages::FogAwsConnection.new.connection
+
     if force_destroy
       destroy_s3_object!
       return
     end
 
-    s3_tags     = get_s3_tags
-    if environments_requiring_image_download.all? do |environment| 
-        s3_tags["#{environment}DownloadedAt"]
-    end
-      destroy_s3_object!
-    end
-
+    s3_tags = get_s3_tags
+    destroy_s3_object! if all_environments_downloaded?(s3_tags)
   end
 
   private
@@ -27,16 +24,22 @@ class ImagePipeline::ImageHoldingTankRemover
 
   def destroy_s3_object!
     directory = connection.directories.get(image_holding_tank_s3_bucket)
-    file      = directory.files.get(s3_key)
+    file = directory.files.get(s3_key)
     file.destroy
   end
 
+  def all_environments_downloaded?(s3_tags)
+    environments_requiring_image_download.all? do |env|
+      s3_tags["#{env}DownloadedAt"]
+    end
+  end
+
   def environments_requiring_image_download
-    Settings.cron.images.environments_requiring_image_download
+    Settings.app.images.environments_requiring_image_download
   end
 
   def image_holding_tank_s3_bucket
-    Settings.s3_buckets.image_holding_tank
+    Settings.app.aws.s3.buckets.image_holding_tank
   end
 
   def get_s3_tags
@@ -50,5 +53,4 @@ class ImagePipeline::ImageHoldingTankRemover
     end
     response.body.fetch('ObjectTagging')
   end
-
 end

@@ -8,13 +8,12 @@ services:
       - RAILS_ENV=test
       - DB_STRUCTURE_ACCESS_KEY
       - DB_STRUCTURE_SECRET
-      - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
     links:
       - mysql
       - redis
       - elasticsearch
     volumes:
-      - /tmp/test-results:/home/app/tmp/test-results  
+      - /tmp/test-results:/home/app/tmp/test-results
   mysql:
     extends:
       file: shared.yml

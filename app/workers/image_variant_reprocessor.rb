@@ -19,7 +19,7 @@ class ImageVariantReprocessor
           )
 
           image_variant.image = image.image.file
-      
+
           if image.made_public_at.present?
             image_variant.image.fog_public = true
           else
@@ -38,7 +38,7 @@ class ImageVariantReprocessor
     end
 
     if invalidate_cloudfront
-      create_invalidation(Settings.s3_buckets.image_variants, ["/#{image.identifier}*"]) 
+      create_invalidation(Settings.app.aws.s3.buckets.image_variants, ["/#{image.identifier}*"])
     end
     image.touch(:updated_at)
   end

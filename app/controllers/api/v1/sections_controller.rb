@@ -1,6 +1,4 @@
 class Api::V1::SectionsController < ApiController
-  include Api::ApiSectionHelper
-
   def index
     pub_date = parse_pub_date(params[:conditions]) || IssueApproval.latest_publication_date
     publication_date = pub_date <= IssueApproval.latest_publication_date ? pub_date : IssueApproval.latest_publication_date

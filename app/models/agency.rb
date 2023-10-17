@@ -50,9 +50,9 @@ class Agency < ApplicationModel
                       :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
                       :s3_region => 'us-east-1'
                     },
-                    :s3_host_alias => Settings.s3_host_aliases.agency_logos,
+                    :s3_host_alias => Settings.app.aws.s3.host_aliases.agency_logos,
                     :s3_protocol => 'https',
-                    :bucket => Settings.s3_buckets.agency_logos,
+                    :bucket => Settings.app.aws.s3.buckets.agency_logos,
                     :path => ":id/:style.:extension",
                     :url => ':s3_alias_url'
   do_not_validate_attachment_file_type :logo

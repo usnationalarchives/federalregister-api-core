@@ -35,7 +35,7 @@ module GpoImages
         paths_for_expiry = ['medium','large','original'].map{|style| "/#{image_identifier.upcase}/#{style}.png"}
         paths_for_expiry << "/#{image_identifier.upcase}/original.pdf"
 
-        create_invalidation(Settings.s3_buckets.public_images, paths_for_expiry)
+        create_invalidation(Settings.app.aws.s3.buckets.public_images, paths_for_expiry)
       end
     end
 
