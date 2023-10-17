@@ -1,4 +1,3 @@
-# require 'flickr'
 class Entry < ApplicationModel
   self.inheritance_column = nil
   include EntryViewLogic
@@ -115,15 +114,10 @@ class Entry < ApplicationModel
   has_many :section_assignments
   has_many :sections, :through => :section_assignments
 
-  has_many :section_highlights, dependent: :destroy
-  belongs_to :lede_photo
-
   has_many :entry_page_views
   has_many :entry_emails
 
   has_many :events, :dependent => :destroy
-
-  accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
 
   file_attribute(:full_xml)  {"#{documents_path}/full_text/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{documents_path}/full_text/text/#{document_file_path}.txt"}
@@ -167,10 +161,6 @@ class Entry < ApplicationModel
 
   def self.published_today
     Issue.current.entries
-  end
-
-  def self.with_lede_photo
-    scoped(:joins => :lede_photo)
   end
 
   def self.published_in(date_range)
@@ -225,10 +215,6 @@ class Entry < ApplicationModel
       :having => "num_emails > 0",
       :order => "num_emails DESC"
     )
-  end
-
-  def self.highlighted(date = IssueApproval.latest_publication_date)
-    scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => date}})
   end
 
   def self.most_recent(n)
@@ -606,10 +592,6 @@ class Entry < ApplicationModel
 
   def has_type?
     entry_type != 'Unknown'
-  end
-
-  def lede_photo_candidates
-    self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
   end
 
   def proclamation_number

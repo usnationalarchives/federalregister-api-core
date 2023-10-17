@@ -46,13 +46,12 @@ namespace :data do
     )
 
     task :full => %w(
-      content:section_highlights:clone
       data:daily:basic
       content:public_inspection:import:entry_id
       elasticsearch:reindex_entry_changes
 
       content:issues:mark_complete
-      
+
       content:public_inspection:reindex
 
       web:notify_of_new_issue

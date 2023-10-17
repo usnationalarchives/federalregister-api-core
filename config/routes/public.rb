@@ -18,7 +18,6 @@ FederalregisterApiCore::Application.routes.draw do
   end
 
   match 'articles' => 'entries#index', :as => :entries, :via => :get
-  match 'articles/featured' => 'entries#highlighted', :as => :highlighted_entries, :via => :get
   match 'articles/search/facet' => 'entries#search_facet', :as => :entries_search_facet, :via => :get
   match 'articles/widget' => 'entries#widget', :as => :entries_widget, :via => :get
   match 'documents/:year/:month/:day/:document_number/:slug' => 'entries#show', :as => :entry, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :slug => /[^\/]+/, :via => :get
@@ -83,7 +82,6 @@ FederalregisterApiCore::Application.routes.draw do
     Section.all.each do |section|
       match "#{section.slug}" => "sections#show", :via => :get
       match "#{section.slug}/about" => "sections#about", :via => :get
-      match "#{section.slug}/featured" => "sections#highlighted_entries", :via => :get
       match "#{section.slug}/significant" => "sections#significant_entries", :via => :get
     end
   end
@@ -93,7 +91,6 @@ FederalregisterApiCore::Application.routes.draw do
 
   # SECTIONS
   match ':slug/about' => 'sections#about', :as => :about_section, :via => :get
-  match ':slug/featured' => 'sections#highlighted_entries', :as => :highlighted_entries_section, :via => :get
   match ':slug/significant' => 'sections#significant_entries', :as => :significant_entries_section, :via => :get
   match ':slug' => 'sections#show', :as => :section, :via => :get
 end

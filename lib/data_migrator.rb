@@ -11,11 +11,7 @@ class DataMigrator
     copy_entry_columns(
       :curated_title,
       :curated_abstract,
-      :lede_photo_id,
-      :lede_photo_candidates,
     )
-    copy_table(:section_highlights)
-    copy_table(:lede_photos)
     copy_table(:issue_approvals)
   end
 

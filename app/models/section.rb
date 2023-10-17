@@ -1,8 +1,6 @@
 class Section < ApplicationModel
   has_many :section_assignments
 
-  has_many :section_highlights
-
   has_many :agencies_sections
   has_many :agencies, -> { order("agencies.name") },  :through => :agencies_sections
   has_many :canned_searches
@@ -21,19 +19,6 @@ class Section < ApplicationModel
 
   def to_param
     slug
-  end
-
-  def highlighted_entries(publication_date=Issue.current.publication_date)
-    Entry.scoped(
-      :conditions => {
-        :section_highlights => {
-          :publication_date => publication_date,
-          :section_id => id
-        }
-      },
-      :joins => :section_highlights,
-      :order => "section_highlights.position"
-    )
   end
 
   def cfr_citation_ranges

@@ -105,11 +105,6 @@ namespace :content do
         entry_importer(:action_name)
       end
 
-      desc "Extract lede photo candidates"
-      task :lede_photo_candidates => :environment do
-        entry_importer(:lede_photo_candidates)
-      end
-
       desc "Extract CFR information into entries"
       task :cfr => :environment do
         entry_importer(:entry_cfr_references)

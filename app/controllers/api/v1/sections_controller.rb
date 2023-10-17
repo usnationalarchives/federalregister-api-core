@@ -9,8 +9,7 @@ class Api::V1::SectionsController < ApiController
 
     Section.all.each do |section|
       sections[section.slug] = {
-        :name => section.title,
-        :highlighted_documents => highlighted_documents(section, publication_date),
+        :name => section.title
       }
     end
 
@@ -31,12 +30,5 @@ class Api::V1::SectionsController < ApiController
         nil
       end
     end
-  end
-
-  def highlighted_documents(section, publication_date)
-    section.
-      highlighted_entries(publication_date).
-      limit(6).
-      map{|entry| highlighted_entry_hash(entry)}
   end
 end

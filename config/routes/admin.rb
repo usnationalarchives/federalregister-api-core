@@ -46,11 +46,6 @@ FederalregisterApiCore::Application.routes.draw do
     end
     resources :pil_agency_letters, :only => [:index, :create, :destroy]
     resources :presidential_documents, :only => [:index, :create, :show]
-    resources :photo_candidates, :only => [:show, :info] do
-      member do
-        get :info
-      end
-    end
     resources :sections
     resources :missing_images, :only => [:index, :show],   :constraints => { :id => /.*/ }
     resources :reprocessed_issues, :only => [:index, :show, :create, :update, :destroy] do
@@ -73,11 +68,9 @@ FederalregisterApiCore::Application.routes.draw do
         member do
           get :preview
         end
-        resources :highlights, controller: 'issues/sections/highlights'
       end
     end
 
-    match 'entries/:id/highlight' => 'issues/entries#highlight', :as => :highlight_entry, :via => :get
     resources :password_resets, :except => [:index, :show, :destroy]
     resources :users do
       resource :password, controller: 'users/passwords'

@@ -10,7 +10,6 @@ module Content
     include Content::EntryImporter::FullText
     include Content::EntryImporter::FullXml
     include Content::EntryImporter::RawText
-    include Content::EntryImporter::LedePhotoCandidates
     # include Content::EntryImporter::PageNumber
     include Content::EntryImporter::EventDetails
     include Content::EntryImporter::Sections
@@ -81,7 +80,7 @@ module Content
         if document_numbers_missing_from_mods.present?
           notify_of_missing_document(:mods, date, document_numbers_missing_from_mods)
         end
-        docs_and_nodes.each do |document_number, bulkdata_node| 
+        docs_and_nodes.each do |document_number, bulkdata_node|
           if mods_doc_numbers.include?(document_number)
             import_document(
               options.merge(

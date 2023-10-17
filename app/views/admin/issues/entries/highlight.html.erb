@@ -1,9 +1,0 @@
-<% title @entry.title %>
-
-<p>Which section would you like to highlight this in?</p>
-
-<ul>
-  <% @entry.sections.each do |section| %>
-    <li><%= link_to_if !@current_sections.include?(section), section.title, admin_issue_section_highlights_path(@issue, section, :section_highlight => {:entry_id => @entry.id}), :method => :post %></li>
-  <% end %>
-</ul>
