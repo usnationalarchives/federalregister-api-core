@@ -8,8 +8,8 @@ class Graphic < ApplicationModel
                     :processors => [:auto_inverter, :gpo_image_converter,  :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
-                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :access_key_id     => Rails.application.credentials.dig(:app, :aws, :s3, :access_key_id),
+                      :secret_access_key => Rails.application.credentials.dig(:app, :aws, :s3, :secret_access_key),
                       :s3_region => 'us-east-1'
                     },
                     :s3_host_alias => Settings.app.aws.s3.host_aliases.public_images,

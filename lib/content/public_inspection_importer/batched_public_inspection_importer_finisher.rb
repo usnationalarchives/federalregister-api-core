@@ -27,7 +27,7 @@ class Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher
   attr_reader :start_time, :session_token
 
   def notify_slack!(status)
-    notifier = Slack::Notifier.new Rails.application.credentials.slack.webhook_url do
+    notifier = Slack::Notifier.new Rails.application.credentials.dig(:slack, :webhook_url) do
       defaults channel: "#federalregister",
                username: "PIL Import Notifier"
     end

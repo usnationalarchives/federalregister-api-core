@@ -51,8 +51,8 @@ class GpoImages::FogAwsConnection
   def connection
     @connection ||= Fog::Storage.new({
       :provider                 => 'AWS',
-      :aws_access_key_id        => Rails.application.secrets[:aws][:access_key_id],
-      :aws_secret_access_key    => Rails.application.secrets[:aws][:secret_access_key],
+      :aws_access_key_id        => Rails.application.credentials.dig(:app, :aws, :s3, :access_key_id),
+      :aws_secret_access_key    => Rails.application.credentials.dig(:app, :aws, :s3, :secret_access_key),
       :endpoint => 'https://s3.amazonaws.com/',
       :path_style => true
     })

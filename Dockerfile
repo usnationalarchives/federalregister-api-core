@@ -153,7 +153,7 @@ ENV WEB_PORT 3000
 COPY --chown=1000:1000 . /home/app/
 WORKDIR /home/app
 
-RUN RAILS_ENV=production rake assets:precompile
+RUN SECRET_KEY_BASE=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX RAILS_ENV=production rake assets:precompile
 
 ##################
 ### BASE (LAST)

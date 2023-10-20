@@ -1,5 +1,3 @@
-redis_url = "redis://#{Rails.application.secrets[:redis][:host]}:#{Rails.application.secrets[:redis][:port]}/#{Rails.application.secrets[:redis][:db]}"
-
 module Sidekiq::Logger::Formatters
   class LokiJSON < Base
     def call(severity, time, program_name, message)
@@ -43,11 +41,11 @@ Sidekiq.configure_server do |config|
     Sidekiq.logger.debug "first heartbeat or recovering from an outage and need to reestablish our heartbeat"
   end
 
-  config.redis = { url: redis_url, reconnect: 0}
+  config.redis = REDIS_CONNECTION_SETTINGS.merge(reconnect: 0)
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: redis_url, reconnect: 0}
+  config.redis = REDIS_CONNECTION_SETTINGS.merge(reconnect: 0)
 end
 
 require "sidekiq/throttled"

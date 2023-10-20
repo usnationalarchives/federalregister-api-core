@@ -71,7 +71,7 @@ class Mailer < ActionMailer::Base
     sendgrid_recipients recipients
 
     attachments[File.basename(error.response_path)] = File.read(error.response_path)
-    @api_url = "#{Rails.application.secrets[:public_inspection][:api_base_uri]}/eDocs/PIReport/#{Date.current.strftime("%Y%m%d")}"
+    @api_url = "#{Rails.application.credentials.dig(:edocs, :base_url)}/eDocs/PIReport/#{Date.current.strftime("%Y%m%d")}"
     @error = error
 
     mail to: "no-reply@mail.federalregister.gov",

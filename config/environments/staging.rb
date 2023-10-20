@@ -108,8 +108,8 @@ Rails.application.configure do
     :address        => "smtp.sendgrid.net",
     :port           => "587",
     :domain         => "fr2.criticaljuncture.org",
-    :user_name      => Rails.application.secrets[:sendgrid][:username],
-    :password       => Rails.application.secrets[:sendgrid][:password],
+    :user_name      => Rails.application.credentials.dig(:sendgrid, :username),
+    :password       => Rails.application.credentials.dig(:sendgrid, :password),
     :authentication => :plain
   }
 

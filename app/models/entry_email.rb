@@ -18,7 +18,7 @@ class EntryEmail < ApplicationModel
   def sender=(sender)
     @sender = sender.to_s.strip
     if sender.present?
-      email_hash = "#{@sender}#{Rails.application.secrets[:email_salt]}"
+      email_hash = "#{@sender}#{Rails.application.credentials.dig(:app, :email_salt)}"
       20.times { email_hash = Digest::SHA512.hexdigest(email_hash) }
       self.sender_hash = email_hash
     else

@@ -17,13 +17,13 @@ namespace :content do
       sftp_connection = case image_source_id
       when ImageSource::GPO_SFTP_HISTORICAL_IMAGES.id.to_s
         GpoImages::Sftp.new(
-          username: Rails.application.secrets[:gpo_historical_images_sftp][:username],
-          password: Rails.application.secrets[:gpo_historical_images_sftp][:password]
+          username: Rails.application.credentials.dig(:gpo, :historical_images, :sftp, :username),
+          password: Rails.application.credentials.dig(:gpo, :historical_images, :sftp, :password)
         )
       when ImageSource::GPO_SFTP.id.to_s
         GpoImages::Sftp.new(
-          username: Rails.application.secrets[:gpo_sftp][:username],
-          password: Rails.application.secrets[:gpo_sftp][:password]
+          username: Rails.application.credentials.dig(:gpo, :images, :sftp, :username),
+          password: Rails.application.credentials.dig(:gpo, :images, :sftp, :password)
         )
       else
         raise NotImplementedError

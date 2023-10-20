@@ -1,2 +1,17 @@
 ---
-:logfile: log/sidekiq.log
+:concurrency: 1
+:queues:
+  - public_inspection
+  - high_priority
+  - api_core
+  - reg_gov
+  - gpo_image_import
+  - reg_gov_dockets
+  - default
+  - reimport
+  - place_determiner
+
+# env specific settings if needed
+#development:
+#staging:
+#production:

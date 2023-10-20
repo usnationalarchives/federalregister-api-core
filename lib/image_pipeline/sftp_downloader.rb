@@ -7,8 +7,8 @@ class ImagePipeline::SftpDownloader
   def initialize(options={})
     @sftp_connection    = options.fetch(:sftp_connection) do
       GpoImages::Sftp.new(
-        username: Rails.application.secrets[:gpo_historical_images_sftp][:username],
-        password: Rails.application.secrets[:gpo_historical_images_sftp][:password]
+        username: Rails.application.credentials.dig(:gpo, :historical_images, :sftp, :username),
+        password: Rails.application.credentials.dig(:gpo, :historical_images, :sftp, :password)
       )
     end
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }

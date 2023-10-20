@@ -1,7 +1,10 @@
 class GpoImages::Sftp
   delegate :remove, :close, :download!, :rmdir!, :to => :connection
 
-  def initialize(username: Rails.application.secrets[:gpo_sftp][:username], password: Rails.application.secrets[:gpo_sftp][:password])
+  def initialize(
+    username: Rails.application.credentials.dig(:gpo, :images, :sftp, :username),
+    password: Rails.application.credentials.dig(:gpo, :images, :sftp, :password)
+  )
     @username = username
     @password = password
   end
@@ -69,7 +72,7 @@ class GpoImages::Sftp
 
   def start_connection
     Net::SFTP.start(
-      Rails.application.credentials.dig(:gpo, :images, :sftp_hostname),
+      Rails.application.credentials.dig(:gpo, :sftp, :hostname),
       username,
       :password => password,
       :auth_methods => ["password"],

@@ -12,9 +12,9 @@ class Content::PublicInspectionImporter::ApiClient
   include HTTParty
   headers 'Accept-Encoding' => "UTF-8"
 
-  base_uri Rails.application.secrets[:public_inspection][:api_base_uri]
-  USERNAME = Rails.application.secrets[:public_inspection][:api_user_name]
-  PASSWORD = Rails.application.secrets[:public_inspection][:api_password]
+  base_uri Rails.application.credentials.dig(:edocs, :base_url)
+  USERNAME = Rails.application.credentials.dig(:edocs, :public_inspection_feed, :username)
+  PASSWORD = Rails.application.credentials.dig(:edocs, :public_inspection_feed, :password)
 
   def initialize(options={})
     @session_token = options[:session_token]
@@ -80,7 +80,7 @@ class Content::PublicInspectionImporter::ApiClient
 
   def parsed_json(string)
     begin
-      JSON.parse(string) 
+      JSON.parse(string)
     rescue JSON::ParserError
     end
   end

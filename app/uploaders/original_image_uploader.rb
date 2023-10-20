@@ -16,8 +16,8 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
 
     self.fog_credentials = {
       :provider               => 'AWS', # required
-      :aws_access_key_id      => Rails.application.secrets[:aws][:access_key_id], # required
-      :aws_secret_access_key  => Rails.application.secrets[:aws][:secret_access_key], # required
+      :aws_access_key_id      => Rails.application.credentials.dig(:app, :aws, :s3, :access_key_id), # required
+      :aws_secret_access_key  => Rails.application.credentials.dig(:app, :aws, :s3, :secret_access_key), # required
       :region => 'us-east-1'
     }
     self.fog_directory = Settings.app.aws.s3.buckets.original_images

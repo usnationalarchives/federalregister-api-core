@@ -1,7 +1,7 @@
 REDIS_CONNECTION_SETTINGS = {
-  :db   => Rails.application.secrets[:redis][:db],
-  :host => Rails.application.secrets[:redis][:host],
-  :port => Rails.application.secrets[:redis][:port]
+  db: Settings.redis.db,
+  host: Settings.redis.host || Rails.application.credentials.dig(:redis, :host),
+  port: Settings.redis.port
 }
 
 if Rails.env.test?

@@ -14,7 +14,7 @@ class GovInfoClient
       "collections/FR/#{last_modified_start_date.to_time.utc.iso8601}",
       standard_options.merge(args)
     )
-   
+
     if response.success?
       JSON.parse(response.body, object_class: OpenStruct).packages || []
     else
@@ -41,7 +41,7 @@ class GovInfoClient
   end
 
   def api_key
-    Rails.application.secrets[:api_keys][:gov_info]
+    Rails.application.credentials.dig(:gpo, :gov_info, :api_key)
   end
 
   def connection

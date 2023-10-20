@@ -170,7 +170,7 @@ class RegulationsDotGov::V4::Client
   end
 
   def api_key
-    Rails.application.secrets[:regulations_dot_gov][:v4_api_key]
+    Rails.application.credentials.dig(:regulations_dot_gov, :v4_api_key)
   end
 
   def connection

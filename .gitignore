@@ -16,3 +16,5 @@
 !data/open_api_v3.yml
 !**data/fr_xml_corrections
 !/**/.gitkeep
+
+/config/credentials/*.key

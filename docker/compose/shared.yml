@@ -1,3 +1,5 @@
+version: '2'
+
 services:
   web:
     image: 264372021245.dkr.ecr.us-east-1.amazonaws.com/federalregister-api-core:latest
@@ -6,16 +8,16 @@ services:
     expose:
       - "3000"
     environment:
-      - WEB_PORT=3000
-      - PASSENGER_MIN_INSTANCES=2
-      - MYSQL_PORT_3306_TCP_ADDR=mysql
-      - REDIS_PORT_6379_TCP_ADDR=redis
-      - HONEYBADGER_API_KEY=''
-      - RAILS_SESSION_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-      - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
-      - LD_LIBRARY_PATH=/usr/local/lib
-      - SETTINGS__DATABASE__HOST=mysql
-      - SETTINGS__REDIS__HOST=redis
+      WEB_PORT: 3000
+      PASSENGER_MIN_INSTANCES: 2
+      # intended for the bin/wait_for_mysql script only
+      MYSQL_PORT_3306_TCP_ADDR: mysql
+      REDIS_PORT_6379_TCP_ADDR: redis
+      HONEYBADGER_API_KEY: ''
+      SECRET_KEY_BASE: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      ELASTICSEARCH_HOST: http://admin:admin@elasticsearch:9200
+      SETTINGS__DATABASE__HOST: mysql
+      SETTINGS__REDIS__HOST: redis
     restart: always
 
   mysql:
@@ -23,7 +25,7 @@ services:
     expose:
       - "3306"
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
 
   redis:
     image: redis:6-alpine

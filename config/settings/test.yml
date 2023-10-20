@@ -11,6 +11,9 @@ elasticsearch:
 lograge:
   enabled: false
 
+redis:
+  host: 127.0.0.1
+
 regulations_dot_gov:
   # cassettes have this url stored and is used for non-comment related items
   api_base_url: https://api.regulations.gov/v4

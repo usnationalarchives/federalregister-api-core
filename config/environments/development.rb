@@ -70,8 +70,8 @@ Rails.application.configure do
     :address        => "smtp.sendgrid.net",
     :port           => "587",
     :domain         => "#{APP_HOST_NAME}",
-    :user_name      => Rails.application.secrets[:sendgrid][:username],
-    :password       => Rails.application.secrets[:sendgrid][:password],
+    :user_name      => Rails.application.credentials.dig(:sendgrid, :username),
+    :password       => Rails.application.credentials.dig(:sendgrid, :password),
     :authentication => :plain
   }
 

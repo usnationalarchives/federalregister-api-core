@@ -8,7 +8,7 @@ FederalRegister.gov Unexpected eDocs Public Inspection API Error:
 
 The unexpected API response we received from eDocs is attached to this message.  This error will prevent the import of Public Inspection documents if it continues to occur; please reach out to the maintainers of the eDocs system accordingly.  Our system will continue to attempt imports every minute, but only one of these notification emails will be sent per hour even if the error condition described above persists.
 
-The daily import system attempts to download public inspection documents Monday through Friday, from 8:45AM EDT to 7PM EDT from this url: <%= link_to @api_url, @api_url, clicktracking: 'off' %> using this username: <%= Rails.application.secrets[:public_inspection][:api_user_name] %>
+The daily import system attempts to download public inspection documents Monday through Friday, from 8:45AM EDT to 7PM EDT from this url: <%= link_to @api_url, @api_url, clicktracking: 'off' %> using this username: <%= Rails.application.credentials.dig(:edocs, :public_inspection_feed, :username) %>
 
 This is an automated message from the FederalRegister.gov daily import system.
 As such, you may already be aware of the following issues that are preventing the import of Federal Register public inspection documents.

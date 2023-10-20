@@ -45,8 +45,8 @@ module CloudfrontUtils
 
     def credentials
       Aws::Credentials.new(
-        Rails.application.secrets[:aws][:cloudfront_access_key_id],
-        Rails.application.secrets[:aws][:cloudfront_secret_access_key]
+        Rails.application.credentials.dig(:app, :aws, :cloudfront, :access_key_id),
+        Rails.application.credentials.dig(:app, :aws, :cloudfront, :secret_access_key)
       )
     end
 

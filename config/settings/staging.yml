@@ -22,7 +22,16 @@ app:
 database:
   name: federal_register_api_core_staging
 
+prince:
+  # expected to be set by helm/deployment
+  host: http://prince-xml-14.ofr.svc.cluster.local
+  port: 3000
+
 services:
   fr:
     web:
       base_url: https://fr2.criticaljuncture.org
+
+varnish:
+  # expected to be set by helm/deployment
+  host: varnish.fr.svc.cluster.local

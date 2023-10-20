@@ -49,7 +49,7 @@ database:
   username:
 
 # host is retrived from credentials
-# development environment uses ENV vars for these that key is defined here
+# development/test environment uses ENV vars for these that key is defined here
 elasticsearch:
   host:
   trace: false
@@ -72,6 +72,13 @@ lograge:
 rails:
   report_deprecations: false
 
+# host is retrived from credentials
+# development/test environment uses ENV vars for this so key is defined here
+redis:
+  db: 0
+  host:
+  port: 6379
+
 open_calais:
   daily_api_call_limit: 500
   throttle:
@@ -83,7 +90,8 @@ paperclip:
   abort_on_s3_error: false
 
 prince:
-  host: prince.fr-prod.svc.cluster.local
+  # expected to be set by helm/deployment
+  host: http://prince-xml-14.ofr-prod.svc.cluster.local
   port: 3000
 
 services:
