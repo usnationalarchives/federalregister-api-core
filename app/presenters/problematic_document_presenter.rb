@@ -115,8 +115,12 @@ class ProblematicDocumentPresenter
   end
   memoize :missing_executive_orders
 
+  PROCLAMATION_NUMBER_EXCLUSION_LIST = [
+    9494 #Appeared on the Public Inspection List on Friday September 16, 2016, but was withdrawn by the issuing agency before publication in the Federal Register
+  ]
   def missing_presidential_proclamations
-    missing_presidential_documents(PresidentialDocumentType::PROCLAMATION)
+    missing_presidential_documents(PresidentialDocumentType::PROCLAMATION).
+      reject{|x| PROCLAMATION_NUMBER_EXCLUSION_LIST.include? x }
   end
   memoize :missing_presidential_proclamations
 
