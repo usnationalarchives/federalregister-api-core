@@ -21,6 +21,9 @@ app:
 lograge:
   enabled: false
 
+regulations_dot_gov:
+  api_base_url: "https://api-staging.regulations.gov/v4"
+
 services:
   fr:
     web:

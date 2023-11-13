@@ -104,7 +104,7 @@ sidekiq:
   memory_threshold: 1048576
 
 regulations_dot_gov:
-  api_base_url: "https://api-staging.regulations.gov/v4"
+  api_base_url: https://api.regulations.gov/v4
   throttle:
     at: 1
     per: 5
