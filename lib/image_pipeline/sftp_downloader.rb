@@ -54,13 +54,21 @@ class ImagePipeline::SftpDownloader
 
       # Clean up directory structure
       if (directory_name != '/') && get_unchanged_files_list(directory_name, sleep_duration: 0).count == 0
+        dirs = [
+          "#{directory_name}/graphics-submitted",
+          "#{directory_name}/postscript-submitted",
+          "#{directory_name}/html-submitted",
+          directory_name
+        ]
         # NOTE: #rmdir! does not delete dir unless empty
-        ["#{directory_name}/graphics-submitted", directory_name].each do |dir|
+        dirs.each do |dir|
           begin
             sftp_connection.rmdir!(dir)
           rescue Net::SFTP::StatusException => error
             if error.code == 3 #  error code 3 is permission denied.  This can sometimes occur if partially-completed files are left behind (eg files prefixed with 'nfs')
-              Honeybadger.notify(error)
+              Honeybadger.notify(error, context: {
+                directory: directory_name
+              })
             elsif error.code == 2 # error code 2 is no such file (eg /FR-2000-04-07 missing graphics-submitted folder)
               # no-op
             else
