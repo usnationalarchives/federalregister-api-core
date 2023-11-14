@@ -7,7 +7,7 @@ describe EntryRegulationsDotGovImporter do
       allow_any_instance_of(RegulationsDotGov::V4::Client).to receive(:api_key).and_return("DEMO_KEY")
       EntryRegulationsDotGovImporter.new.perform(entry.document_number)
     end
-    
+
     expect(entry.reload).to have_attributes(
       comment_count:                         3,
       comment_url:                           "http://www.regulations.gov/commenton/HHS_FRDOC_0001-0882",
@@ -70,24 +70,29 @@ describe EntryRegulationsDotGovImporter do
     )
   end
 
-  it "accounts for changes in regulations.gov document ids where the regulations_dot_gov_object_id remains the same" do
+  it "properly processess api response in which regulations.gov document ids change but the regulations_dot_gov_object_id remains the same" do
     entry = Factory(:entry, document_number: '2022-28376')
-    regs_dot_gov_document = Factory(
-      :regs_dot_gov_document,
-      docket_id:                                 "ARBITRARY_INITIAL_DOCKET_NUMBER",
-      federal_register_document_number:          entry.document_number,
+
+    regs_dot_gov_document = Factory(:regs_dot_gov_document,
+      docket_id: "ARBITRARY_INITIAL_DOCKET_NUMBER",
+      federal_register_document_number: entry.document_number,
       original_federal_register_document_number: entry.document_number,
-      regulations_dot_gov_document_id:           "ARBITRARY_INITIAL_DOCKET_NUMBER-1234",
+      regulations_dot_gov_document_id: "ARBITRARY_INITIAL_DOCKET_NUMBER-1234"
     )
+
     VCR.use_cassette("entry_regulations_dot_gov_importer_multi_document") do
       allow_any_instance_of(RegulationsDotGov::V4::Client).to receive(:api_key).and_return("DEMO_KEY")
       EntryRegulationsDotGovImporter.new.perform(entry.document_number)
     end
 
-    result = RegsDotGovDocument.where(regulations_dot_gov_object_id: regs_dot_gov_document.regulations_dot_gov_object_id).count
+    result = RegsDotGovDocument.unscoped.where(
+      regulations_dot_gov_object_id: regs_dot_gov_document.regulations_dot_gov_object_id
+    ).count
+    # no new new record created
     expect(result).to eq(1)
-
     expect(regs_dot_gov_document.reload.deleted_at).to be_truthy
+
+    # dockets correctly created
     expect(RegsDotGovDocket.count).to eq(9)
   end
 

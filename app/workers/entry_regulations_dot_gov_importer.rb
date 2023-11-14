@@ -24,7 +24,9 @@ class EntryRegulationsDotGovImporter
         begin
           attrs.merge!(comment_count: api_doc.comment_count)
         rescue RegulationsDotGov::V4::Client::NotFoundError
-          # NOTE: Some documents (2023-11654, 2023-12012) are open per the API but return a 404 when attempting to fetch the comment count.  eg https://api.regulations.gov/v4/document-comments-received-counts/MARAD_FRDOC_0001-2795?api_key=DEMO_KEY
+          # NOTE: Some documents (2023-11654, 2023-12012) are open per the API
+          # but return a 404 when attempting to fetch the comment count.
+          # eg https://api.regulations.gov/v4/document-comments-received-counts/MARAD_FRDOC_0001-2795?api_key=DEMO_KEY
         end
       end
     end
@@ -34,10 +36,11 @@ class EntryRegulationsDotGovImporter
         # Ensure we retain the original FR doc num
         base_attributes.merge!(original_federal_register_document_number: existing_doc.federal_register_document_number)
       end
+
       existing_doc.update!(base_attributes)
     else
       RegsDotGovDocument.create!(base_attributes)
-     
+
       if api_doc.docket_id.present?
         docket = RegsDotGovDocket.find_or_initialize_by(
           id:                     api_doc.docket_id,
@@ -95,7 +98,7 @@ class EntryRegulationsDotGovImporter
     begin
       regulationsdotgov_document ? regulationsdotgov_document.try(:comment_count) : entry.comment_count
     rescue RegulationsDotGov::V4::Client::NotFoundError
-      # NOTE: Some documents (2023-11654, 2023-12012) are open per the API but return a 404 when attempting to fetch the comment count.  eg https://api.regulations.gov/v4/document-comments-received-counts/MARAD_FRDOC_0001-2795?api_key=DEMO_KEY    
+      # NOTE: Some documents (2023-11654, 2023-12012) are open per the API but return a 404 when attempting to fetch the comment count.  eg https://api.regulations.gov/v4/document-comments-received-counts/MARAD_FRDOC_0001-2795?api_key=DEMO_KEY
     end
   end
 
@@ -137,8 +140,7 @@ class EntryRegulationsDotGovImporter
       regulations_dot_gov_documents.each do |api_doc|
         # NOTE: We can't assume the existing doc can only be associated with the same FR document
         existing_doc = RegsDotGovDocument.find_by(
-          regulations_dot_gov_document_id: api_doc.regulations_dot_gov_document_id,
-          deleted_at:                      nil
+          regulations_dot_gov_document_id: api_doc.regulations_dot_gov_document_id
         )
         self.class.resync_regulations_dot_gov_document!(api_doc, existing_doc)
       end
@@ -155,7 +157,7 @@ class EntryRegulationsDotGovImporter
     # NOTE: We're enqueuing on a delay to avoid an ES/Varnish race condition where varnish caches the old page before the ES index refreshes
     CacheClearer.perform_in(5.seconds, document_paths)
   end
-  
+
   def document_paths
     [
       "/api/v1/documents/#{entry.document_number}*",

@@ -39,8 +39,12 @@ class Entry < ApplicationModel
   has_one :entry_change
 
   has_many :corrections, :foreign_key => "correction_of_id", :class_name => "Entry"
-  has_many :regs_dot_gov_documents, -> { active }, primary_key: :document_number, foreign_key: :federal_register_document_number
+
+  has_many :regs_dot_gov_documents,
+    primary_key: :document_number,
+    foreign_key: :federal_register_document_number
   has_many :regs_dot_gov_dockets, through: :regs_dot_gov_documents
+
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
 
