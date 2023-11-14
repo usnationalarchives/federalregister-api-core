@@ -10,7 +10,7 @@ module OpenCalais
     end
 
     def locations
-      enriched_response.locations || []
+      enriched_response&.locations || []
     end
 
     private
@@ -27,6 +27,11 @@ module OpenCalais
         @enriched_response
       rescue Faraday::ClientError => e
         case e.response.fetch(:status)
+        when 403
+          # we occasionaly get unexplained 403s from OpenCalais
+          # - seems potentially related to something in the content being sent
+          Rails.logger.warn("403 received from OpenCalais #{e.inspect}")
+          nil
         when 413
           raise RequestSizeTooLarge.new("Request Size Too Large: #{text.bytesize/1024.to_f}KB")
         when 429
