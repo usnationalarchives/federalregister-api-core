@@ -32,7 +32,9 @@ module CloudfrontUtils
     end
 
     def distribution_id(subdomain)
-      mapping = YAML.load_file(File.join(Rails.root, FileSystemPathManager.cloudfront_subdomain_distribution_id_mappings))
+      mapping = Rails.application.credentials.dig(
+        :app, :aws, :cloudfront, :host_alias_distribution_id_mappings
+      ).stringify_keys
       mapping.fetch(subdomain)
     end
 

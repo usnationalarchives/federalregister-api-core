@@ -1,10 +1,6 @@
 class FileSystemPathManager
   attr_reader :date
 
-  def self.cloudfront_subdomain_distribution_id_mappings
-    "config/cloudfront_subdomain_to_distribution_id_mappings.yml"
-  end
-
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
   end
