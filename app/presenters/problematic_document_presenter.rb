@@ -57,6 +57,47 @@ class ProblematicDocumentPresenter
       )
   end
 
+  def possibly_errant_documents_with_effective_dates
+    issue.
+      entries.
+      includes(:effective_date, :public_inspection_document).
+      select do |x|
+        x.granule_class == "RULE" &&
+        x.effective_date &&
+        x.public_inspection_document &&
+        (x.effective_date.date < x.public_inspection_document.filed_at.to_date)
+      end.
+      each_with_object({}) do |doc, hsh|
+        date_text, extracted_dates = extract_dates(doc, date)
+
+        hsh[doc] = highlight_dates(
+          extracted_dates,
+          doc.effective_on,
+          date_text
+        )
+      end
+  end
+
+  COURT_REFERENCE_REGEXP = /court/i
+  def documents_referencing_courts
+    issue.
+      entries.
+      includes(:effective_date).
+      select{|doc|
+        date_text, extracted_dates = extract_dates(doc, date)
+        COURT_REFERENCE_REGEXP.match? date_text
+      }.
+      each_with_object({}) do |doc, hsh|
+        date_text, extracted_dates = extract_dates(doc, date)
+
+        hsh[doc] = highlight_dates(
+          extracted_dates,
+          doc.effective_on,
+          date_text
+        )
+      end
+  end
+
   def rules_with_date_text
     rules.each_with_object({}) do |doc, hsh|
 
@@ -149,6 +190,7 @@ class ProblematicDocumentPresenter
   def rules
     @rules_without_dates ||= issue.
       entries.
+      includes(:effective_date).
       select do |doc|
         doc.granule_class == "RULE" &&
         !doc.document_number.match(/^C-/)
