@@ -61,7 +61,9 @@
 
   <%= yield :javascripts %>
 
-  <%= render(:partial => 'layouts/admin/google_analytics') if RAILS_ENV == 'production' %>
+  <% if RAILS_ENV == 'production' %>
+    <%= javascript_include_tag 'admin/google_analytics' %>
+  <% end %>
 
   <%= yield :head %>
 </head>
