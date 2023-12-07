@@ -1,7 +1,7 @@
 <%= f.inputs do %>
   <%= f.input :title %>
   <%= f.input :slug, :hint => "only letters and dashes", :label => "URL Portion" %>
-  <%= f.input :agencies, collection: Agency.order("agencies.name").map{|x| [x.name, x.id]}, input_html: {style: "width: 500px; height: 400px;"} %>
+  <%= f.input :agencies, collection: Agency.order("agencies.name").map{|x| [x.name, x.id]} %>
   <%= f.input :description %>
   <%= f.input :relevant_cfr_sections, :hint => "examples: '10 CFR', '10 CFR 100', '10 CFR 100-199' ", :label => "Relevant CFR sections" %>
 <% end %>

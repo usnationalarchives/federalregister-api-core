@@ -5,27 +5,6 @@
   :publication_date => @publication_date
 }) %>
 
-<% add_javascript do %>
-  <script>
-    $(document).ready(function(){
-      $('input[type=checkbox]').live('click', function(){
-        // $(this)
-        var form = $($(this).closest('form'));
-        form.find('img').remove();
-        form.find('a').prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">')
-        $.ajax({
-          url: form.attr('action'),
-          data: form.serialize(),
-          type: 'PUT',
-          success: function(){
-            form.find('img').remove();
-          }
-        })
-      });
-    });
-  </script>
-<% end %>
-
 <% if @issue_approval.present? %>
   <div class="notice">
     <p>Issue approved on <%= @issue_approval.created_at %>
@@ -46,7 +25,7 @@
 
   <div class="page_summary">
     <h4><%= @current_issue.toc_note_title %></h4>
-    <div style="margin-top: 10px; margin-bottom:10px">
+    <div>
       <%= @current_issue.toc_note_text %>
     </div>
   </div>

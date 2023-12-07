@@ -30,4 +30,6 @@
 //= require admin/fr_index
 //= require admin/issue_reprocessor
 //= require admin/presidential_document_importer
+//= require admin/issue
+//= require admin/canned_search
 
