@@ -4,7 +4,7 @@ $(document).ready(function(){
       // $(this)
       var form = $($(this).closest('form'));
       form.find('img').remove();
-      form.find('a').prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">')
+      form.find('a').prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">');
       $.ajax({
         url: form.attr('action'),
         data: form.serialize(),
@@ -12,7 +12,7 @@ $(document).ready(function(){
         success: function(){
           form.find('img').remove();
         }
-      })
+      });
     });
   }
 });
