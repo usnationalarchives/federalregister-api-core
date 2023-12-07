@@ -7,15 +7,15 @@
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
   policy.font_src    :self, :https, :data
-  policy.img_src     :self, :https, :data
+  policy.img_src     :self, :https, :data, :report_sample
   policy.object_src  :none
-  policy.script_src  :self, :https
-  policy.style_src   :self, :https
+  policy.script_src  :self, :https, :report_sample
+  policy.style_src   :self, :https, :report_sample
 
   #   # Specify URI for violation reports
   if ['production', 'staging'].include?(Rails.env)
     # Increment version on each change to this file
-    csp_version = 1
+    csp_version = 2
 
     policy.report_uri -> {
       api_key = Rails.application.credentials.dig(:honeybadger, :csp_api_key)
