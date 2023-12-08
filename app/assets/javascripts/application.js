@@ -2,7 +2,10 @@
 //= require jquery_ujs
 //= require jquery-ui-1.9.2.custom.min.js
 //= require jquery-ui-1.9.2.effects.min.js
-//= require admin/handlebars-1.0.rc.1.min.js
+
+// handlebars_assets gem support:
+//= require handlebars.runtime
+//= require_tree ./templates
 
 //= require bootstrap/bootstrap-transition.js
 //= require bootstrap/bootstrap-alert.js

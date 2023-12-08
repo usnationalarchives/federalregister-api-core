@@ -12,8 +12,8 @@ var SpellChecker = (function(){
         this.open_behaviour = options.open_behaviour || 'mouseenter';
         this.close_behaviour = options.close_behaviour || 'mouseleave';
         this.open_behavior_delay = options.open_behavior_delay || 1;
-        this.handlebars_template = options.handlebars_template || '#spelling-error-menu-template';
-        this.handlebars_loading_template = options.handlebars_loading_template || '#spelling-error-loading-menu-template';
+        this.handlebars_template = options.handlebars_template || 'spelling_error_menu';
+        this.handlebars_loading_template = options.handlebars_loading_template || 'spelling_error_loading_menu';
 
         if( options.ajax_suggestions === true ) {
           this.ajax_suggestions = true;
@@ -23,8 +23,8 @@ var SpellChecker = (function(){
         this.suggestion_cache = {};
         this.suggestionDeferreds = {};
 
-        this.template = Handlebars.compile( $(this.handlebars_template).html() );
-        this.loading_template = Handlebars.compile( $(this.handlebars_loading_template).html() );
+        this.template = HandlebarsTemplates[this.handlebars_template]
+        this.loading_template = HandlebarsTemplates[this.handlebars_loading_template]
 
         this.add_behaviour();
       },

@@ -26,6 +26,9 @@ gem 'geokit-rails'
 # acquires lat/long coordinates for postal codes provided in search
 gem 'geocoder'
 
+# allows handlebars templates to be precompiled and pass CSP
+gem 'handlebars_assets'
+
 # log formatting
 gem "lograge"
 gem "lograge-sql"

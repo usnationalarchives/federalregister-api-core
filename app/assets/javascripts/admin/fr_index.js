@@ -20,7 +20,7 @@ fr_index_popover_handler.fields = 'fields%5B%5D=toc_subject&fields%5B%5D=toc_doc
 fr_index_popover_handler.add_popover_content = function() {
     var $tipsy_el = $('.tipsy'),
         prev_height = $tipsy_el.height(),
-        fr_index_entry_popover_content_template = Handlebars.compile($("#fr-index-entry-popover-content-template").html()),
+        fr_index_entry_popover_content_template = HandlebarsTemplates['fr_index_entry_popover_content'],
         popover_id = '#popover-' + this.current_el.data('document-number'),
         new_html = fr_index_entry_popover_content_template( this.popover_cache[this.current_el.data('document-number')] );
 
@@ -31,7 +31,7 @@ fr_index_popover_handler.add_popover_content = function() {
 var FRIndexEditorForm = (function() {
   try {
     var FRIndexEditorForm = function() {
-      this.form_template = Handlebars.compile($("#fr-index-form-template").html());
+      this.form_template = HandlebarsTemplates['fr_index_form'];
     };
 
     FRIndexEditorForm.prototype = {
@@ -394,7 +394,7 @@ $(document).ready(function() {
 
     var popover_handler = fr_index_popover_handler.initialize();
     if ( $("#fr-index-entry-popover-template") !== []) {
-      var fr_index_entry_popover_template = Handlebars.compile($("#fr-index-entry-popover-template").html());
+      var fr_index_entry_popover_template = HandlebarsTemplates['fr_index_entry_popover'];
 
       $('body').delegate('.with_ajax_popover a.document_number', 'mouseenter', function(event) {
         var $el = $(this),
