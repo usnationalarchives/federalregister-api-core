@@ -11,8 +11,15 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, :data, :report_sample
   policy.object_src  :none
-  policy.script_src  :self, :https, :report_sample
-  policy.style_src   :self, :https, :report_sample
+
+  script_srcs = [
+    :self,
+    :https,
+    :report_sample,
+  ]
+
+  policy.script_src  *script_srcs
+  policy.style_src   :self, :https, :report_sample, :unsafe_inline
 
   #   # Specify URI for violation reports
   if ['production', 'staging'].include?(Rails.env)
