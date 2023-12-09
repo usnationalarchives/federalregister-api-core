@@ -57,7 +57,8 @@ module FederalregisterApiCore
     config.session_store :cookie_store, **{
       :cookie_only => true,
       :path        => '/admin',
-      :secure      => (Rails.env.production? || Rails.env.staging?)
+      :secure      => (Rails.env.production? || Rails.env.staging?),
+      :same_site   => :strict,
     }
     config.time_zone = 'Eastern Time (US & Canada)'
     # config.eager_load_paths << Rails.root.join("extras")
@@ -88,5 +89,9 @@ module FederalregisterApiCore
 
     config.middleware.use ::Ofr::Rack::RequestQueueTrackerMiddleware
     config.middleware.use ::Ofr::Rack::MemoryUsageTrackerMiddleware
+
+    config.action_dispatch.default_headers.merge!({
+      'X-Frame-Options' => 'DENY',
+    })
   end
 end
