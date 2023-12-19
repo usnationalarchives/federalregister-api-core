@@ -16,7 +16,7 @@ app:
         public_images: images.example.com
         public_inspection: public-inspection.example.com
   csp:
-    report_only: true
+    report_only: false
   deliver_daily_import_email: true
   deliver_late_content_notifications: true
   deployment_environment: blue
