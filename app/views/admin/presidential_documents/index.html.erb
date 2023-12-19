@@ -8,7 +8,7 @@
     multipart: true
   } do |f| %>
 
-  <p>Uploaded files need to be in CSV format (.csv)</p>
+  <p>Uploaded files need to be in CSV format (.csv).  Click <%= link_to "here", "/api/v1/documents.csv?fields[]=executive_order_number&fields[]=document_number&fields[]=html_url&fields[]=publication_date&fields[]=signing_date&per_page=2000&order=executive_order_number&conditions[presidential_document_type][]=executive_order&conditions[correction]=0" %> to download existing executive orders.</p>
 
   <%= f.inputs do %>
     <%= f.input :csv_file, label: 'Executive Orders:', as: :file %>
