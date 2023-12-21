@@ -504,12 +504,12 @@ class EsEntrySearch < EsApplicationSearch
     when 'newest', 'date'
       [
         {publication_date: {order: "desc"}},
-        {_score: {order: "desc"}}
+        {document_number: {order: "desc"}}, 
       ]
     when 'oldest'
       [
         {publication_date: {order: "asc"}},
-        {_score: {order: "desc"}}
+        {document_number: {order: "asc"}}, 
       ]
     when 'executive_order_number'
       [
