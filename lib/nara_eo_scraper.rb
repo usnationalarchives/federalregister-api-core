@@ -57,12 +57,14 @@ class NaraEoScraper
     end
   end
 
+  HEADERS = ['title', 'citation', 'presidential_document_number', 'signing_date', 'publication_date', 'president', 'disposition_notes', 'scraped_url']
   def self.replace_file_and_write_headers
-    CSV.open('data/nara_executive_orders.csv', 'w', write_headers: true, headers: ['title', 'citation', 'presidential_document_number', 'signing_date', 'publication_date', 'president', 'disposition_notes']) do |csv|
+    CSV.open('data/nara_executive_orders.csv', 'w', write_headers: true, headers: HEADERS) do |csv|
     end
   end
 
-  # Use this to test individual scraping of pages: NaraEoScraper.scrape_year_specific_page('https://www.archives.gov/federal-register/executive-orders/1947.html','truman')
+  # Use this to test individual scraping of pages: 
+  # reload!; NaraEoScraper.scrape_year_specific_page('https://www.archives.gov/federal-register/executive-orders/1998.html','clinton')
   def self.scrape_year_specific_page(url, president_identifier)
     # Load and parse the HTML file
     html_content = URI.open(url).read
@@ -70,7 +72,7 @@ class NaraEoScraper
     doc = Nokogiri::HTML(html_content)
 
     # Prepare CSV file
-    CSV.open('data/nara_executive_orders.csv', 'a', write_headers: false, headers: ['title', 'citation', 'presidential_document_number', 'signing_date', 'publication_date', 'president', 'disposition_notes']) do |csv|
+    CSV.open('data/nara_executive_orders.csv', 'a', write_headers: false, headers: HEADERS) do |csv|
       # Iterate over each executive order
       doc.css('hr').each do |hr|
 
@@ -84,17 +86,19 @@ class NaraEoScraper
         begin
           presidential_document_number = title_element.children.find{|x| x.name == 'a'}['name']
         rescue
-          # binding.pry
+          #eg Some truman documents
+          presidential_document_number = title_element.children.first.text.gsub(/\D/, '')
         end
         # Initialize details
         details = { 'signing_date' => '', 'citation' => '', 'publication_date' => '', 'disposition_notes' => [] }
 
         # Iterate over details
+        binding.pry if presidential_document_number == '13078'
         title_element.xpath('following-sibling::ul[1]/li').each do |li|
-          case li.text
+          case li.text.strip
           when /^Signed:/
             details['signing_date'] = li.text.gsub('Signed: ', '')
-          when /^Federal Register page and date:/
+          when /^Federal Register page and date:/i
             citation_text = li.text.gsub('Federal Register page and date: ', '')
             details['citation'] = citation_text.split(',').first
             # binding.pry if details['citation'] == "75 FR 2053"
@@ -111,7 +115,7 @@ class NaraEoScraper
         president = president_identifier
 
         # Write to CSV
-        csv << [title, details['citation'], presidential_document_number, details['signing_date'], details['publication_date'], president, disposition_notes]
+        csv << [title, details['citation'], presidential_document_number, details['signing_date'], details['publication_date'], president, disposition_notes, url]
       end
     end
   end
