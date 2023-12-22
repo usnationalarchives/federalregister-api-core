@@ -93,7 +93,6 @@ class NaraEoScraper
         details = { 'signing_date' => '', 'citation' => '', 'publication_date' => '', 'disposition_notes' => [] }
 
         # Iterate over details
-        binding.pry if presidential_document_number == '13078'
         title_element.xpath('following-sibling::ul[1]/li').each do |li|
           case li.text.strip
           when /^Signed:/
@@ -103,6 +102,9 @@ class NaraEoScraper
             details['citation'] = citation_text.split(',').first
             # binding.pry if details['citation'] == "75 FR 2053"
             details['publication_date'] = citation_text.split(',').last(2).join
+          when /not received for publication/
+            details['citation'] = 'non_received_for_publication'
+            details['publication_date'] = 'non_received_for_publication'
           else
             details['disposition_notes'] << li.text.strip
           end
