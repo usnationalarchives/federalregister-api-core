@@ -57,7 +57,7 @@ class NaraEoScraper
     end
   end
 
-  HEADERS = ['title', 'citation', 'presidential_document_number', 'signing_date', 'publication_date', 'president', 'disposition_notes', 'scraped_url']
+  HEADERS = ['title', 'citation', 'presidential_document_number', 'signing_date', 'parsed_signing_date', 'publication_date', 'parsed_publication_date', 'president', 'disposition_notes', 'scraped_url']
   def self.replace_file_and_write_headers
     CSV.open('data/nara_executive_orders.csv', 'w', write_headers: true, headers: HEADERS) do |csv|
     end
@@ -86,9 +86,10 @@ class NaraEoScraper
         begin
           presidential_document_number = title_element.children.find{|x| x.name == 'a'}['name']
         rescue
-          #eg Some truman documents
+          #eg Handle alternate structure for some truman documents
           presidential_document_number = title_element.children.first.text.gsub(/\D/, '')
         end
+      
         # Initialize details
         details = { 'signing_date' => '', 'citation' => '', 'publication_date' => '', 'disposition_notes' => [] }
 
@@ -97,11 +98,16 @@ class NaraEoScraper
           case li.text.strip
           when /^Signed:/
             details['signing_date'] = li.text.gsub('Signed: ', '')
+            details['parsed_signing_date'] = Date.try(:parse, details['signing_date'])
           when /Federal Register page and date:/i
             citation_text = li.text.gsub('Federal Register page and date: ', '').strip
             details['citation'] = citation_text.split(',').first
-            # binding.pry if details['citation'] == "75 FR 2053"
             details['publication_date'] = citation_text.split(',').last(2).join
+            begin
+              details['parsed_publication_date'] = Date.parse(details['publication_date'])
+            rescue
+              details['parsed_publication_date'] = "date_parsing_error"
+            end
           when /not received for publication/
             details['citation'] = 'non_received_for_publication'
             details['publication_date'] = 'non_received_for_publication'
@@ -113,11 +119,10 @@ class NaraEoScraper
         # Concatenate disposition notes
         disposition_notes = details['disposition_notes'].join(', ')
 
-        # President is not available in the provided HTML structure
         president = president_identifier
 
         # Write to CSV
-        csv << [title, details['citation'], presidential_document_number, details['signing_date'], details['publication_date'], president, disposition_notes, url]
+        csv << [title, details['citation'], presidential_document_number, details['signing_date'], details['parsed_signing_date'], details['publication_date'], details['parsed_publication_date'], president, disposition_notes, url]
       end
     end
   end
