@@ -98,8 +98,8 @@ class NaraEoScraper
           case li.text.strip
           when /^Signed:/
             details['signing_date'] = li.text.gsub('Signed: ', '')
-          when /^Federal Register page and date:/i
-            citation_text = li.text.gsub('Federal Register page and date: ', '')
+          when /Federal Register page and date:/i
+            citation_text = li.text.gsub('Federal Register page and date: ', '').strip
             details['citation'] = citation_text.split(',').first
             # binding.pry if details['citation'] == "75 FR 2053"
             details['publication_date'] = citation_text.split(',').last(2).join
