@@ -83,12 +83,8 @@ class NaraEoScraper
         title = title_element.text.strip.split("\n").last.strip
 
         # Extract presidential document number from the title
-        begin
-          presidential_document_number = title_element.children.find{|x| x.name == 'a'}['name']
-        rescue
-          #eg Handle alternate structure for some truman documents
-          presidential_document_number = title_element.children.first.text.gsub(/\D/, '')
-        end
+        presidential_document_number = title_element.children.find{|x| x.name == 'a'}.try(:[], 'name') || title_element.children.first.text.gsub(/Executive Order /, '').strip
+
       
         # Initialize details
         details = { 'signing_date' => '', 'citation' => '', 'publication_date' => '', 'disposition_notes' => [] }
