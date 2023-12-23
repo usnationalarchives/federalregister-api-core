@@ -64,7 +64,7 @@ class NaraEoScraper
   end
 
   # Use this to test individual scraping of pages: 
-  # reload!; NaraEoScraper.scrape_year_specific_page('https://www.archives.gov/federal-register/executive-orders/1998.html','clinton')
+  # reload!; NaraEoScraper.scrape_year_specific_page('https://www.archives.gov/federal-register/executive-orders/1962.html','clinton')
   def self.scrape_year_specific_page(url, president_identifier)
     # Load and parse the HTML file
     html_content = URI.open(url).read
@@ -95,18 +95,32 @@ class NaraEoScraper
           when /^Signed:/
             details['signing_date'] = li.text.gsub('Signed: ', '')
             details['parsed_signing_date'] = Date.try(:parse, details['signing_date'])
+          when /not received for publication/
+            # mark columns as inappropriate
+            ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
+              details[column_name] = 'not_received_for_publication'
+            end
+          when /not received in time for publication/
+            # mark columns as inappropriate
+            ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
+              details[column_name] = 'not_received_in_time_for_publication'
+            end
           when /Federal Register page and date:/i
             citation_text = li.text.gsub('Federal Register page and date: ', '').strip
-            details['citation'] = citation_text.split(',').first
-            details['publication_date'] = citation_text.split(',').last(2).join
+
+            #Sometimes we have a citation like "Federal Register page and date: 61 FR 1209; January 18, 1996" and sometimes it's like "Federal Register page and date: 70 FR 2323, January 12, 2005"
+            if citation_text.include?(";")
+              details['citation'] = citation_text.split(';').first
+              details['publication_date'] = citation_text.split(';').last
+            else
+              details['citation'] = citation_text.split(',').first
+              details['publication_date'] = citation_text.split(',').last(2).join(',')
+            end
             begin
               details['parsed_publication_date'] = Date.parse(details['publication_date'])
             rescue
               details['parsed_publication_date'] = "date_parsing_error"
             end
-          when /not received for publication/
-            details['citation'] = 'non_received_for_publication'
-            details['publication_date'] = 'non_received_for_publication'
           else
             details['disposition_notes'] << li.text.strip
           end
