@@ -80,7 +80,9 @@ class NaraEoScraper
         next unless title_element && title_element.name == 'p' && (hr.next_element.children.length > 1)
 
         # Extract title
-        title = title_element.text.strip.split("\n").last.strip
+        title = title_element.text.strip.split("\n")
+        title.shift
+        title = title.join("\n")
 
         # Extract presidential document number from the title
         presidential_document_number = title_element.children.find{|x| x.name == 'a'}.try(:[], 'name') || title_element.children.first.text.gsub(/Executive Order /, '').strip
