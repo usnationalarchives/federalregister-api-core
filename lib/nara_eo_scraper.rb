@@ -57,7 +57,7 @@ class NaraEoScraper
     end
   end
 
-  HEADERS = ['title', 'citation', 'presidential_document_number', 'signing_date', 'parsed_signing_date', 'publication_date', 'parsed_publication_date', 'president', 'disposition_notes', 'scraped_url']
+  HEADERS = ['title', 'citation', 'executive_order_number', 'signing_date_string', 'signing_date', 'publication_date_string', 'publication_date', 'president', 'disposition_notes', 'scraped_url']
   def self.replace_file_and_write_headers
     CSV.open('data/nara_executive_orders.csv', 'w', write_headers: true, headers: HEADERS) do |csv|
     end
@@ -133,11 +133,7 @@ class NaraEoScraper
             details['citation'] = citation_text.split(';').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
             details['publication_date'] = citation_text.split(';').last
           else
-            begin
             details['citation'] = citation_text.split(',').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
-            rescue => e
-              binding.pry
-            end
             details['publication_date'] = citation_text.split(',').last(2).join(',')
           end
           begin
