@@ -72,11 +72,15 @@ class NaraEoScraper
     # Prepare CSV file
     CSV.open('data/nara_executive_orders.csv', 'a', write_headers: false, headers: HEADERS) do |csv|
       eo_metadata(html_content, president_identifier, url).each do |eo|
-        csv << eo
+        puts eo
+        if eo.present?
+          csv << eo
+        end
       end
     end
   end
 
+  NON_BREAKING_SPACE_REGEX = /\u00A0/
   def self.eo_metadata(html_content, president_identifier, url)
     # Iterate over each executive order
     nokogiri_doc = Nokogiri::HTML(html_content)
@@ -86,6 +90,11 @@ class NaraEoScraper
 
       # Extract title
       title = title_element.text.strip.split("\n")
+      if title[0].strip == 'Executive Order' 
+        #Handle some Kennedy/Carter-era EOs where a newline separates the string 'Executive Order' and the EO number
+        title = [title[0] + title[1]] + title[2..-1]
+      end
+
       title.shift
       title = title.join("\n").strip
 
@@ -112,15 +121,23 @@ class NaraEoScraper
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
             details[column_name] = 'not_received_in_time_for_publication'
           end
-        when /Federal Register page and date:/i
+        when /Federal Register page and date:/i, /\A\d+\sFR\s\d+/
           citation_text = li.text.gsub('Federal Register page and date: ', '').strip
+          if citation_text.blank?
+            # eg 10026-A is missing an FR page and date and just says 'Federal Register page and date:'
+            "no_citation_provided"
+          end
 
           #Sometimes we have a citation like "Federal Register page and date: 61 FR 1209; January 18, 1996" and sometimes it's like "Federal Register page and date: 70 FR 2323, January 12, 2005"
           if citation_text.include?(";")
-            details['citation'] = citation_text.split(';').first
+            details['citation'] = citation_text.split(';').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
             details['publication_date'] = citation_text.split(';').last
           else
-            details['citation'] = citation_text.split(',').first
+            begin
+            details['citation'] = citation_text.split(',').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
+            rescue => e
+              binding.pry
+            end
             details['publication_date'] = citation_text.split(',').last(2).join(',')
           end
           begin
@@ -128,13 +145,15 @@ class NaraEoScraper
           rescue
             details['parsed_publication_date'] = "date_parsing_error"
           end
+        when /\A\d+\sFR\s\d+\z/
+
         else
           details['disposition_notes'] << li.text.strip
         end
       end
 
       # Concatenate disposition notes
-      disposition_notes = details['disposition_notes'].join(', ')
+      disposition_notes = details['disposition_notes'].join(', ').gsub(NON_BREAKING_SPACE_REGEX,"").strip
 
       [
         title, details['citation'],
