@@ -1,6 +1,76 @@
 class President < ActiveHash::Base
   self.data = [
     {
+      :id => 32,
+      :identifier => 'franklin-d-roosevelt',
+      :full_name => "Franklin D. Roosevelt",
+      :starts_on => Date.new(1933, 3, 4),
+      :ends_on => Date.new(1945, 4, 12)
+    },
+    {
+      :id => 33,
+      :identifier => 'harry-s-truman',
+      :full_name => "Harry S. Truman",
+      :starts_on => Date.new(1945, 4, 12),
+      :ends_on => Date.new(1953, 1, 20)
+    },
+    {
+      :id => 34,
+      :identifier => 'dwight-d-eisenhower',
+      :full_name => "Dwight D. Eisenhower",
+      :starts_on => Date.new(1953, 1, 20),
+      :ends_on => Date.new(1961, 1, 20)
+    },
+    {
+      :id => 35,
+      :identifier => 'john-f-kennedy',
+      :full_name => "John F. Kennedy",
+      :starts_on => Date.new(1961, 1, 20),
+      :ends_on => Date.new(1963, 11, 22)
+    },
+    {
+      :id => 36,
+      :identifier => 'lyndon-b-johnson',
+      :full_name => "Lyndon B. Johnson",
+      :starts_on => Date.new(1963, 11, 22),
+      :ends_on => Date.new(1969, 1, 20)
+    },
+    {
+      :id => 37,
+      :identifier => 'richard-nixon',
+      :full_name => "Richard Nixon",
+      :starts_on => Date.new(1969, 1, 20),
+      :ends_on => Date.new(1974, 8, 9)
+    },
+    {
+      :id => 38,
+      :identifier => 'gerald-ford',
+      :full_name => "Gerald Ford",
+      :starts_on => Date.new(1974, 8, 9),
+      :ends_on => Date.new(1977, 1, 20)
+    },
+    {
+      :id => 39,
+      :identifier => 'jimmy-carter',
+      :full_name => "Jimmy Carter",
+      :starts_on => Date.new(1977, 1, 20),
+      :ends_on => Date.new(1981, 1, 20)
+    },
+    {
+      :id => 40,
+      :identifier => 'ronald-reagan',
+      :full_name => "Ronald Reagan",
+      :starts_on => Date.new(1981, 1, 20),
+      :ends_on => Date.new(1989, 1, 20)
+    },
+    {
+      :id => 41,
+      :identifier => 'george-h-w-bush',
+      :full_name => "George H.W. Bush",
+      :starts_on => Date.new(1989, 1, 20),
+      :ends_on => Date.new(1993, 1, 20)
+    },
+    {
       :id => 1,
       :identifier => 'william-j-clinton',
       :full_name => "William J. Clinton",
