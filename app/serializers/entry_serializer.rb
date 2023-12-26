@@ -86,7 +86,9 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :html_url do |e|
-    entry_url(e)
+    if e.document_number
+      entry_url(e)
+    end
   end
 
   attribute :images_metadata do |entry|
@@ -162,11 +164,13 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :json_url do |e|
-    api_v1_document_url(
-      e.document_number,
-      :publication_date => e.publication_date.to_s(:iso),
-      :format           => :json
-    )
+    if e.document_number
+      api_v1_document_url(
+        e.document_number,
+        :publication_date => e.publication_date.to_s(:iso),
+        :format           => :json
+      )
+    end
   end
 
   attribute :mods_url do |e|
@@ -304,39 +308,45 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :dockets do |entry|
+
     result = []
-    entry.
-      regs_dot_gov_documents.
-      select{|doc| doc.docket_id.present? }.
-      sort_by(&:docket_id).
-      group_by(&:regs_dot_gov_docket).
-      each do |docket, docs|
-       result << {
-         agency_name: docket.agency_id,
-         id: docket.id,
-         title: docket.title,
-         supporting_documents: docket.regs_dot_gov_supporting_documents.sort_by(&:id).reverse[0..9].map do |doc|
-          {
-            :title => doc.title,
-            :document_id => doc.id
-          }
-        end,
-         supporting_documents_count: docket.docket_documents_count,
-         documents: docs.map do |doc|
-          {
-            allow_late_comments: doc.allow_late_comments,
-            comment_count: doc.comment_count,
-            comment_end_date: doc.comment_end_date,
-            comment_start_date: doc.comment_start_date,
-            comment_url: doc.comment_url,
-            id: doc.regulations_dot_gov_document_id,
-            regulations_dot_gov_open_for_comment: doc.regulations_dot_gov_open_for_comment,
-            updated_at: doc.updated_at,
-          }
-         end
-       }
+
+    if entry.document_number.nil?
+      result #otherwise all regs_dot_gov_documents with no FR doc num will be returned
+    else
+      entry.
+        regs_dot_gov_documents.
+        select{|doc| doc.docket_id.present? }.
+        sort_by(&:docket_id).
+        group_by(&:regs_dot_gov_docket).
+        each do |docket, docs|
+        result << {
+          agency_name: docket.agency_id,
+          id: docket.id,
+          title: docket.title,
+          supporting_documents: docket.regs_dot_gov_supporting_documents.sort_by(&:id).reverse[0..9].map do |doc|
+            {
+              :title => doc.title,
+              :document_id => doc.id
+            }
+          end,
+          supporting_documents_count: docket.docket_documents_count,
+          documents: docs.map do |doc|
+            {
+              allow_late_comments: doc.allow_late_comments,
+              comment_count: doc.comment_count,
+              comment_end_date: doc.comment_end_date,
+              comment_start_date: doc.comment_start_date,
+              comment_url: doc.comment_url,
+              id: doc.regulations_dot_gov_document_id,
+              regulations_dot_gov_open_for_comment: doc.regulations_dot_gov_open_for_comment,
+              updated_at: doc.updated_at,
+            }
+          end
+        }
+      end
+      result
     end
-    result
   end
 
   attribute :signing_date do |entry|
