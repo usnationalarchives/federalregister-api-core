@@ -810,6 +810,27 @@ describe EsEntrySearch, es: true do
       expect(search.results.count).to eq 1
     end
 
+    it "handles executive_order_number search" do
+      entries = [
+        entry,
+        Factory(
+          :entry,
+          presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
+          presidential_document_number: '9999'
+        ),
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(
+        conditions: {
+          executive_order_numbers: ['9999'],
+        }
+      )
+
+      assert_valid_search(search)
+      expect(search.results.count).to eq 1
+    end
+
     it "handles es multi-value attribute queries" do
       agencies = (1..2).map{ Factory.create(:agency) } #Note that actual agencies must exist in order for the search to register the filter
       entries = [

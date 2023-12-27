@@ -114,6 +114,13 @@ class EsEntrySearch < EsApplicationSearch
                 :es_attribute => :document_number do |document_numbers|
                   document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
+
+  define_filter :executive_order_numbers,
+                :es_type => :with,
+                :es_attribute => :executive_order_number do |eo_numbers|
+                  eo_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
+          
   define_filter :president,
                 :es_type => :with,
                 :es_attribute => :president_id,
