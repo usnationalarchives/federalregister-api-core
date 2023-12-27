@@ -46,9 +46,11 @@ module Content
         }
         if publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE)
           attr.merge!(
+            executive_order_notes: eo['disposition_notes'],
+            granule_class: "PRESDOCU",
+            presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
             publication_date: publication_date,
-            title: eo['title'],
-            executive_order_notes: eo['disposition_notes']
+            title: eo['title']
           )
         end
 
