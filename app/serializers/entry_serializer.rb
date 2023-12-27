@@ -38,7 +38,14 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :citation do |e|
-    e.start_page && e.start_page.to_i > 0 ? e.citation : nil
+    if e.presidential_document_type_id == PresidentialDocumentType::EXECUTIVE_ORDER.id && 
+      e.publication_date &&
+      (e.publication_date < Content::ExecutiveOrderImporter::HISTORICAL_EO_CUTOFF_DATE)
+      # ie Don't require a start page for historical EOs
+      e.citation
+    else
+      e.start_page && e.start_page.to_i > 0 ? e.citation : nil
+    end
   end
 
   attribute :comments_close_on do |e|
