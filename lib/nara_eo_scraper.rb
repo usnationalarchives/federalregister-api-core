@@ -110,7 +110,7 @@ class NaraEoScraper
         case li.text.strip
         when /^Signed:/
           details['signing_date'] = li.text.gsub('Signed: ', '')
-          details['parsed_signing_date'] = Date.try(:parse, details['signing_date'])
+          details['parsed_signing_date'] = Date.try(:parse, details['signing_date']).try(:to_s, :iso)
         when /not received for publication/
           # mark columns as inappropriate
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
@@ -125,7 +125,8 @@ class NaraEoScraper
           citation_text = li.text.gsub('Federal Register page and date: ', '').strip
           if citation_text.blank?
             # eg 10026-A is missing an FR page and date and just says 'Federal Register page and date:'
-            "no_citation_provided"
+            details['citation'] = "no_citation_provided"
+            next
           end
 
           #Sometimes we have a citation like "Federal Register page and date: 61 FR 1209; January 18, 1996" and sometimes it's like "Federal Register page and date: 70 FR 2323, January 12, 2005"
@@ -137,7 +138,7 @@ class NaraEoScraper
             details['publication_date'] = citation_text.split(',').last(2).join(',')
           end
           begin
-            details['parsed_publication_date'] = Date.parse(details['publication_date'])
+            details['parsed_publication_date'] = Date.parse(details['publication_date']).try(:to_s, :iso)
           rescue
             details['parsed_publication_date'] = "date_parsing_error"
           end
