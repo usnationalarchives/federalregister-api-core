@@ -51,7 +51,7 @@ describe "ExecutiveOrderImporter" do
   end
 
   it "prioritizes updating an executive order number even if it's publication date does not match what we have stored in the DB for an entry" do
-    entry = FactoryGirl.create(:entry)
+    entry = FactoryGirl.create(:entry, presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: "12890", publication_date: Date.new(1994,1,5))
     csv_rows = <<-eos.strip_heredoc
       citation,document_number,end_page,executive_order_notes,ExEcUtive_order_number  ,html_url,pdf_url,publication_date,signing_date,start_page,title
       59 FR 499,   #{entry.document_number} ,499,,12890,https://www.federalregister.gov/documents/1994/01/05/94-290/amendment-to-executive-order-no-12864,https://www.govinfo.gov/content/pkg/FR-1994-01-05/html/94-290.htm,#{Date.new(1900,1,1).to_s(:default)},12/30/93,499,Amendment to Executive Order No. 12864
@@ -60,16 +60,16 @@ describe "ExecutiveOrderImporter" do
     csv_file = stubbed_csv(csv_rows)
 
     Content::ExecutiveOrderImporter.perform(csv_file.path)
-    expect(Entry.first).to have_attributes(
+    expect(Entry.count).to eq(1)
+    expect(Entry.first.reload).to have_attributes(
       presidential_document_number: "12890"
     )
   end
 
   it "If an EO was signed before #{Content::ExecutiveOrderImporter::HISTORICAL_EO_CUTOFF_DATE} and it does not yet exist, import/modify it" do
     csv_rows = <<-eos.strip_heredoc
-      #{NaraEoScraper::HEADERS.join(',')}
-      "Amending Executive Order 8396 of April 18, 1940, Prescribing Chapter I of the Foreign Service Regulations of the United States",10 FR 4010,9537,"April 11, 1945 ",04/11/1945," April 14, 1945",04/14/1945,roosevelt,"Amends: EO 8396, April 18, 1940",https://www.archives.gov/federal-register/executive-orders/1945-roosevelt.html
-      ,,,,,,,,,,
+      title,citation,executive_order_number,signing_date_string,signing_date,publication_date_string,publication_date,president,disposition_notes,scraped_url
+      "Amending Executive Order 8396 of April 18, 1940, Prescribing Chapter I of the Foreign Service Regulations of the United States",10 FR 4010,9537,"April 11, 1945 ",1945-04-11," April 14, 1945",1945-04-14,roosevelt,"Amends: EO 8396, April 18, 1940",https://www.archives.gov/federal-register/executive-orders/1945-roosevelt.html
     eos
 
     csv_file = stubbed_csv(csv_rows)
@@ -82,12 +82,6 @@ describe "ExecutiveOrderImporter" do
       signing_date: Date.new(1945,4,11),
       title: "Amending Executive Order 8396 of April 18, 1940, Prescribing Chapter I of the Foreign Service Regulations of the United States",
       executive_order_notes: "Amends: EO 8396, April 18, 1940"
-    )
-
-    search = EsEntrySearch.new(
-      conditions: {
-        presidential_document_type: ['executive_order'],
-      }
     )
   end
 

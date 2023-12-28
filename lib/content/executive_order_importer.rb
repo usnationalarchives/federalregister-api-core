@@ -77,17 +77,19 @@ module Content
       publication_date = nil
     end
 
-    if publication_date
-      if (publication_date < HISTORICAL_EO_CUTOFF_DATE)
-        Entry.find_or_initialize_by(presidential_document_number: eo['presidential_document_number'])
-      else
+    if document_number.present?
+      if publication_date
         Entry.find_by_document_number_and_publication_date(document_number.strip, publication_date) || Entry.find_by_document_number(document_number.strip)
+      else
+        Entry.find_by_document_number(document_number.strip)
       end
-    else
-      Entry.find_by_document_number(document_number.strip)
+    elsif (publication_date < HISTORICAL_EO_CUTOFF_DATE) && eo['executive_order_number']
+      Entry.find_or_initialize_by(
+        presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
+        presidential_document_number: eo['executive_order_number']
+      )
     end
   end
-
 
   end
 end
