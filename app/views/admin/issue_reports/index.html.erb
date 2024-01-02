@@ -3,7 +3,7 @@
 <h4>Issue-Level Document and Page Counts:</h4>
 
 <ul>
-  <% (2019..Date.current.year).to_a.reverse.each do |year| %>
+  <% (2001..Date.current.year).to_a.reverse.each do |year| %>
     <li>
       <%= link_to "CY #{year}", admin_issue_report_detail_path(year: year, date_range_type: "cy", format: :csv) %>
       &nbsp;&nbsp;|&nbsp;&nbsp;
