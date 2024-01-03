@@ -39,11 +39,19 @@ module Content
       if entry
         Rails.logger.info("Document #{document_number} found...")
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
+
+        signing_date = eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil
+
         attr = {
           :presidential_document_number => eo['executive_order_number'],
-          :signing_date => eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil,
-          :executive_order_notes => eo['executive_order_notes'] || eo['disposition_notes'],
+          :signing_date => signing_date,
         }
+
+        if (Date.new(1900,1,1)..Date.current).exclude? signing_date
+          # ie delete the signing_date if it appears unreasonable
+          attr.delete(:signing_date)
+        end
+
         if publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE)
           attr.merge!(
             executive_order_notes: eo['disposition_notes'],
@@ -83,7 +91,7 @@ module Content
       else
         Entry.find_by_document_number(document_number.strip)
       end
-    elsif (publication_date < HISTORICAL_EO_CUTOFF_DATE) && eo['executive_order_number']
+    elsif publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE) && eo['executive_order_number']
       Entry.find_or_initialize_by(
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
         presidential_document_number: eo['executive_order_number']
