@@ -5,7 +5,7 @@ class EsApplicationSearch
 
   attr_accessor :order
   attr_writer :aggregation_field, :date_histogram_interval
-  attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions, :excerpts
+  attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions, :excerpts, :include_pre_1994_docs
 
   def per_page=(count)
     per_page = count.to_s.to_i
@@ -121,6 +121,7 @@ class EsApplicationSearch
     end
 
     @excerpts = options.fetch(:excerpts, false)
+    @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
 
     set_defaults(options)
 

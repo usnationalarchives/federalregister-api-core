@@ -1117,6 +1117,23 @@ describe EsEntrySearch, es: true do
         expect(page_3_search.results.next_page).to eq nil
       end
     end
+
+    context "option for inclusion of pre-1994 EOs" do
+      it "in facets" do
+        entry = Factory.create(
+          :entry,
+          title: 'fish',
+        ) 
+        Factory.create(:issue, publication_date: Date.current, completed_at: Time.current)
+        Entry.bulk_index([entry], refresh: true)
+        search = EsEntrySearch.new(conditions: {term: 'fish'}, include_pre_1994_docs: true)
+
+
+        result = search.date_distribution(:period => :yearly).results
+        expect(result["1933-01-01"]).to be_truthy
+      end
+    end
+
   end
 
 end

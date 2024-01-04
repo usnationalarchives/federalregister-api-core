@@ -1,9 +1,13 @@
 class EsEntrySearch::DateAggregator::Base
   extend Memoist
 
+  STARTING_DATE_OF_HISTORICAL_EXECUTIVE_ORDERS = Date.new(1933,1,1)
   def initialize(es_search, options)
     @es_search = es_search
-    if options[:with] && options[:with][:publication_date]
+    if es_search.include_pre_1994_docs
+      @start_date = STARTING_DATE_OF_HISTORICAL_EXECUTIVE_ORDERS
+      @end_date = Issue.current.publication_date
+    elsif options[:with] && options[:with][:publication_date]
       @start_date = Time.at(options[:with][:publication_date].first).utc.to_date
 
       end_date = Time.at(options[:with][:publication_date].last).utc.to_date
