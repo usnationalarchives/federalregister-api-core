@@ -22,9 +22,6 @@ module Content
     end
 
     max_known_eo_number = executive_orders.map{|eo| eo['executive_order_number'] }.max
-    Entry.scoped(
-      :conditions => ["presidential_document_type_id = #{PresidentialDocumentType::EXECUTIVE_ORDER.id} AND CAST(presidential_document_number AS UNSIGNED) <= ?", max_known_eo_number]
-    ).update_all(:presidential_document_number => nil)
     executive_orders.each do |eo|
       document_number = eo['document_number']
 
