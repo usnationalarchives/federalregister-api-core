@@ -38,6 +38,7 @@ module Content
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
 
         signing_date = eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil
+        not_received_for_publication = (eo['publication_date'] == 'not_received_for_publication')
 
         attr = {
           :presidential_document_number => eo['executive_order_number'],
@@ -49,14 +50,19 @@ module Content
           attr.delete(:signing_date)
         end
 
-        if publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE)
+        if publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE) ||
+          not_received_for_publication
           attr.merge!(
             executive_order_notes: eo['disposition_notes'],
             granule_class: "PRESDOCU",
             presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
             publication_date: publication_date,
-            title: eo['title']
-          )
+            title: eo['title'],
+          ).tap do |attr|
+            if not_received_for_publication
+              attr.merge!(not_received_for_publication: not_received_for_publication)
+            end
+          end
         end
 
         if eo['citation'].present?
@@ -88,7 +94,7 @@ module Content
       else
         Entry.find_by_document_number(document_number.strip)
       end
-    elsif publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE) && eo['executive_order_number']
+    elsif eo['executive_order_number']
       Entry.find_or_initialize_by(
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
         presidential_document_number: eo['executive_order_number']

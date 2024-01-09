@@ -99,4 +99,16 @@ describe "ExecutiveOrderImporter" do
     )
   end
 
+  it "populates not received for publication when the publication_date field is 'not_received_for_publication'" do
+    csv_rows = <<-eos.strip_heredoc
+      title,citation,executive_order_number,signing_date_string,signing_date,publication_date_string,publication_date,president,disposition_notes,scraped_url
+      Korea,not_received_for_publication,10026-A,"January 5, 1949",1949-01-05,not_received_for_publication,not_received_for_publication,truman,"",https://www.archives.gov/federal-register/executive-orders/1949.html
+    eos
+
+    csv_file = stubbed_csv(csv_rows)
+
+    Content::ExecutiveOrderImporter.perform(csv_file.path)
+    expect(Entry.first).to have_attributes(not_received_for_publication: true)
+  end
+
 end

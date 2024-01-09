@@ -18,7 +18,7 @@ class EntrySerializer < ApplicationSerializer
     {} #Returning an empty hash since this method is no longer used for supplying find options to search infrastructure (all Entry searches are now performed by ES).  This method is solely used for confirming the requested fields exist
   end
 
-  attributes :id, :title, :abstract, :action, :dates, :document_number,  :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :toc_doc, :toc_subject, :volume
+  attributes :id, :title, :abstract, :action, :dates, :document_number,  :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :start_page, :executive_order_number, :not_received_for_publication, :presidential_document_number, :proclamation_number, :toc_doc, :toc_subject, :volume
 
   attribute :excerpts, if: Proc.new { |document, params| params[:active_record_retrieval] } do |document|
     nil
