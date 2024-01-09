@@ -43,7 +43,7 @@ describe NaraEoScraper do
     HTML
 
     result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
-    expect(result.first.first).to eq('Strengthening Federal Environmental, Energy, and Transportation Management')
+    expect(result.first[1]).to eq('Strengthening Federal Environmental, Energy, and Transportation Management')
   end
 
   it "does not include the EO number in the title for Kennedy era EOs" do
@@ -147,9 +147,9 @@ describe NaraEoScraper do
     HTML
 
     result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
-    expect(result.first[0]).to eq('Amending the Selective Service Regulations')
-    expect(result.first[1]).to eq('27 FR 193')
-    expect(result.first[2]).to eq('10984')
+    expect(result.first[1]).to eq('Amending the Selective Service Regulations')
+    expect(result.first[2]).to eq('27 FR 193')
+    expect(result.first[0]).to eq('10984')
   end
 
   it "does not include the EO number in the title for Carter era EOs" do
@@ -163,7 +163,7 @@ describe NaraEoScraper do
     HTML
 
     result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
-    expect(result.first[0]).to eq('Offshore oil spill pollution')
+    expect(result.first[1]).to eq('Offshore oil spill pollution')
   end
 
   it "Handle '¬†' characters in some Bush-era docs" do
@@ -180,7 +180,7 @@ describe NaraEoScraper do
     HTML
   
     result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
-    expect(result.first[1]).to eq('68 FR 3371')
+    expect(result.first[2]).to eq('68 FR 3371')
   end
 
   it "Handles citation lines not prefixed by 'Federal Register page and date:' (eg some FDR citations)" do
@@ -209,7 +209,7 @@ describe NaraEoScraper do
     HTML
 
     result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
-    expect(result.first[1]).to eq('10 FR 2423')
+    expect(result.first[2]).to eq('10 FR 2423')
   end
    
 end

@@ -50,14 +50,24 @@ class NaraEoScraper
 
   def self.perform
     replace_file_and_write_headers
+    results = []
     president_metadata.each do |metadata|
       metadata.year_specific_urls.each do |url|
-        scrape_year_specific_page(url, metadata.president_identifier)
+        scrape_year_specific_page(url, metadata.president_identifier).each do |result|
+          results << result
+        end
+      end
+    end
+
+    # Sort results by EO number
+    CSV.open('data/nara_executive_orders.csv', 'a', write_headers: false, headers: HEADERS) do |csv|
+      results.sort_by{|eo_metadata| eo_metadata[0].to_i}.each do |eo_metadata|
+        csv << eo_metadata
       end
     end
   end
 
-  HEADERS = ['title', 'citation', 'executive_order_number', 'signing_date_string', 'signing_date', 'publication_date_string', 'publication_date', 'president', 'disposition_notes', 'scraped_url']
+  HEADERS = ['executive_order_number', 'title', 'citation', 'signing_date_string', 'signing_date', 'publication_date_string', 'publication_date', 'president', 'disposition_notes', 'scraped_url']
   def self.replace_file_and_write_headers
     CSV.open('data/nara_executive_orders.csv', 'w', write_headers: true, headers: HEADERS) do |csv|
     end
@@ -68,14 +78,10 @@ class NaraEoScraper
     # Load and parse the HTML file
     html_content = URI.open(url).read
 
-
-    # Prepare CSV file
-    CSV.open('data/nara_executive_orders.csv', 'a', write_headers: false, headers: HEADERS) do |csv|
-      eo_metadata(html_content, president_identifier, url).each do |eo|
+    eo_metadata(html_content, president_identifier, url).each_with_object(Array.new) do |eo, results|
+      if eo.present?
         puts eo
-        if eo.present?
-          csv << eo
-        end
+        results << eo
       end
     end
   end
@@ -153,8 +159,9 @@ class NaraEoScraper
       disposition_notes = details['disposition_notes'].join(', ').gsub(NON_BREAKING_SPACE_REGEX,"").strip
 
       [
-        title, details['citation'],
         presidential_document_number,
+        title,
+        details['citation'],
         details['signing_date'],
         details['parsed_signing_date'],
         details['publication_date'],
