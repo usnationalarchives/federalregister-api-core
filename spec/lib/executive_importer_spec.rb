@@ -85,10 +85,11 @@ describe "ExecutiveOrderImporter" do
     )
   end
 
-  it "does not update the signing date if it appears to be outside a reasonable timeframe" do
+  it "does not update the signing date/publication_date if it appears to be outside a reasonable timeframe" do
+    '10575-09-20'
     csv_rows = <<-eos.strip_heredoc
       title,citation,executive_order_number,signing_date_string,signing_date,publication_date_string,publication_date,president,disposition_notes,scraped_url
-      "Amending Executive Order 8396 of April 18, 1940, Prescribing Chapter I of the Foreign Service Regulations of the United States",10 FR 4010,9537,"April 11, 1945 ",19656-04-11," April 14, 1945",1945-04-14,roosevelt,"Amends: EO 8396, April 18, 1940",https://www.archives.gov/federal-register/executive-orders/1945-roosevelt.html
+      "Amending Executive Order 8396 of April 18, 1940, Prescribing Chapter I of the Foreign Service Regulations of the United States",10 FR 4010,9537,"April 11, 1945 ",19656-04-11," April 14, 1945",10575-09-20,roosevelt,"Amends: EO 8396, April 18, 1940",https://www.archives.gov/federal-register/executive-orders/1945-roosevelt.html
     eos
 
     csv_file = stubbed_csv(csv_rows)
@@ -96,6 +97,7 @@ describe "ExecutiveOrderImporter" do
     Content::ExecutiveOrderImporter.perform(csv_file.path)
     expect(Entry.first).to have_attributes(
       signing_date: nil,
+      publication_date: nil
     )
   end
 

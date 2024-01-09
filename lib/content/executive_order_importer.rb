@@ -45,7 +45,7 @@ module Content
           :signing_date => signing_date,
         }
 
-        if (Date.new(1900,1,1)..Date.current).exclude? signing_date
+        if reasonable_date_range.exclude? signing_date
           # ie delete the signing_date if it appears unreasonable
           attr.delete(:signing_date)
         end
@@ -66,6 +66,10 @@ module Content
           end
         end
 
+        if reasonable_date_range.exclude? publication_date
+          attr.delete(:publication_date)
+        end
+
         if eo['citation'].present?
           attr[:citation] = eo['citation'].strip
         end
@@ -78,6 +82,10 @@ module Content
   end
 
   private
+
+  def reasonable_date_range
+    (Date.new(1900,1,1)..Date.current)
+  end
 
   HISTORICAL_EO_NUMBER_CUTOFF = 12890 #ie published on 1994-01-05
   def locate_document(eo)
