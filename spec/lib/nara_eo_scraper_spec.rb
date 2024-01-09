@@ -3,6 +3,44 @@ require "spec_helper"
 
 describe NaraEoScraper do
 
+  it "correctly parses EO number even when there is a PDF link" do
+    html = <<-HTML
+      <hr>
+
+
+
+      <p>
+
+        <a name="0.1_13717"></a>
+      <strong>
+      
+        <a class="pdfImage" href="https://www.gpo.gov/fdsys/pkg/FR-2016-02-05/pdf/2016-02475.pdf">Executive Order 13717</a></strong>
+      <br>
+        
+      Establishing a Federal Earthquake Risk Management Standard</p>
+
+
+      <ul>
+
+
+        <li>Signed: February 2, 2016</li>
+
+
+        <li>Federal Register page and date: 81 FR 6407, February 5, 2016</li>
+
+
+        <li>Revokes: 
+      
+          <a href="/federal-register/executive-orders/1990.html#12699">EO 12699</a>, January 5, 1990; 
+      
+          <a href="/federal-register/executive-orders/1994.html#12941">EO 12941</a>, December 1, 1994</li>
+
+      </ul>
+    HTML
+    result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
+    expect(result.first[0]).to eq('13717')
+  end
+
   it "strips leading/trailing whitespace from EO title" do
     html =  <<-HTML
       <hr>
