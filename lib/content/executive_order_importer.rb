@@ -50,8 +50,9 @@ module Content
           attr.delete(:signing_date)
         end
 
-        if publication_date && (publication_date < HISTORICAL_EO_CUTOFF_DATE) ||
-          not_received_for_publication
+        #   not_received_for_publication
+        integer_coerced_eo_number = eo['executive_order_number'].gsub(/\D/, '').to_i
+        if eo['executive_order_number'] && (integer_coerced_eo_number < HISTORICAL_EO_NUMBER_CUTOFF)
           attr.merge!(
             executive_order_notes: eo['disposition_notes'],
             granule_class: "PRESDOCU",
@@ -78,7 +79,7 @@ module Content
 
   private
 
-  HISTORICAL_EO_CUTOFF_DATE = Date.new(1993,1,1)
+  HISTORICAL_EO_NUMBER_CUTOFF = 12890 #ie published on 1994-01-05
   def locate_document(eo)
     document_number = eo['document_number']
 

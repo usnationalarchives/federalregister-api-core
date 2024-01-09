@@ -39,8 +39,8 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :citation do |e|
     if e.presidential_document_type_id == PresidentialDocumentType::EXECUTIVE_ORDER.id && 
-      e.publication_date &&
-      (e.publication_date < Content::ExecutiveOrderImporter::HISTORICAL_EO_CUTOFF_DATE)
+      e.presidential_document_number &&
+      (e.presidential_document_number.to_i < Content::ExecutiveOrderImporter::HISTORICAL_EO_NUMBER_CUTOFF)
       # ie Don't require a start page for historical EOs
       e.citation
     else
