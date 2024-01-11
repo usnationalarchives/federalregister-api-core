@@ -246,8 +246,11 @@ describe NaraEoScraper do
       </ul>
     HTML
 
-    result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
+    result = described_class.eo_metadata(html, 'roosevelt', 'arbitrary_url')
     expect(result.first[2]).to eq('10 FR 2423')
+
+    #It correctly maps NARA identifier to API Core style president identifier
+    expect(result.first[7]).to eq('franklin-d-roosevelt')
   end
    
 end

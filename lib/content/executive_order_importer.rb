@@ -43,7 +43,12 @@ module Content
         attr = {
           :presidential_document_number => eo['executive_order_number'],
           :signing_date => signing_date,
-        }
+        }.tap do |attrs|
+          president = President.find_by_identifier(eo['president'])
+          if president
+            attrs.merge!(:president_id => president.id)
+          end
+        end
 
         if reasonable_date_range.exclude? signing_date
           # ie delete the signing_date if it appears unreasonable

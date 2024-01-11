@@ -650,7 +650,9 @@ class Entry < ApplicationModel
   end
 
   def president
-    if signing_date || publication_date
+    if president_id
+      President.find(president_id)
+    elsif signing_date || publication_date
       date = signing_date || (publication_date - 3)
       President.in_office_on(date)
     end

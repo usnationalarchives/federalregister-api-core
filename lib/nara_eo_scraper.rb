@@ -4,6 +4,22 @@ require 'open-uri'
 
 class NaraEoScraper
 
+  NARA_IDENTIFIER_MAPPING = ActiveSupport::HashWithIndifferentAccess.new(
+    obama: 'barack-obama',
+    wbush: 'george-w-bush',
+    clinton: 'william-j-clinton',
+    bush: 'george-h-w-bush',
+    reagan: 'ronald-reagan',
+    carter: 'jimmy-carter',
+    ford: 'gerald-ford',
+    nixon: 'richard-nixon',
+    johnson: 'lyndon-b-johnson',
+    kennedy: 'john-f-kennedy',
+    eisenhower: 'dwight-d-eisenhower',
+    truman: 'harry-s-truman',
+    roosevelt: 'franklin-d-roosevelt',
+  )
+
   BASE_URL = "https://www.archives.gov"
   def self.presidential_page_objects
     paths = %w(
@@ -166,7 +182,7 @@ class NaraEoScraper
         details['parsed_signing_date'],
         details['publication_date'],
         details['parsed_publication_date'],
-        president_identifier,
+        NARA_IDENTIFIER_MAPPING[president_identifier],
         disposition_notes,
         url
       ]
