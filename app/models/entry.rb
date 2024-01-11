@@ -477,6 +477,8 @@ class Entry < ApplicationModel
   end
 
   def source_url(format)
+    return unless publication_date
+
     case format.to_sym
     when :mods
       "https://www.govinfo.gov/metadata/granule/FR-#{publication_date.to_s(:iso)}/#{document_number}/mods.xml"
@@ -648,8 +650,10 @@ class Entry < ApplicationModel
   end
 
   def president
-    date = signing_date || (publication_date - 3)
-    President.in_office_on(date)
+    if signing_date || publication_date
+      date = signing_date || (publication_date - 3)
+      President.in_office_on(date)
+    end
   end
 
   def regulations_dot_gov_agency_id
@@ -669,7 +673,9 @@ class Entry < ApplicationModel
   end
 
   def document_file_path
-    "#{publication_date.to_s(:ymd)}/#{document_number}"
+    if publication_date 
+      "#{publication_date.to_s(:ymd)}/#{document_number}"
+    end
   end
 
   def to_hash

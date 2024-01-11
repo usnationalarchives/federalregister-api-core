@@ -367,7 +367,7 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :president_id do |entry|
     if entry.granule_class == 'PRESDOCU'
-      entry.president.id
+      entry.president.try(:id)
     end
   end
 
