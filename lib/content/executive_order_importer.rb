@@ -21,7 +21,7 @@ module Content
       end
     end
 
-    max_known_eo_number = executive_orders.map{|eo| eo['executive_order_number'] }.max
+    count = 0
     executive_orders.each do |eo|
       document_number = eo['document_number']
 
@@ -79,9 +79,11 @@ module Content
           attr[:citation] = eo['citation'].strip
         end
         entry.update(attr)
-        Rails.logger.info("Document #{document_number} updated.")
+        count += 1
+        puts "#{count} EOs updated..."
+        Rails.logger.info("EO #{eo['executive_order_number']} updated.")
       else
-        Rails.logger.info("Document #{document_number} not found!")
+        Rails.logger.info("EO #{eo['executive_order_number']} not found!")
       end
     end
   end
