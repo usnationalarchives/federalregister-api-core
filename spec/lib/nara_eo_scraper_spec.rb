@@ -3,6 +3,31 @@ require "spec_helper"
 
 describe NaraEoScraper do
 
+  it "handles scenarios where there are multiple EOs not separated by an HR" do
+    html = <<-HTML
+      <hr>
+      <p><strong>Executive Order   <a name="7800"></a>7800</strong>
+      <br>Transferring Certain Lands to the Control and Jurisdiction of the Secretary of the Navy, Cuba</p>
+      <ul><li>Signed: January 27, 1938</li>
+      <li>Federal Register page and date: 3 FR 262, January 29, 1938</li>
+      <li>Amends: Executive Order of January 9, 1904 (unnumbered series) </li>
+      </ul><p>
+      
+      <strong>Executive Order No. <a name="7801"></a> 7801 </strong>
+      <br>Establishing Black Coulee Migratory Waterfowl Refuge, Montana</p>
+      <ul><li>Signed: January 28, 1938 </li>
+      <li>Federal Register page and date: 3 FR 271, February 1, 1938</li>
+      </ul>
+    HTML
+    
+    result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
+   
+    expect(result.count).to eq(2)
+    expect(result[0].first).to eq("7800")
+    expect(result[1].first).to eq("7801")
+  end
+
+
   it "correctly parses EO number even when there is a PDF link" do
     html = <<-HTML
       <hr>

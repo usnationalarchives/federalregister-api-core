@@ -106,9 +106,11 @@ class NaraEoScraper
   def self.eo_metadata(html_content, president_identifier, url)
     # Iterate over each executive order
     nokogiri_doc = Nokogiri::HTML(html_content)
-    nokogiri_doc.css('hr').map do |hr|
-      title_element = hr.next_element
-      next unless title_element && title_element.name == 'p' && (hr.next_element.children.length > 1)
+    nokogiri_doc.css('p a[name]').map do |anchor_el_with_name|
+      title_element = anchor_el_with_name.ancestors('p').first
+    # nokogiri_doc.css('hr').map do |hr|
+      # title_element = hr.next_element
+      next unless title_element && title_element.name == 'p' && (title_element.children.length > 1)
 
       # Extract title
       title = title_element.text.strip.split("\n")
@@ -121,7 +123,7 @@ class NaraEoScraper
       title = title.join("\n").strip
 
       # Extract presidential document number from the title
-      presidential_document_number = title_element.children.find{|x| x.name == 'a'}.try(:[], 'name').try(:gsub, /^0.1_/,"") || title_element.children.first.text.gsub(/Executive Order /, '').strip
+      presidential_document_number = title_element.css('a[name]').first.try(:[], 'name').try(:gsub, /^0.1_/,"") || title_element.children.first.text.gsub(/Executive Order /, '').strip
 
     
       # Initialize details
