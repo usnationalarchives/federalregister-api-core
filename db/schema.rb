@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 2024_01_08_235855) do
     t.integer "issue_part_id"
     t.integer "universal_analytics_page_views"
     t.boolean "not_received_for_publication"
+    t.integer "president_id"
     t.index ["citation"], name: "index_entries_on_citation"
     t.index ["citing_entries_count"], name: "index_entries_on_citing_entries_count"
     t.index ["correction_of_id"], name: "index_entries_on_correction_of"

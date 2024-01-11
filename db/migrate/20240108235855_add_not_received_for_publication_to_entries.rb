@@ -1,5 +1,8 @@
 class AddNotReceivedForPublicationToEntries < ActiveRecord::Migration[6.1]
   def change
-    add_column :entries, :not_received_for_publication, :boolean
+    change_table(:entries) do |t|
+      t.boolean :not_received_for_publication
+      t.integer :president_id
+    end
   end
 end
