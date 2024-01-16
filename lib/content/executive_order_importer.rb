@@ -5,7 +5,12 @@ module Content
     new.perform(file_path)
   end
            
-  def perform(file_path)
+  def perform(file_path, log_differences_only=false)
+    @log_differences_only = log_differences_only
+    if log_differences_only
+      differences = []
+    end
+
     executive_orders = []
     CSV.foreach(
       file_path,
@@ -58,6 +63,10 @@ module Content
         #   not_received_for_publication
         integer_coerced_eo_number = eo['executive_order_number'].gsub(/\D/, '').to_i
         if eo['executive_order_number'] && (integer_coerced_eo_number < HISTORICAL_EO_NUMBER_CUTOFF)
+          if log_differences_only
+            next #ie don't log diffs for older EOs we definitely don't have
+          end
+
           attr.merge!(
             executive_order_notes: eo['disposition_notes'],
             granule_class: "PRESDOCU",
@@ -78,17 +87,75 @@ module Content
         if eo['citation'].present?
           attr[:citation] = eo['citation'].strip
         end
-        entry.update(attr)
-        count += 1
-        puts "#{count} EOs updated..."
-        Rails.logger.info("EO #{eo['executive_order_number']} updated.")
+
+        if log_differences_only          
+          attribute_diffs = []
+          row = DIFF_COLUMNS.each_with_object([]) do |(column_name, column_type), columns|
+            per_nara = eo[column_name.to_s]
+            columns << per_nara
+
+            if column_type == :date
+              per_fr = entry[column_name].try(:to_s, :iso)
+            else
+              if entry.id?
+                per_fr = entry[column_name]
+              else
+                per_fr = nil
+              end
+            end
+            columns << per_fr
+            if entry.id? && (per_nara.try(:upcase) != per_fr.try(:upcase)) #ignore casing differences
+              attribute_diffs << column_name
+            end
+          end
+          
+          if entry.id?
+            row << attribute_diffs.join(', ')
+          else
+            row << "missing from FR"
+          end
+
+          Rails.logger.info(row)
+          differences << row
+        else
+          entry.update(attr)
+          Rails.logger.info("EO #{eo['executive_order_number']} updated.")
+        end
       else
         Rails.logger.info("EO #{eo['executive_order_number']} not found!")
+      end
+      count += 1
+      puts "#{count} EOs processed..."
+    end
+
+    if log_differences_only
+      CSV.open(diff_file_path, 'w') do |csv|
+        headers = DIFF_COLUMNS.keys.each_with_object([]) do |column, headers|
+          headers << "#{column}_per_nara"
+          headers << "#{column}_per_fr"
+        end
+        headers << "attributes_with_differences"
+        csv << headers
+
+        differences.each { |row| csv << row }
       end
     end
   end
 
   private
+  
+  attr_reader :log_differences_only
+
+  DIFF_COLUMNS = {
+    executive_order_number: :string,
+    publication_date:       :date,
+    signing_date:           :date,
+    title:                  :string,
+  }
+
+  def diff_file_path
+    "data/eo_differences_#{Date.current.to_s(:iso)}.csv"
+  end
 
   def reasonable_date_range
     (Date.new(1900,1,1)..Date.current)
