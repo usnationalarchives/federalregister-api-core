@@ -84,7 +84,7 @@ module Content
           attr.delete(:publication_date)
         end
 
-        if eo['citation'].present?
+        if eo['citation'].present? && !not_received_for_publication
           attr[:citation] = eo['citation'].strip
         end
 

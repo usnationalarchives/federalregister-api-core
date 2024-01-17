@@ -110,7 +110,10 @@ describe "ExecutiveOrderImporter" do
     csv_file = stubbed_csv(csv_rows)
 
     Content::ExecutiveOrderImporter.perform(csv_file.path)
-    expect(Entry.first).to have_attributes(not_received_for_publication: true)
+    expect(Entry.first).to have_attributes(
+      citation: nil,
+      not_received_for_publication: true
+    )
   end
 
 end
