@@ -30,6 +30,7 @@ module EntryApiConfiguration
       :images_metadata,
       :json_url,
       :mods_url,
+      :not_received_for_publication,
       :page_length,
       :page_views,
       :pdf_url,
