@@ -74,6 +74,7 @@ class President < ActiveHash::Base
       :id => 1,
       :identifier => 'william-j-clinton',
       :full_name => "William J. Clinton",
+      :mods_file_id => "WJC",
       :starts_on => Date.new(1993,1,20),
       :ends_on => Date.new(2001,1,19)
     },
@@ -81,6 +82,7 @@ class President < ActiveHash::Base
       :id => 2,
       :identifier => 'george-w-bush',
       :full_name => "George W. Bush",
+      :mods_file_id => "GWB",
       :starts_on => Date.new(2001,1,20),
       :ends_on => Date.new(2009,1,19)
     },
@@ -88,6 +90,7 @@ class President < ActiveHash::Base
       :id => 3,
       :identifier => 'barack-obama',
       :full_name => "Barack Obama",
+      :mods_file_id => "BHO",
       :starts_on => Date.new(2009,1,20),
       :ends_on => Date.new(2017,1,19)
     },
@@ -95,6 +98,7 @@ class President < ActiveHash::Base
       :id => 4,
       :identifier => 'donald-trump',
       :full_name => "Donald Trump",
+      :mods_file_id => "DJT",
       :starts_on => Date.new(2017,1,20),
       :ends_on => Date.new(2021,1,19)
     },
@@ -102,6 +106,7 @@ class President < ActiveHash::Base
       :id => 5,
       :identifier => 'joe-biden',
       :full_name => "Joseph R. Biden Jr.",
+      :mods_file_id => "JRB",
       :starts_on => Date.new(2021,1,20),
       :ends_on => Date.new(2025,1,19)
     },

@@ -5,6 +5,7 @@ module Content::EntryImporter::PresidentialDocumentDetails
     :signing_date,
     :executive_order_notes,
     :presidential_document_number,
+    :president_id
 
   def presidential_document_type_id
     document_type_id = nil
@@ -70,6 +71,17 @@ module Content::EntryImporter::PresidentialDocumentDetails
 
       if presdoc_node.present?
         return presdoc_node.attr('number').try(:value)
+      end
+    end
+  end
+
+  def president_id
+    if mods_node
+      president_node = mods_node.css('president')
+
+      if president_node.present?
+        president_id = president_node.attr('id').try(:value)
+        President.find_by_mods_file_id(president_id)&.id
       end
     end
   end

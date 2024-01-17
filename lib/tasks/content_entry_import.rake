@@ -97,7 +97,7 @@ namespace :content do
 
       desc "Extract Presidential Document Data"
       task :presidential_documents => :environment do
-        entry_importer(:presidential_document_type_id, :signing_date, :executive_order_notes, :presidential_document_number)
+        entry_importer(:presidential_document_type_id, :signing_date, :executive_order_notes, :presidential_document_number, :president_id)
       end
 
       desc "Extract Action Name"
