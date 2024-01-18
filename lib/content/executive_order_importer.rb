@@ -43,7 +43,8 @@ module Content
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
 
         signing_date = eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil
-        not_received_for_publication = (eo['publication_date'] == 'not_received_for_publication')
+
+        not_received_for_publication = ['not_received_in_time_for_publication', 'not_received_for_publication'].any?{|x| eo['publication_date'] == x}
 
         attr = {
           :presidential_document_number => eo['executive_order_number'],
