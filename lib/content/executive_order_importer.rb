@@ -177,7 +177,7 @@ module Content
       else
         Entry.find_by_document_number(document_number.strip)
       end
-    elsif eo['executive_order_number']
+    elsif eo['executive_order_number'] && (eo['executive_order_number'].gsub(/\D/, '').to_i < HISTORICAL_EO_NUMBER_CUTOFF)
       Entry.find_or_initialize_by(
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
         presidential_document_number: eo['executive_order_number']
