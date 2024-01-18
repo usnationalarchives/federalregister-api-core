@@ -123,8 +123,10 @@ class NaraEoScraper
       title = title.join("\n").strip
 
       # Extract presidential document number from the title
-      presidential_document_number = title_element.css('a[name]').first.try(:[], 'name').try(:gsub, /^0.1_/,"") || title_element.children.first.text.gsub(/Executive Order /, '').strip
-
+      presidential_document_number = title_element.children.first.text.gsub(/Executive Order /, '').gsub('No.','').strip
+      if presidential_document_number.blank?
+        presidential_document_number = title_element.css('a[name]').first.try(:[], 'name').try(:gsub, /^0.1_/,"")
+      end
     
       # Initialize details
       details = { 'signing_date' => '', 'citation' => '', 'publication_date' => '', 'disposition_notes' => [] }

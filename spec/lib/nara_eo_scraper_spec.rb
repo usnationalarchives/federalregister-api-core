@@ -3,6 +3,20 @@ require "spec_helper"
 
 describe NaraEoScraper do
 
+  it "in conflicts between anchor tag 'name' attribute metadata text displayed, prioritize displaying what is visibly shown to the user" do
+    html = <<-HTML
+      <p><strong>Executive Order     <a name="86497"></a>8697 </strong>
+      <br>Transfer of Certain Lands From the Secretary of the Interior to the Secretary of Agriculture; New Mexico </p>
+      <ul><li>Signed: February 28, 1941</li>
+      <li>Federal Register page and date: 6 FR 1230, March 4, 1941 </li>
+      </ul>
+    HTML
+    
+    result = described_class.eo_metadata(html, 'arbitrary_president', 'arbitrary_url')
+
+    expect(result[0].first).to eq("8697")
+  end
+
   it "handles scenarios where there are multiple EOs not separated by an HR" do
     html = <<-HTML
       <hr>
@@ -11,9 +25,9 @@ describe NaraEoScraper do
       <ul><li>Signed: January 27, 1938</li>
       <li>Federal Register page and date: 3 FR 262, January 29, 1938</li>
       <li>Amends: Executive Order of January 9, 1904 (unnumbered series) </li>
-      </ul><p>
+      </ul>
       
-      <strong>Executive Order No. <a name="7801"></a> 7801 </strong>
+      <p><strong>Executive Order No. <a name="7801"></a> 7801 </strong>
       <br>Establishing Black Coulee Migratory Waterfowl Refuge, Montana</p>
       <ul><li>Signed: January 28, 1938 </li>
       <li>Federal Register page and date: 3 FR 271, February 1, 1938</li>
@@ -26,7 +40,6 @@ describe NaraEoScraper do
     expect(result[0].first).to eq("7800")
     expect(result[1].first).to eq("7801")
   end
-
 
   it "correctly parses EO number even when there is a PDF link" do
     html = <<-HTML
