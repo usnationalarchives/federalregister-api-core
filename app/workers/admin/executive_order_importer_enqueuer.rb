@@ -8,7 +8,7 @@ class Admin::ExecutiveOrderImporterEnqueuer
 
   def perform(file_path, file_identifier)
     begin
-      Content::ExecutiveOrderImporter.new.perform(file_path, true)
+      Content::ExecutiveOrderImporter.new.perform(file_path, Settings.only_log_on_eo_import)
       ElasticsearchIndexer.handle_entry_changes
       CacheUtils.purge_cache(".*")
       record_job_status(file_identifier, 'complete')
