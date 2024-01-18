@@ -1,8 +1,8 @@
 module Content
   class ExecutiveOrderImporter
 
-  def self.perform(file_path)
-    new.perform(file_path)
+  def self.perform(file_path, log_differences_only=false)
+    new.perform(file_path, log_differences_only)
   end
            
   def perform(file_path, log_differences_only=false)
@@ -35,8 +35,8 @@ module Content
       rescue
         publication_date = nil
       end
-
-      entry = locate_document(eo)
+      
+      entry = locate_document(eo) # NOTE: The embedded assumption is we won't create new EO entries via this importer unless they are not available via the govinfo APIs
 
       if entry
         Rails.logger.info("Document #{document_number} found...")
@@ -61,11 +61,10 @@ module Content
           attr.delete(:signing_date)
         end
 
-        #   not_received_for_publication
         integer_coerced_eo_number = eo['executive_order_number'].gsub(/\D/, '').to_i
         if eo['executive_order_number'] && (integer_coerced_eo_number < HISTORICAL_EO_NUMBER_CUTOFF)
           if log_differences_only
-            next #ie don't log diffs for older EOs we definitely don't have
+            next #ie don't log diffs for older EOs we definitely don't have via govinfo APIs
           end
 
           attr.merge!(
@@ -155,7 +154,7 @@ module Content
   }
 
   def diff_file_path
-    "data/eo_differences_#{Date.current.to_s(:iso)}.csv"
+    "data/efs/eo_differences_#{Date.current.to_s(:iso)}.csv"
   end
 
   def reasonable_date_range
@@ -172,7 +171,7 @@ module Content
       publication_date = nil
     end
 
-    if document_number.present?
+    if document_number.present? # We're using the presence of a document number as a proxy for whether the document number is available via govinfo since the document number was not available in the NARA disposition tables
       if publication_date
         Entry.find_by_document_number_and_publication_date(document_number.strip, publication_date) || Entry.find_by_document_number(document_number.strip)
       else

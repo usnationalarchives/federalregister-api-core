@@ -319,7 +319,7 @@ class EntrySerializer < ApplicationSerializer
     result = []
 
     if entry.document_number.nil?
-      result #otherwise all regs_dot_gov_documents with no FR doc num will be returned
+      # no-op, otherwise all regs_dot_gov_documents with no FR doc num will be returned
     else
       entry.
         regs_dot_gov_documents.
