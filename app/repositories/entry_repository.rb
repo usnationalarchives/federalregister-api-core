@@ -236,7 +236,7 @@ class EntryRepository < BaseRepository
     indexes :start_page, {type: 'integer'}
     indexes :topics, {type: 'keyword', index: false}
     indexes :subtype, {type: 'keyword', index: false}
-    indexes :executive_order_number, {type: 'integer'}
+    indexes :executive_order_number, {type: 'keyword'}
     indexes :proclamation_number, {type: 'keyword'}
 
     # Formerly Sphinx multi-value attributes
