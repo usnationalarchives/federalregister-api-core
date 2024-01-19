@@ -77,8 +77,7 @@ end
 if Settings.app.import.content
   every 1.day, at: '2:00 pm' do
     set :job, 'enqueue_reimports_of_modified_issues'
-    # NOTE: Turn back once queues can better support de-prioritized historical reprocessings
-    # rake 'content:issues:enqueue_reimports_of_modified_issues'
+    rake 'content:issues:enqueue_reimports_of_modified_issues'
   end
 end
 
