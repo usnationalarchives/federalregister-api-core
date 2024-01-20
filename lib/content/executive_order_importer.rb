@@ -10,6 +10,7 @@ module Content
     if log_differences_only
       differences = []
     end
+    current_time = Time.current
 
     executive_orders = []
     CSV.foreach(
@@ -118,7 +119,11 @@ module Content
           Rails.logger.info(row)
           differences << row
         else
-          entry.update(attr)
+          entry.assign_attributes(attr)
+          if entry.changed?
+            entry.updated_at = current_time
+            entry.save
+          end
           Rails.logger.info("EO #{eo['executive_order_number']} updated.")
         end
       else

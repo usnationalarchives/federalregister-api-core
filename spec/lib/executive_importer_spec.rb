@@ -50,6 +50,24 @@ describe "ExecutiveOrderImporter" do
     )
   end
 
+  it "if an EO has not changed, don't make an update call" do
+    entry_1 = FactoryGirl.create(:entry, document_number: '96-2755', publication_date: Date.new(1996,2,7), presidential_document_number: '12988', signing_date: Date.new(1993,12,30), citation: '59 FR 499', updated_at: Time.current - 1.day)
+    original_updated_at = entry_1.updated_at
+    puts original_updated_at
+
+    csv_rows = <<-eos.strip_heredoc
+      citation,document_number,end_page,executive_order_notes,ExEcUtive_order_number  ,html_url,pdf_url,publication_date,signing_date,start_page,title
+      59 FR 499,96-2755,499,,12988,https://www.federalregister.gov/documents/1994/01/05/94-290/amendment-to-executive-order-no-12864,https://www.govinfo.gov/content/pkg/FR-1994-01-05/html/94-290.htm,#{Date.new(1996,2,7).to_s(:default)},12/30/93,499,Amendment to Executive Order No. 12864
+      ,,,,,,,,,,
+    eos
+    csv_file = stubbed_csv(csv_rows)
+
+    Content::ExecutiveOrderImporter.perform(csv_file.path)
+    expect(Entry.count).to eq(1)
+
+    expect(entry_1.reload.updated_at).to eq(original_updated_at)
+  end
+
   it "prioritizes updating an executive order number even if it's publication date does not match what we have stored in the DB for an entry" do
     entry = FactoryGirl.create(:entry, presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: "12890", publication_date: Date.new(1994,1,5))
     csv_rows = <<-eos.strip_heredoc
