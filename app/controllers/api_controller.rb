@@ -15,8 +15,19 @@ class ApiController < ApplicationController
     headers['Access-Control-Allow-Origin'] = '*'
   end
 
+  EXECUTIVE_ORDER_CSV_MAXIMUM_PER_PAGE = 10000
   def enforce_maximum_per_page
-    params.delete(:maximum_per_page)
+    if eo_csv_request? && (params[:maximum_per_page].to_i <= EXECUTIVE_ORDER_CSV_MAXIMUM_PER_PAGE)
+      # no-op: permit larger EO csv requests
+    else
+      params.delete(:maximum_per_page)
+    end
+  end
+
+  def eo_csv_request?
+    params[:format] == "csv" &&
+    params.dig(:conditions, :presidential_document_type) == "executive_order"
+    params[:controller] == "api/v1/entries"
   end
 
   def render_json_or_jsonp(data, options = {})
