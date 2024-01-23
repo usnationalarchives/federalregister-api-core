@@ -2,7 +2,6 @@ require "spec_helper"
 
 
 describe NaraEoScraper do
-
   it "in conflicts between anchor tag 'name' attribute metadata text displayed, prioritize displaying what is visibly shown to the user" do
     html = <<-HTML
       <p><strong>Executive Order     <a name="86497"></a>8697 </strong>
@@ -291,7 +290,7 @@ describe NaraEoScraper do
     expect(result.first[7]).to eq('franklin-d-roosevelt')
   end
 
-  it "can handle citations where the publication date errantly comes first" do
+  it "can handle citations where the publication date errantly comes first that end with a comma" do
     html =  <<-HTML
       <p><strong>Executive Order    <a name="8605"></a>8605 </strong>
       <br> Ordering Certain Units and Members of the National Guard of the United States Into the Active Military Service of the United States</p>
@@ -303,5 +302,25 @@ describe NaraEoScraper do
     result = described_class.eo_metadata(html, 'roosevelt', 'arbitrary_url')
     expect(result.first[2]).to eq('5 FR 4795')
   end
+
+  it "can handle citations where the publication date errantly comes first" do
+    html =  <<-HTML
+      <p>
+        <strong>Executive Order     <a name="8874"></a>8874  </strong>
+        <br> Withdrawing Public Lands for Use of the War Department as a Practice Bombing Range; New Mexico 
+      </p>
+      <ul><li>Signed: August 28, 1941 </li>
+        <li>Federal Register page and date: August 30, 1941, 6 FR 4485</li>
+        <li>Amended by: <a href="/federal-register/executive-orders/1945-roosevelt.html#9526">EO 9526</a>, February 28, 
+              1945 </li>
+        <li>Revoked by: Public Land Order 496, July 9, 1948 (13 FR 4126)(in part); Public Land Order 682, November 3, 1950 (15 FR 7645)(in part); Public Land Order 2807, October 25, 1962 (27 FR 10583) </li>
+        <li>See: <!--A href="eo1934.html#6910"-->EO 6910, November 26, 1934 </li>
+      </ul>
+    HTML
+
+    result = described_class.eo_metadata(html, 'roosevelt', 'arbitrary_url')
+    expect(result.first[2]).to eq('6 FR 4485')
+  end
+
    
 end

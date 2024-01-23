@@ -137,17 +137,22 @@ class NaraEoScraper
         when /^Signed:/
           details['signing_date'] = li.text.gsub('Signed: ', '')
           details['parsed_signing_date'] = Date.try(:parse, details['signing_date']).try(:to_s, :iso)
-        when /not received for Federal Register publication/
+        when /not received for Federal Register publication/i
           # mark columns as inappropriate
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
             details[column_name] = 'not_received_for_publication'
           end
-        when /not received for publication/
+        when /not published/i
           # mark columns as inappropriate
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
             details[column_name] = 'not_received_for_publication'
           end
-        when /not received in time for publication/
+        when /not received for publication/i
+          # mark columns as inappropriate
+          ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
+            details[column_name] = 'not_received_for_publication'
+          end
+        when /not received in time for publication/i
           # mark columns as inappropriate
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
             details[column_name] = 'not_received_in_time_for_publication'
@@ -164,12 +169,14 @@ class NaraEoScraper
           if citation_text.include?(";")
             details['citation'] = citation_text.split(';').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
             details['publication_date'] = citation_text.split(';').last
-          elsif citation_text.ends_with?(',')
+          elsif citation_text.first.match?(/[[:alpha:]]/) || citation_text.ends_with?(',') 
             matches = citation_text.match(/^(.*?\d{4})(.*$)/)
+            next if matches.nil?
+
             publication_date = matches[1]
             citation = matches[1].try(:chomp,',')
             details['publication_date'] = publication_date
-            details['citation'] = citation = matches[2].try(:chomp,',').try(:strip)
+            details['citation'] = citation = matches[2].gsub(',',"").try(:strip)
           else
             details['citation'] = citation_text.split(',').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
             details['publication_date'] = citation_text.split(',').last(2).join(',')
