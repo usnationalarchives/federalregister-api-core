@@ -290,5 +290,18 @@ describe NaraEoScraper do
     #It correctly maps NARA identifier to API Core style president identifier
     expect(result.first[7]).to eq('franklin-d-roosevelt')
   end
+
+  it "can handle citations where the publication date errantly comes first" do
+    html =  <<-HTML
+      <p><strong>Executive Order    <a name="8605"></a>8605 </strong>
+      <br> Ordering Certain Units and Members of the National Guard of the United States Into the Active Military Service of the United States</p>
+      <ul><li>Signed: November 30, 1940 </li>
+        <li>Federal Register page and date: December 5, 1940 5 FR 4795, </li>
+      </ul>
+    HTML
+
+    result = described_class.eo_metadata(html, 'roosevelt', 'arbitrary_url')
+    expect(result.first[2]).to eq('5 FR 4795')
+  end
    
 end

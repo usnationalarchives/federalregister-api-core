@@ -164,6 +164,12 @@ class NaraEoScraper
           if citation_text.include?(";")
             details['citation'] = citation_text.split(';').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
             details['publication_date'] = citation_text.split(';').last
+          elsif citation_text.ends_with?(',')
+            matches = citation_text.match(/^(.*?\d{4})(.*$)/)
+            publication_date = matches[1]
+            citation = matches[1].try(:chomp,',')
+            details['publication_date'] = publication_date
+            details['citation'] = citation = matches[2].try(:chomp,',').try(:strip)
           else
             details['citation'] = citation_text.split(',').first.gsub(NON_BREAKING_SPACE_REGEX,"").strip
             details['publication_date'] = citation_text.split(',').last(2).join(',')
