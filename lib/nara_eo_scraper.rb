@@ -137,6 +137,11 @@ class NaraEoScraper
         when /^Signed:/
           details['signing_date'] = li.text.gsub('Signed: ', '')
           details['parsed_signing_date'] = Date.try(:parse, details['signing_date']).try(:to_s, :iso)
+        when /not received for Federal Register publication/
+          # mark columns as inappropriate
+          ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
+            details[column_name] = 'not_received_for_publication'
+          end
         when /not received for publication/
           # mark columns as inappropriate
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
