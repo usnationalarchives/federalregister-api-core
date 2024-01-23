@@ -43,6 +43,7 @@ module Content::ExecutiveOrderImporter
         attr = {
           :presidential_document_number => eo['executive_order_number'],
           :signing_date => eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil,
+          :executive_order_notes => eo['executive_order_notes'] || eo['disposition_notes'],
         }
         if eo['citation'].present?
           attr[:citation] = eo['citation'].strip
