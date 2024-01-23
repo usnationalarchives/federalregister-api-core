@@ -153,7 +153,7 @@ class NaraEoScraper
             details[column_name] = 'not_received_in_time_for_publication'
           end
         when /Federal Register page and date:/i, /\A\d+\sFR\s\d+/
-          citation_text = li.text.gsub('Federal Register page and date: ', '').strip
+          citation_text = li.text.gsub(/Federal Register page and date: /i, '').strip
           if citation_text.blank?
             # eg 10026-A is missing an FR page and date and just says 'Federal Register page and date:'
             details['citation'] = "no_citation_provided"
