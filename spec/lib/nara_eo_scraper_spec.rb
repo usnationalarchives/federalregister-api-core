@@ -322,5 +322,19 @@ describe NaraEoScraper do
     expect(result.first[2]).to eq('6 FR 4485')
   end
 
-   
+  it "can distinguish between citation and publication date even when no comma is present" do
+    html =  <<-HTML
+      <p><strong>Executive Order    <a name="9918"></a>9918</strong>
+      <br>  Creating an Emergency Board To Investigate Disputes Between the Alabama, Tennessee and Northern Railroad Company and Other Carriers, and Certain of Their Employees</p>
+      <ul><li>Signed: December 31, 1947 </li>
+      <li>Federal Register Page and Date: 13 FR 27 January 3, 1948  </li>
+      <li> Revoked by: <a href="/federal-register/executive-orders/1986.html#12553">EO 12553</a>, February 25, 1986</li>
+      </ul>
+    HTML
+
+    result = described_class.eo_metadata(html, 'roosevelt', 'arbitrary_url')
+    expect(result.first[2]).to eq('13 FR 27')
+    expect(result.first[6]).to eq('1948-01-03')
+  end
+
 end
