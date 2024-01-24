@@ -337,4 +337,19 @@ describe NaraEoScraper do
     expect(result.first[6]).to eq('1948-01-03')
   end
 
+  it "removes superfluous EO number that precedes a title if it comes first" do #eg '12334\n\n \n \n Example Title'
+    html =  <<-HTML
+      <p><strong>Executive Order 
+      
+        <a name="12334"></a>12334</strong>
+
+      <br>
+        
+      President's Intelligence Oversight Board</p>
+    HTML
+
+    result = described_class.eo_metadata(html, 'roosevelt', 'arbitrary_url')
+    expect(result.first[1]).to eq("President's Intelligence Oversight Board")
+  end
+
 end

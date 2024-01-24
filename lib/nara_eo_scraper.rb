@@ -108,8 +108,6 @@ class NaraEoScraper
     nokogiri_doc = Nokogiri::HTML(html_content)
     nokogiri_doc.css('p a[name]').map do |anchor_el_with_name|
       title_element = anchor_el_with_name.ancestors('p').first
-    # nokogiri_doc.css('hr').map do |hr|
-      # title_element = hr.next_element
       next unless title_element && title_element.name == 'p' && (title_element.children.length > 1)
 
       # Extract title
@@ -121,6 +119,15 @@ class NaraEoScraper
 
       title.shift
       title = title.join("\n").strip
+
+      eo_number = anchor_el_with_name['name']
+      title = title.
+        gsub('\n','').
+        tap do |string|
+          if eo_number.present?
+            string.gsub!(/^\s*#{eo_number}\s*/,"") # eg remove whitespace EO number and succeeding preceding whitespace: '12334\n\n \n \n Example Title'
+          end
+        end
 
       # Extract presidential document number from the title
       presidential_document_number = title_element.children.first.text.gsub(/Executive Order /, '').gsub('No.','').strip
