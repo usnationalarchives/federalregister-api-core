@@ -147,7 +147,7 @@ class NaraEoScraper
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
             details[column_name] = 'not_received_for_publication'
           end
-        when /not received for publication/i
+        when /(?<!\()\bnot published\b(?!\))/i #eg EO 10995 mentions '(not published)' with reference to a different EO
           # mark columns as inappropriate
           ['citation', 'publication_date', 'parsed_publication_date'].each do |column_name|
             details[column_name] = 'not_received_for_publication'
