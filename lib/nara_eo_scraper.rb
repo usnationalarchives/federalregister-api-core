@@ -195,12 +195,15 @@ class NaraEoScraper
         when /\A\d+\sFR\s\d+\z/
 
         else
-          details['disposition_notes'] << li.text.strip
+          details['disposition_notes'] << li.text.strip.gsub("\n","")
         end
       end
 
       # Concatenate disposition notes
-      disposition_notes = details['disposition_notes'].join(', ').gsub(NON_BREAKING_SPACE_REGEX,"").strip
+      disposition_notes = details['disposition_notes'].
+        join('\n').
+        gsub(NON_BREAKING_SPACE_REGEX,"")
+
 
       [
         presidential_document_number,
