@@ -192,8 +192,6 @@ class NaraEoScraper
           rescue
             details['parsed_publication_date'] = "date_parsing_error"
           end
-        when /\A\d+\sFR\s\d+\z/
-
         else
           details['disposition_notes'] << li.text.strip.gsub("\n","")
         end
