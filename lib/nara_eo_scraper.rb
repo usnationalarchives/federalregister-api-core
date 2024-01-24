@@ -179,6 +179,7 @@ class NaraEoScraper
             details['citation'] = citation = matches[2].gsub(',',"").try(:strip)
           elsif citation_text.count(",") == 1 # eg Federal Register Page and Date: 13 FR 27 January 3, 1948
             matches = citation_text.match(/(\d+ FR \d+)\s+(.+)/)
+            next if matches.nil?
             citation = matches[1]
             publication_date = matches[2]
             details['citation'] = citation
