@@ -21,8 +21,7 @@ class NaraEoScraper
   )
 
   BASE_URL = "https://www.archives.gov"
-  def self.presidential_page_objects
-    paths = %w(
+  PRESIDENT_INDEX_PATHS = %w(
     /federal-register/executive-orders/obama.html
     /federal-register/executive-orders/wbush.html
     /federal-register/executive-orders/clinton.html
@@ -36,8 +35,9 @@ class NaraEoScraper
     /federal-register/executive-orders/eisenhower.html
     /federal-register/executive-orders/truman.html
     /federal-register/executive-orders/roosevelt.html
-    )
-    paths.map do |path|
+  )
+  def self.presidential_page_objects
+    PRESIDENT_INDEX_PATHS.map do |path|
       OpenStruct.new(
         url: "#{BASE_URL}#{path}",
         president_identifier: path.split('/').last.gsub(".html","")
@@ -80,6 +80,33 @@ class NaraEoScraper
       results.sort_by{|eo_metadata| eo_metadata[0].to_i}.each do |eo_metadata|
         csv << eo_metadata
       end
+    end
+  end
+
+  def self.save_nara_pages_to_disk
+    base_directory = Rails.root.join('data', "nara_pages_archive_#{Date.current.to_s(:iso)}/")
+
+    urls = ["#{BASE_URL}/federal-register/executive-orders/disposition"]
+    PRESIDENT_INDEX_PATHS.each do |path|
+      urls << "#{BASE_URL}#{path}"
+    end
+    president_metadata.each do |metadata|
+      metadata.year_specific_urls.each do |url|
+        urls << url
+      end
+    end
+    urls
+
+    urls.each do |url|
+      html_content = URI.open(url).read
+      #Replace external URLs with local refs
+      html_content = html_content.gsub("#{BASE_URL}/federal-register/executive-orders/", "")
+      html_content = html_content.gsub("/federal-register/executive-orders/", "")
+      path_sans_host = url.gsub("#{BASE_URL}/federal-register/executive-orders/","")
+      path_on_disk = "#{base_directory}#{path_sans_host}"
+      FileUtils.mkdir_p(File.dirname(path_on_disk))
+      puts path_on_disk
+      File.write(path_on_disk, html_content)
     end
   end
 
