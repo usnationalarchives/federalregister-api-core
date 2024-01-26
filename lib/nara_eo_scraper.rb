@@ -75,6 +75,14 @@ class NaraEoScraper
       end
     end
 
+    MANUAL_ATTRIBUTE_CHANGES.
+      select{|eo_number, attr| attr['manual_addition']}.
+      to_h.
+      values.
+      each do |attrs|
+        results << attrs.values
+      end
+
     # Sort results by EO number
     CSV.open('data/nara_executive_orders.csv', 'a', write_headers: false, headers: HEADERS) do |csv|
       results.sort_by{|eo_metadata| eo_metadata[0].to_i}.each do |eo_metadata|
@@ -284,9 +292,84 @@ class NaraEoScraper
     '11838' => {'publication_date' => '1975-02-07'},
     '12458' => {'publication_date' => '1984-01-17'},
     '12825' => {'citation' => '32 FR 10049'},
-
-
-
+    '12287' => {
+      'executive_order_number' => 12287,
+      'title'                  => 'Decontrol of crude oil and refined petroleum products',
+      'citation'               => '46 FR 9909',
+      'signing_date_string'    => nil,
+      'signing_date'           => '1981-01-28',
+      'publication_date_string'=> nil,
+      'publication_date'       => '1981-01-30',
+      'president'              => 'ronald-reagan',
+      'disposition_notes'      => nil,
+      'scraped_url'            => 'https://www.archives.gov/federal-register/executive-orders/1981-reagan.html',
+      'manual_addition'        => true,
+    },
+    '12400' => {
+      'executive_order_number' => 12400,
+      'title'                  => "President's Commission on Strategic Forces",
+      'citation'               => "48 FR 381",
+      'signing_date_string'    => nil,
+      'signing_date'           => "1983-01-03",
+      'publication_date_string'=> nil,
+      'publication_date'       => "1983-01-05",
+      'president'              => 'ronald-reagan',
+      'disposition_notes'      => "Amended by: EO 12406, February 18, 1983; EO 12424, June 10, 1983\nRevoked by: EO 12534, September 30, 1985",
+      'scraped_url'            => "https://www.archives.gov/federal-register/executive-orders/1983.html",
+      'manual_addition'        => true,
+    },
+    '12498' => {
+      'executive_order_number' => 12498,
+      'title'                  => "Regulatory planning process",
+      'citation'               => "50 FR 1036",
+      'signing_date_string'    => nil,
+      'signing_date'           => "1985-01-04",
+      'publication_date_string'=> nil,
+      'publication_date'       => "1985-01-08",
+      'president'              => 'ronald-reagan',
+      'disposition_notes'      => "Revoked by: EO 12866, September 30, 1993\nSee: EO 12291, February 17, 1981; EO 12612, October 26, 1987; President's Message to Congress, November 5, 1991 (Weekly Compilation of Presidential Documents, v. 27, no. 45); EO 12803, April 30, 1992",
+      'scraped_url'            => "https://www.archives.gov/federal-register/executive-orders/1985.html",
+      'manual_addition'        => true,
+    },
+    '12543' => {
+      'executive_order_number' => '12543',
+      'title'                  => 'Prohibiting trade and certain transactions involving Libya',
+      'citation'               => '51 FR 875',
+      'signing_date_string'    => nil,
+      'signing_date'           => '1986-01-07',
+      'publication_date_string'=> nil,
+      'publication_date'       => '1986-01-09',
+      'president'              => 'ronald-reagan',
+      'disposition_notes'      => "See: Department of the Treasury regulations, 51 FR 1354; Department of Commerce regulations, 51 FR 2353; EO 12544, January 8, 1986; Notice of December 23, 1986; Notice of December 15, 1987; Notice of December 28, 1988; Notice of January 4, 1990; Notice of January 2, 1991; Notice of December 26, 1991; EO 12801, April 15, 1992; Notice of December 14, 1992; Notice of December 2, 1993; Notice of December 22, 1994; Notice of January 3, 1996; Notice of January 2, 1997; Notice of January 2, 1998; Notice of December 30, 1998; Notice of December 29, 1999; Notice of January 4, 2001; Notice of January 3, 2002; Notice of January 2, 2003; Notice of January 5, 2004\nRevoked by: EO 13357, September 20, 2004",
+      'scraped_url'            => "https://www.archives.gov/federal-register/executive-orders/1986.html",
+      'manual_addition'        => true,
+    },
+    '12623' => {
+      'executive_order_number' => '12623',
+      'title'                  => 'Delegating authority to implement assistance to the Nicaraguan Democratic Resistance',
+      'citation'               => '53 FR 487',
+      'signing_date_string'    => nil,
+      'signing_date'           => '1988-01-06',
+      'publication_date_string'=> nil,
+      'publication_date'       => '1988-01-08',
+      'president'              => 'ronald-reagan',
+      'disposition_notes'      => nil,
+      'scraped_url'            => "https://www.archives.gov/federal-register/executive-orders/1988.html",
+      'manual_addition'        => true,
+    },
+    '12663' => {
+      'executive_order_number' => 12663,
+      'title'                  => "Adjustments of certain rates of pay and allowances",
+      'citation'               => "54 FR 791",
+      'signing_date_string'    => nil,
+      'signing_date'           => "1989-01-06",
+      'publication_date_string'=> nil,
+      'publication_date'       => "1989-01-10",
+      'president'              => 'ronald-reagan',
+      'disposition_notes'      => "Supersedes: EO 12622, December 31, 1987\nSuperseded by: EO 12698, December 23, 1989",
+      'scraped_url'            => "https://www.archives.gov/federal-register/executive-orders/1989-reagan.html",
+      'manual_addition'        => true,
+    },
   }
 
 end
