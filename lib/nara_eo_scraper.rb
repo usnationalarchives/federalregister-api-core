@@ -238,19 +238,55 @@ class NaraEoScraper
         gsub(NON_BREAKING_SPACE_REGEX,"")
 
 
-      [
-        presidential_document_number,
-        title,
-        details['citation'],
-        details['signing_date'],
-        details['parsed_signing_date'],
-        details['publication_date'],
-        details['parsed_publication_date'],
-        NARA_IDENTIFIER_MAPPING[president_identifier],
-        disposition_notes,
-        url
-      ]
+      attributes = {
+          'executive_order_number' => presidential_document_number,
+          'title'                  => title,
+          'citation'               => details['citation'],
+          'signing_date_string'    => details['signing_date'],
+          'signing_date'           => details['parsed_signing_date'],
+          'publication_date_string'=> details['publication_date'],
+          'publication_date'       => details['parsed_publication_date'],
+          'president'              => NARA_IDENTIFIER_MAPPING[president_identifier],
+          'disposition_notes'      => disposition_notes,
+        'scraped_url'              => url,
+      }.tap do |attrs|
+        manual_changes = MANUAL_ATTRIBUTE_CHANGES[presidential_document_number]
+        if manual_changes
+          attrs.merge!(manual_changes)
+        end
+      end
+      
+      attributes.values
     end
   end
+
+
+  MANUAL_ATTRIBUTE_CHANGES = {
+    '7729' => {'publication_date' => '1937-10-20'},
+    '7925' => {'publication_date' => '1938-07-07'},
+    '8467' => {'publication_date' => '1940-07-04'},
+    '8596' => {'publication_date' => '1940-11-20'},
+    '8869' => {'publication_date' => '1931-08-26'},
+    '8874' => {'signing_date' => '1941-08-28', 'publication_date' => '1941-08-30'},
+    '8921' => {'publication_date' => '1941-10-25'},
+    '9312' => {'publication_date' => '1943-03-12'},
+    '9670' => {'publication_date' => '1946-01-01'},
+    '9787' => {'signing_date' => '1946-10-05'},
+    '9959' => {'publication_date' => '1948-05-20'},
+    '10010' => {'publication_date' => '1948-10-19'},
+    '10092' => {'publication_date' => '1949-12-22'},
+    '10101' => {'signing_date' => '1950-01-31'},
+    '10151' => {'publication_date' => '1950-08-15'},
+    '10681' => {'signing_date' => '1956-10-22'},
+    '10932' => {'signing_date' => '1961-04-07', 'publication_date' => '1961-04-11'},
+    '11026' => {'publication_date' => '1962-06-12'},
+    '11304' => {'publication_date' => '1966-09-14'},
+    '11838' => {'publication_date' => '1975-02-07'},
+    '12458' => {'publication_date' => '1984-01-17'},
+    '12825' => {'citation' => '32 FR 10049'},
+
+
+
+  }
 
 end
