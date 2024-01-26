@@ -155,6 +155,7 @@ module Content
     executive_order_number: :string,
     publication_date:       :date,
     signing_date:           :date,
+    citation:               :string,
     title:                  :string,
   }
 
@@ -167,6 +168,7 @@ module Content
   end
 
   HISTORICAL_EO_NUMBER_CUTOFF = 12890 #ie published on 1994-01-05
+  DUPLICATE_EO_NUMBERS = ['10571']
   def locate_document(eo)
     document_number = eo['document_number']
 
@@ -182,6 +184,13 @@ module Content
       else
         Entry.find_by_document_number(document_number.strip)
       end
+    elsif DUPLICATE_EO_NUMBERS.include?(eo['executive_order_number'])
+      not_received_for_publication = eo['publication_date'] == 'not_received_for_publication'
+      Entry.find_or_initialize_by(
+        presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
+        presidential_document_number:  eo['executive_order_number'],
+        not_received_for_publication:  not_received_for_publication
+      )
     elsif eo['executive_order_number'] && (eo['executive_order_number'].gsub(/\D/, '').to_i < HISTORICAL_EO_NUMBER_CUTOFF)
       Entry.find_or_initialize_by(
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,

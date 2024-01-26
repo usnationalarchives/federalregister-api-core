@@ -13,7 +13,7 @@ def stubbed_csv(csv_text, tempfile_name="arbitrary.csv", options = {empty_endlin
   csv_file
 end
 
-describe "ExecutiveOrderImporter" do
+describe Content::ExecutiveOrderImporter do
   before(:each) do
     agency_name = FactoryGirl.create(:agency_name, name: 'Executive Office of the President')
   end
@@ -132,6 +132,19 @@ describe "ExecutiveOrderImporter" do
       citation: nil,
       not_received_for_publication: true
     )
+  end
+
+  it "handles duplicate executive order number scenarios eg 10571" do
+    csv_rows = <<-eos.strip_heredoc
+      executive_order_number,title,citation,signing_date_string,signing_date,publication_date_string,publication_date,president,disposition_notes,scraped_url
+      10571,Including Certain Lands in the Nantahala National Forest,19 FR 6687,"October 18, 1954",1954-10-18," October 19, 1954",1954-10-19,dwight-d-eisenhower,"",https://www.archives.gov/federal-register/executive-orders/1954.html
+      10571,-A Assignment of Frequencies to Government Radio Stations,not_received_for_publication,"October 26, 1954",1954-10-26,not_received_for_publication,not_received_for_publication,dwight-d-eisenhower,"",https://www.archives.gov/federal-register/executive-orders/1954.html
+    eos
+
+    csv_file = stubbed_csv(csv_rows)
+
+    Content::ExecutiveOrderImporter.perform(csv_file.path)
+    expect(Entry.count).to eq(2)
   end
 
 end
