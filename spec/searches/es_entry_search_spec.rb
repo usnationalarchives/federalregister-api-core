@@ -1130,7 +1130,7 @@ describe EsEntrySearch, es: true do
 
 
         result = search.date_distribution(:period => :yearly).results
-        expect(result["1933-01-01"]).to be_truthy
+        expect(result["1937-01-01"]).to be_truthy
       end
     end
 
