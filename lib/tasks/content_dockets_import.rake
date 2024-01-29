@@ -15,7 +15,7 @@ namespace :content do
           ORDER BY publication_date DESC", 4.months.ago]
       ).compact.uniq.each do |docket_id|
         is_default_docket = RegsDotGovDocket::DEFAULT_DOCKET_REGEX.match?(docket_id)
-        Sidekiq::Client.enqueue(DocketImporter, docket_id, !is_default_docket)
+        Sidekiq::Client.enqueue(DocketImporter, docket_id, false, !is_default_docket)
       end
     end
   end
