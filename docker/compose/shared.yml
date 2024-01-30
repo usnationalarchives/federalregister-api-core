@@ -44,3 +44,4 @@ services:
       - network.host=0.0.0.0
       - discovery.type=single-node
       - bootstrap.memory_lock=true
+      - script.painless.regex.enabled=true
