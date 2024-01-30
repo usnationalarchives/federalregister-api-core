@@ -261,12 +261,18 @@ class NaraEoScraper
           'publication_date'       => details['parsed_publication_date'],
           'president'              => NARA_IDENTIFIER_MAPPING[president_identifier],
           'disposition_notes'      => disposition_notes,
-        'scraped_url'              => url,
+          'scraped_url'            => url,
       }.tap do |attrs|
         manual_changes = MANUAL_ATTRIBUTE_CHANGES[presidential_document_number]
         if manual_changes
           attrs.merge!(manual_changes)
         end
+        
+        if attrs['executive_order_number'] == '10571' &&
+          attrs['title'].starts_with?('-A')
+          attrs.merge(executive_order_number: '10571-A', title: 'Assignment of Frequencies to Government Radio Stations')
+        end
+
       end
       
       attributes.values
