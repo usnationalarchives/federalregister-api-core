@@ -3,7 +3,7 @@ class PageViewHistoricalSetUpdater
   include Sidekiq::Throttled::Worker
   include CacheUtils
   include PageViewCountUtils
-  sidekiq_options :queue => :api_core, :retry => 6
+  sidekiq_options :queue => :place_determiner, :retry => 6
   sidekiq_throttle(**{
     # Allow maximum 1 concurrent jobs of this class at a time.
     :concurrency => { :limit => 1 },
