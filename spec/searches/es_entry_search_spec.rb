@@ -793,6 +793,20 @@ describe EsEntrySearch, es: true do
       expect(search.results.es_ids).to eq([999,888])
     end
 
+    it "applies the sort order correctly since EO numbers are now stored as strings in ES and can contain hyphenated alpha-numeric suffixes" do
+      entries = [
+        build_entry_double(executive_order_number: '9396', id: 666),
+        build_entry_double(executive_order_number: '9395-A', id: 888),
+        build_entry_double(executive_order_number: '9395', id: 777),
+        build_entry_double(executive_order_number: '9395-B', id: 999),
+        build_entry_double(executive_order_number: '10000', id: 555),
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(conditions: {}, order: 'executive_order_number')
+      expect(search.results.es_ids).to eq([777,888,999,666,555])
+    end
+
     it "handles array attributes" do
       entries = [
         entry,

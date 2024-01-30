@@ -519,9 +519,22 @@ class EsEntrySearch < EsApplicationSearch
         {document_number: {order: "asc"}}, 
       ]
     when 'executive_order_number'
+      painless_script = <<-PAINLESS
+        String digitsOnly = /[^0-9]/.matcher(doc['executive_order_number'].value).replaceAll('');
+        Integer.parseInt(digitsOnly)
+      PAINLESS
       [
+        {
+          "_script": {
+            "type": "number",
+            "script": {
+              "source": painless_script,
+              "lang": "painless"
+            },
+            "order": "asc"
+          }
+        },
         {executive_order_number: {order: "asc"}},
-        {_score: {order: "desc"}}
       ]
     when 'proclamation_number'
       [
