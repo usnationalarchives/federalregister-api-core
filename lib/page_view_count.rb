@@ -3,8 +3,9 @@ class PageViewCount
   include PageViewCountUtils
 
 
-  def initialize(page_view_type)
+  def initialize(page_view_type, options={})
     @page_view_type = page_view_type
+    @use_pre_ga_4_api = options.fetch(:use_pre_ga_4_api, false)
   end
 
   def self.batch_count_for(document_numbers, page_view_type)

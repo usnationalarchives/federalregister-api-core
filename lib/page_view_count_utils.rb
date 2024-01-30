@@ -65,6 +65,8 @@ module PageViewCountUtils
 
   private
 
+  attr_reader :use_pre_ga_4_api
+
   def log(msg)
     logger.info("[#{Time.current}] #{msg}")
   end
@@ -116,7 +118,11 @@ module PageViewCountUtils
   memoize :total_results
 
   def use_ga4?
-    true
+    if use_pre_ga_4_api
+      false
+    else
+      true
+    end
   end
 
   def page_views(args={})
