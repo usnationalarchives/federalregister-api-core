@@ -37,6 +37,7 @@ FederalregisterApiCore::Application.routes.draw do
     match 'index/:year/:agency/unapproved-documents' => 'indexes#year_agency_unapproved_documents', :as => :index_year_agency_unapproved_documents, :via => :get
     match 'index/:year/:agency/completion' => 'indexes#mark_complete', :as => :index_year_agency_completion, :via => :put
     match 'index/:year/:agency/:type' => 'indexes#year_agency_type', :as => :index_year_agency_type, :via => :get
+    resources :executive_orders, only: [:index, :show, :edit, :update]
     resources :generated_files, :only => [:show]
     resources :topics
     resources :topic_names do

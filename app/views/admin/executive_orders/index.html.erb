@@ -1,0 +1,14 @@
+<% super_title 'Executive Orders' %>
+
+<%= semantic_form_for @search, :url => admin_executive_orders_path, :method => :get do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :presidential_document_number_cont, label: 'Search By EO Number' %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :label => 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+  <% end %>
+<% end %>
+
+
+<%#= @search.result.map(&:presidential_document_number) %>

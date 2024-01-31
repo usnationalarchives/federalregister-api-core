@@ -450,6 +450,11 @@ class Entry < ApplicationModel
     paths.each {|path| purge_cache(path) }
   end
 
+  def historical_era_eo?
+    presidential_document_type_id == PresidentialDocumentType::EXECUTIVE_ORDER.id &&
+    executive_order_number &&
+    executive_order_number.to_i < Content::ExecutiveOrderImporter::HISTORICAL_EO_NUMBER_CUTOFF
+  end
 
   def comments_close_on
     comments_close_date.try(:date)

@@ -1,0 +1,29 @@
+<% super_title "Executive Order #{@executive_order.presidential_document_number}" %>
+
+<%= semantic_form_for @executive_order, :url => admin_executive_order_path(@executive_order) do |f| %>
+  <%#= hidden_field_tag :return_to, params[:return_to] %>
+  <%= f.inputs do %>
+    <%= f.input :executive_order_number, input_html: {disabled: true} %>
+    <%= f.input :document_number,
+          input_html: {
+            disabled: (!@executive_order.historical_era_eo?)
+          },
+          hint: "" %>
+    <%= f.input :publication_date,
+          as: :string,
+          input_html: {disabled: !@executive_order.historical_era_eo?},
+          hint: "Publication date is automatically set based on the XML data source"
+           %>
+    <%= f.input :signing_date,
+          as: :string,
+          input_html: {disabled: true},
+          hint: "Signing date should be modified via a change to the MODS file" unless @executive_order.historical_era_eo? %>
+    <%= f.input :executive_order_notes, label: "Disposition Notes" %>
+  <% end %>
+  
+  <%= f.actions do %>
+    <%= f.action :submit, :label => 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+    <%#= link_to 'Cancel', unprocessed_admin_agency_names_path %>
+  <% end %>
+<% end %>
+
