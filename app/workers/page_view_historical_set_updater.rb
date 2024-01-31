@@ -9,9 +9,10 @@ class PageViewHistoricalSetUpdater
     :concurrency => { :limit => 1 },
   })
 
-  def perform(start_date,end_date, page_view_type_id)
+  def perform(start_date,end_date, page_view_type_id, use_pre_ga_4_api)
     ActiveRecord::Base.clear_active_connections!
     @page_view_type = PageViewType.find(page_view_type_id)
+    @use_pre_ga_4_api = use_pre_ga_4_api
     begin
       update_counts(
         Date.parse(start_date),

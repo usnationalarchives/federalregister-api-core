@@ -50,13 +50,15 @@ describe PageViewCount do
       PageViewHistoricalSetUpdater.perform_async(
         (Date.new(2010,1,1)).to_s(:iso),
         Date.new(2010,3,31).to_s(:iso),
-        page_view_type.id
+        page_view_type.id,
+        nil
       )
       expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(8)
       PageViewHistoricalSetUpdater.perform_async(
         (Date.new(2010,4,1)).to_s(:iso),
         Date.new(2010,6,30).to_s(:iso),
-        page_view_type.id
+        page_view_type.id,
+        nil
       )
       expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(16)
     end

@@ -57,7 +57,8 @@ class PageViewCount
       PageViewHistoricalSetUpdater.perform_async(
         date_range.first.to_s(:iso),
         date_range.last.to_s(:iso),
-        page_view_type.id
+        page_view_type.id,
+        use_pre_ga_4_api
       )
     end
 
