@@ -37,7 +37,7 @@ class Admin::ExecutiveOrdersController < AdminController
   private
 
   def eo_params
-    params.require(:entry).permit(:document_number, :publication_date, :signing_date)
+    params.require(:entry).permit(:document_number, :publication_date, :signing_date, :executive_order_notes)
   end
 
 end
