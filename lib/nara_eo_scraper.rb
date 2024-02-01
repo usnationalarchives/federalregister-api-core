@@ -247,7 +247,7 @@ class NaraEoScraper
 
       # Concatenate disposition notes
       disposition_notes = details['disposition_notes'].
-        join('\n').
+        join("\n").
         gsub(NON_BREAKING_SPACE_REGEX,"")
 
 
