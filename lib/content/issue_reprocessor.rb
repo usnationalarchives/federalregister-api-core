@@ -126,7 +126,7 @@ module Content
       update_reprocessing_message("reprocessing presidential document fields")
 
       begin
-        entry_importer(:presidential_document_type_id, :signing_date, :executive_order_notes, :presidential_document_number)
+        entry_importer(:presidential_document_type_id, :signing_date, :executive_order_notes, :presidential_document_number, :president_id)
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Presidential Documents")
       end
