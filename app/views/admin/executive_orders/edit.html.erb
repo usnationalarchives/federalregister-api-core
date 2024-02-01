@@ -12,7 +12,7 @@
     <%= f.input :publication_date,
           as: :string,
           input_html: {disabled: !@executive_order.historical_era_eo?},
-          hint: "Publication date is automatically set based on the XML data source"
+          hint: ("Publication date is automatically set based on the XML data source" if !@executive_order.historical_era_eo?)
            %>
     <%= f.input :signing_date,
           as: :string,
