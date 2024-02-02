@@ -1,1 +1,31 @@
-<%= @executive_order.document_number %>
+<% super_title "Executive Order #{@executive_order.presidential_document_number}" %>
+
+
+<%= semantic_form_for @search, :url => admin_executive_orders_path, :method => :get do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :presidential_document_number_cont, label: 'Search By EO Number', required: false %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :label => 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+  <% end %>
+<% end %>
+
+<div id="eo-attributes">
+  <table class='table table-bordered'>
+    <tbody>
+        <tr>
+          <th><%= link_to "Edit", edit_admin_executive_order_path(@executive_order) %></th>
+          <td></td>
+        </tr>
+        <% [:title, :document_number, :publication_date, :signing_date, :executive_order_notes].each do |attribute| %>
+          <tr>
+            <th><%= Entry.human_attribute_name(attribute).titleize %></th>
+            <td><%= simple_format(add_eo_links(@executive_order.send(attribute).to_s, true)) %></td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+  Click <%= link_to "here", edit_admin_executive_order_path(@executive_order) %> to edit this EO
+</div>
+

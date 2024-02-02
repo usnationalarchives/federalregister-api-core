@@ -2,7 +2,7 @@
 
 <%= semantic_form_for @search, :url => admin_executive_orders_path, :method => :get do |f| %>
   <%= f.inputs do %>
-    <%= f.input :presidential_document_number_cont, label: 'Search By EO Number' %>
+    <%= f.input :presidential_document_number_cont, label: 'Search By EO Number', required: false %>
   <% end %>
 
   <%= f.actions do %>

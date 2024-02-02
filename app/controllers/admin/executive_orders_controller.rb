@@ -4,7 +4,7 @@ class Admin::ExecutiveOrdersController < AdminController
   def index
     respond_to do |wants|
       wants.html do
-        @search = Entry.where(presidential_document_type_id: 2).ransack(params[:q])
+        load_search!
         if @search.result.to_a.count == 1
           redirect_to edit_admin_executive_order_path(@search.result.first)
         else
@@ -15,6 +15,7 @@ class Admin::ExecutiveOrdersController < AdminController
   end
 
   def show 
+    load_search!
     @executive_order = Entry.where(presidential_document_type_id: 2).find(params[:id])
   end
 
@@ -35,6 +36,10 @@ class Admin::ExecutiveOrdersController < AdminController
   end
 
   private
+
+  def load_search!
+    @search = Entry.where(presidential_document_type_id: 2).ransack(params[:q])
+  end
 
   def eo_params
     params.require(:entry).permit(:document_number, :publication_date, :signing_date, :executive_order_notes)

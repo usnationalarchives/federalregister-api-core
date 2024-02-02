@@ -1,6 +1,18 @@
 #executive_orders {
+  .wrapper {
+    width: 780px;
+  }
+
+  .flash {
+    margin-left: 26px;
+  }
+
   #entry_executive_order_notes_input textarea {
     width: 700px;
   }
   
+}
+
+#eo-attributes {
+  margin-left: 26px;
 }
