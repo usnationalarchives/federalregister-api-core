@@ -15,8 +15,11 @@ class EntryObserver < ActiveRecord::Observer
       if entry.presidential_document?
         purge_cache("^/presidential-documents")
         purge_cache("^/esi/layouts/navigation/presidential-documents")
-        purge_cache("^/esi/home/presidential_documents")
       end
+    elsif entry.historical_era_eo?
+      purge_cache("^/executive-order/#{entry.presidential_document_number}")
+      purge_cache("^/presidential-documents/executive-orders/*")
     end
   end
+
 end
