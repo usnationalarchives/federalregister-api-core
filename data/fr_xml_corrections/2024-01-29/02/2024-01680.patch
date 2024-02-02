@@ -1,0 +1,17 @@
+--- /home/app/data/efs/document_issues/xml/2024/01/2024-01-29.xml	2024-02-01 19:25:18.233626476 -0500
++++ tmp/2024-01-29_modified_tmp.xml	2024-02-01 19:26:11.358244572 -0500
+@@ -20201,7 +20201,13 @@
+         <NOTICE>
+             <PREAMB>
+                 <AGENCY TYPE="S">DEPARTMENT OF AGRICULTURE</AGENCY>
+-                <SUBJECT>Privacy Act of 1974; Revised System of Records</SUBJECT>
++		<SUBJECT>Privacy Act of 1974; Revised System of Records</SUBJECT>
++		<NOTE>
++			<HD SOURCE="HED">Editorial Note:</HD>
++			<P>
++			USDA inadvertently included a wrong phone number (202-577-8071) under the FOR FURTHER INFORMATION CONTACT caption in the document. Please use one of the other means provided to contact the agency.
++			</P>
++		</NOTE>
+                 <AGY>
+                     <HD SOURCE="HED">AGENCY:</HD>
+                     <P>Office of the Chief Financial Officer (OCFO), National Finance Center (NFC).</P>
