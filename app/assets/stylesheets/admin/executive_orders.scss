@@ -1,14 +1,28 @@
 #executive_orders {
+  table th {
+    background-color: #f9f9f9;
+  }
+
   .wrapper {
     width: 780px;
   }
 
-  .flash {
+  p.eo-xml-note, .flash {
     margin-left: 26px;
   }
 
-  #entry_executive_order_notes_input textarea {
+  #entry_title_input textarea {
+    height: 70px;
     width: 700px;
+  }
+
+  #entry_executive_order_notes_input textarea {
+    height: 270px;
+    width: 700px;
+  }
+
+  #entry_not_received_for_publication_input label {
+    padding-left: 0;
   }
   
 }

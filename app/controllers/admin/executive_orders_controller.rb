@@ -7,7 +7,7 @@ class Admin::ExecutiveOrdersController < AdminController
         load_search!
         if @search.result.to_a.count == 1
           redirect_to edit_admin_executive_order_path(@search.result.first)
-        else
+        elsif params[:q]
           flash.now[:error] = "Executive order not found"
         end
       end
@@ -42,7 +42,22 @@ class Admin::ExecutiveOrdersController < AdminController
   end
 
   def eo_params
-    params.require(:entry).permit(:document_number, :publication_date, :signing_date, :executive_order_notes)
+    if @executive_order.historical_era_eo?
+      params.require(:entry).permit(
+        :title,
+        :citation,
+        :document_number,
+        :signing_date, 
+        :publication_date,
+        :president_id,
+        :not_received_for_publication,
+        :executive_order_notes
+      )
+    else
+      params.require(:entry).permit(
+        :executive_order_notes
+      )
+    end
   end
 
 end

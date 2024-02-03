@@ -1,23 +1,46 @@
 <% super_title "Executive Order #{@executive_order.presidential_document_number}" %>
 
+
+<% if !@executive_order.historical_era_eo? %>
+<p class="eo-xml-note">
+  <em>NOTE: Executive orders after EO 12890 should be corrected in the XML source data for fields disabled for editing below. After an XML update, the system will automatically detect the changes and attempt to reimport them automatically.</em>
+  <%= link_to "Search for a Different EO", admin_executive_orders_path %>
+</p>
+</br>
+<% end %>
+
 <%= semantic_form_for @executive_order, :url => admin_executive_order_path(@executive_order) do |f| %>
-  <%#= hidden_field_tag :return_to, params[:return_to] %>
   <%= f.inputs do %>
     <%= f.input :executive_order_number, input_html: {disabled: true} %>
+    <%= f.input :title, input_html: {disabled: true} %>
+    <%= f.input :citation,
+          input_html: {
+            disabled: (!@executive_order.historical_era_eo?)
+          },
+          hint: "" %>
     <%= f.input :document_number,
           input_html: {
             disabled: (!@executive_order.historical_era_eo?)
           },
           hint: "" %>
+    <%= f.input :signing_date,
+          as: :string,
+          input_html: {disabled: !@executive_order.historical_era_eo?},
+          placeholder: "01/01/1999" %>
     <%= f.input :publication_date,
           as: :string,
           input_html: {disabled: !@executive_order.historical_era_eo?},
-          hint: ("Publication date is automatically set based on the XML data source" if !@executive_order.historical_era_eo?)
+          placeholder: "01/01/1999"
            %>
-    <%= f.input :signing_date,
-          as: :string,
-          input_html: {disabled: true},
-          hint: "Signing date should be modified via a change to the MODS file" unless @executive_order.historical_era_eo? %>
+    <%= f.input :president_id,
+          as: :select,
+          collection: President.all.map{|x| [x.full_name, x.id]},
+          label: "President",
+          input_html: {disabled: !@executive_order.historical_era_eo?},
+          hint: ("President will be inferred based on signing date and publication date if left blank" if @executive_order.historical_era_eo?) %>
+    <% if @executive_order.historical_era_eo? %>
+      <%= f.input :not_received_for_publication %>
+    <% end %>
     <%= f.input :executive_order_notes, label: "Disposition Notes" %>
   <% end %>
   

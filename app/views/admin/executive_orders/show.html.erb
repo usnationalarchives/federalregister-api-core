@@ -18,14 +18,40 @@
           <th><%= link_to "Edit", edit_admin_executive_order_path(@executive_order) %></th>
           <td></td>
         </tr>
-        <% [:title, :document_number, :publication_date, :signing_date, :executive_order_notes].each do |attribute| %>
-          <tr>
-            <th><%= Entry.human_attribute_name(attribute).titleize %></th>
-            <td><%= simple_format(add_eo_links(@executive_order.send(attribute).to_s, true)) %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <th><%= Entry.human_attribute_name(:title).titleize %></th>
+          <td><%= simple_format(add_eo_links(@executive_order.title, true)) %></td>
+        </tr>
+        <tr>
+          <th><%= Entry.human_attribute_name(:citation) %></th>
+          <td><%= @executive_order.citation %></td>
+        </tr>
+        <tr>
+          <th><%= Entry.human_attribute_name(:document_number).titleize %></th>
+          <td><%= @executive_order.document_number %></td>
+        </tr>
+        <tr>
+          <th><%= Entry.human_attribute_name(:signing_date).titleize %></th>
+          <td><%= @executive_order.signing_date %></td>
+        </tr>
+        <tr>
+          <th><%= Entry.human_attribute_name(:publication_date).titleize %></th>
+          <td><%= @executive_order.publication_date %></td>
+        </tr>
+        <tr>
+          <th><%= Entry.human_attribute_name(:president_id) %></th>
+          <td><%= @executive_order.president&.full_name %></td>
+        </tr>
+        <tr>
+          <th>Received for Publication</th>
+          <td><%= @executive_order.not_received_for_publication ? "No" : "Yes" %></td>
+        </tr>
+        <tr>
+          <th><%= Entry.human_attribute_name(:executive_order_notes).titleize %></th>
+          <td><%= simple_format(add_eo_links(@executive_order.executive_order_notes, true)) %></td>
+        </tr>
     </tbody>
   </table>
-  Click <%= link_to "here", edit_admin_executive_order_path(@executive_order) %> to edit this EO
+  Click <%= link_to "here", edit_admin_executive_order_path(@executive_order) %> to edit
 </div>
 
