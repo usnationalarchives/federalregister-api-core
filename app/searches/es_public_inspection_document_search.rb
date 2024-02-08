@@ -156,6 +156,10 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
     ]
   end
 
+  def es_base_must_conditions
+    []
+  end
+
   def highlight_fields
     #NOTE: It is necessary to include the .exact fields or no excerpts will be returned for queries that include double quotes.
     {

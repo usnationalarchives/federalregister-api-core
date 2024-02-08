@@ -553,6 +553,18 @@ class EsEntrySearch < EsApplicationSearch
     end
   end
 
+  def es_base_must_conditions
+    if include_pre_1994_docs
+      []
+    else
+      [
+        exists: {
+          field: "document_number"
+        },
+      ]
+    end
+  end
+
   def highlight_fields
     {
       "abstract" => {

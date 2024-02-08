@@ -1151,6 +1151,7 @@ describe EsEntrySearch, es: true do
       it "in facets" do
         entry = Factory.create(
           :entry,
+          document_number: nil,
           title: 'fish',
         ) 
         Factory.create(:issue, publication_date: Date.current, completed_at: Time.current)
@@ -1161,6 +1162,20 @@ describe EsEntrySearch, es: true do
         result = search.date_distribution(:period => :yearly).results
         expect(result["1937-01-01"]).to be_truthy
       end
+
+      it "in normal searches" do
+        entry = Factory.create(
+          :entry,
+          document_number: nil,
+          title: 'fish',
+        ) 
+        Factory.create(:issue, publication_date: Date.current, completed_at: Time.current)
+        Entry.bulk_index([entry], refresh: true)
+        search = EsEntrySearch.new(conditions: {term: 'fish'}, include_pre_1994_docs: true)
+
+        expect(search.results.count).to eq(1)
+      end
+
     end
 
   end

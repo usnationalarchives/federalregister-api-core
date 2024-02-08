@@ -457,11 +457,7 @@ class EsApplicationSearch
         function_score: {
           query: {
             bool: {
-              must: [
-                exists: {
-                  field: "document_number"
-                },
-              ],
+              must: es_base_must_conditions,
               filter: []
             }
           },
@@ -476,6 +472,10 @@ class EsApplicationSearch
         query.merge!(highlight: highlight_query)
       end
     end
+  end
+
+  def es_base_must_conditions
+    raise NotImplementedError
   end
 
   def es_source
