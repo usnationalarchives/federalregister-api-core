@@ -554,7 +554,7 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   def es_base_must_conditions
-    if include_pre_1994_docs
+    if Settings.feature_flags.include_pre_1994_docs && include_pre_1994_docs
       []
     else
       [

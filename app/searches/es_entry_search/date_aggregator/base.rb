@@ -4,7 +4,7 @@ class EsEntrySearch::DateAggregator::Base
   STARTING_DATE_OF_HISTORICAL_EXECUTIVE_ORDERS = Date.new(1937,1,1)
   def initialize(es_search, options)
     @es_search = es_search
-    if es_search.include_pre_1994_docs
+    if Settings.feature_flags.include_pre_1994_docs && es_search.include_pre_1994_docs
       @start_date = STARTING_DATE_OF_HISTORICAL_EXECUTIVE_ORDERS
       @end_date = Issue.current.publication_date
     elsif options[:with] && options[:with][:publication_date]
