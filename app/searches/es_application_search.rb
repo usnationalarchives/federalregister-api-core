@@ -457,7 +457,11 @@ class EsApplicationSearch
         function_score: {
           query: {
             bool: {
-              must: [],
+              must: [
+                exists: {
+                  field: "document_number"
+                },
+              ],
               filter: []
             }
           },

@@ -3,6 +3,9 @@ require "spec_helper"
 describe EsEntrySearch, es: true do
 
   def build_entry_double(hsh)
+    if hsh[:document_number].blank?
+      hsh.merge!(document_number: "2099-#{rand(5000)}")
+    end
     entry = double('entry')
     allow(entry).to receive(:to_hash).and_return(hsh)
     allow(entry).to receive(:id).and_return(hsh.fetch(:id))
@@ -268,7 +271,7 @@ describe EsEntrySearch, es: true do
            {:function_score=>
              {:query=>
                {:bool=>
-                 {:must=>[],
+                 {:must=>[{:exists=>{:field=>"document_number"}}],
                   :filter=>[{:bool=>{:filter=>{:term=>{:significant=>true}}}}]}},
               :functions=>
                [{:gauss=>
@@ -306,7 +309,7 @@ describe EsEntrySearch, es: true do
                  {:filter=>
                    [{:bool=>
                       {:filter=>{:terms=>{:presidential_document_type_id=>[1, 2]}}}}],
-                  :must=>[]}}}},
+                      :must=>[{:exists=>{:field=>"document_number"}}]}}}},
           :size=>EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
           :sort => [
             {:_score=>{:order=>"desc"}},
@@ -333,7 +336,7 @@ describe EsEntrySearch, es: true do
                  {:filter=>
                    [{:range=>
                       {:publication_date=>{:gte=>"2000-01-01", :lte=>"2049-01-01"}}}],
-                  :must=>[]}}}},
+                    :must=>[{:exists=>{:field=>"document_number"}}]}}}},
           :size=>20,
           :sort => [
             {:_score=>{:order=>"desc"}},
@@ -352,6 +355,18 @@ describe EsEntrySearch, es: true do
     end
 
     context "full object characteristics" do
+
+      it "does not retrieve nil document numbers by default" do
+        entry = Entry.create!(
+          document_number: nil,
+          signing_date: Date.new(1993,12,29),
+          title: 'fish',
+        )
+        Entry.bulk_index([entry], refresh: true)
+        search = EsEntrySearch.new(conditions: {term: 'fish'})
+
+        expect(search.results.count).to eq(0)
+      end
 
       it "retrieves corrections" do
         entry = Factory.create(
