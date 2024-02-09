@@ -327,7 +327,7 @@ class EntrySerializer < ApplicationSerializer
         sort_by(&:docket_id).
         group_by(&:regs_dot_gov_docket).
         each do |docket, docs|
-        Honeybadger.notify("#{entry.document_number} does not have a corresponding docket record.  This is likely a rare error condition that may only happen in staging.")
+        Honeybadger.notify("#{entry.document_number} does not have a corresponding docket record.  This is likely a rare error condition that may only happen in staging.") if docket.nil?
         next unless docket
 
         result << {
