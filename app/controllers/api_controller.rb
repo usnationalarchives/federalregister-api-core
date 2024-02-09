@@ -26,7 +26,8 @@ class ApiController < ApplicationController
 
   def eo_csv_request?
     params[:format] == "csv" &&
-    params.dig(:conditions, :presidential_document_type) == "executive_order"
+      params[:conditions] != "" &&
+      params.dig(:conditions, :presidential_document_type) == "executive_order"
     params[:controller] == "api/v1/entries"
   end
 
