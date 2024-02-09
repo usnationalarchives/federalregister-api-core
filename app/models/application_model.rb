@@ -92,7 +92,10 @@ class ApplicationModel < ActiveRecord::Base
         if Rails.env.development?
           raise response.fetch('errors')
         else
-          Honeybadger.notify(response.fetch('errors'))
+          Honeybadger.notify(
+            "ES bulk update encountered errors",
+            context: {ids: active_record_collection.map(&:id), items: response['items']}
+          )
         end
       end
     rescue Faraday::TimeoutError => e
