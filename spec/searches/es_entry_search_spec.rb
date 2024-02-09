@@ -1149,6 +1149,7 @@ describe EsEntrySearch, es: true do
 
     context "option for inclusion of pre-1994 EOs" do
       it "in facets" do
+        allow(Settings.feature_flags).to receive(:include_pre_1994_docs).and_return(true)
         entry = Factory.create(
           :entry,
           document_number: nil,
@@ -1164,6 +1165,7 @@ describe EsEntrySearch, es: true do
       end
 
       it "in normal searches" do
+        allow(Settings.feature_flags).to receive(:include_pre_1994_docs).and_return(true)
         entry = Factory.create(
           :entry,
           document_number: nil,
