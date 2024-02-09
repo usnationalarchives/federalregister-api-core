@@ -26,7 +26,8 @@ class Admin::ExecutiveOrdersController < AdminController
   def update
     @executive_order = Entry.where(presidential_document_type_id: 2).find(params[:id])
     if @executive_order.update(eo_params)
-      # Note: Cache purging handled via EntryObserver
+      @executive_order.reindex!
+      @executive_order.touch # Cache purging handled via EntryObserver
       redirect_to admin_executive_order_path(@executive_order)
       flash[:notice] = "The executive order was updated.  The public-facing site should reflect the updates within one minute."
     else
