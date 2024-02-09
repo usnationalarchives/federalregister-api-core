@@ -577,6 +577,24 @@ describe EsEntrySearch, es: true do
       expect(results).to eq([entry_3.id, entry_2.id])
     end
 
+    it "when executive_order is specified as the sort order and documents are included that do not have an executive order number, return them first" do
+      entry_1 = build_entry_double(id: 1, executive_order_number: "1", publication_date: Date.new(2020,3,1).to_s(:iso))
+      entry_2 = build_entry_double(id: 2, executive_order_number: nil, publication_date: Date.new(2020,3,1).to_s(:iso))
+      entry_3 = build_entry_double(id: 3, executive_order_number: "2", publication_date: Date.new(2020,3,1).to_s(:iso))
+      entries = [
+        entry_1,
+        entry_2,
+        entry_3,
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {}, order: 'executive_order_number')
+
+      assert_valid_search(search)
+      results = search.results.map(&:id)
+      expect(results).to eq([entry_2.id, entry_1.id, entry_3.id])
+    end
+
     it "performs basic excerpting" do
       $entry_repository.create_index!(force: true)
       another_entry = Factory(
@@ -1148,6 +1166,10 @@ describe EsEntrySearch, es: true do
     end
 
     context "option for inclusion of pre-1994 EOs" do
+      it "" do
+      end
+
+
       it "in facets" do
         allow(Settings.feature_flags).to receive(:include_pre_1994_docs).and_return(true)
         entry = Factory.create(

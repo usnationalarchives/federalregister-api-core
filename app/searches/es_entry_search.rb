@@ -520,6 +520,10 @@ class EsEntrySearch < EsApplicationSearch
       ]
     when 'executive_order_number'
       painless_script = <<-PAINLESS
+        if (doc['executive_order_number'].empty) {
+          return 0;
+        }
+
         String digitsOnly = /[^0-9]/.matcher(doc['executive_order_number'].value).replaceAll('');
         Integer.parseInt(digitsOnly)
       PAINLESS
