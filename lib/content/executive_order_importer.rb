@@ -50,6 +50,7 @@ module Content
         attr = {
           :presidential_document_number => eo['executive_order_number'],
           :signing_date => signing_date,
+          :executive_order_notes => eo['disposition_notes'],
         }.tap do |attrs|
           president = President.find_by_identifier(eo['president'])
           if president
@@ -69,7 +70,6 @@ module Content
           end
 
           attr.merge!(
-            executive_order_notes: eo['disposition_notes'],
             granule_class: "PRESDOCU",
             presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
             publication_date: publication_date,
