@@ -22,7 +22,6 @@ RSpec.describe "Images Endpoint", :type => :request do
         content_type: 'png',
         height:       126,
         identifier:   'ep13oc15.011',
-        image_source: 'gpo_sftp',
         sha:          '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33',
         size:         999,
         url:          "https://img.federalregister.gov/EN28OC22.000/EN28OC22.000_large.png",

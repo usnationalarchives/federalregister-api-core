@@ -29,7 +29,6 @@ class Api::V1::ImagesController < ApiController
         content_type: image_variant.image_content_type,
         height:       image_variant.image_height,
         identifier:   image_variant.identifier,
-        image_source: image.image_source.try(:identifier) || 'Unknown',
         sha:          image_variant.image_sha,
         size:         image_variant.image_size,
         url:          "https://#{image_variant.image.url}",
