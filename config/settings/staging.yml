@@ -22,6 +22,9 @@ app:
 database:
   name: federal_register_api_core_staging
 
+feature_flags:
+  include_pre_1994_docs: true
+
 prince:
   # expected to be set by helm/deployment
   host: http://prince-xml-14.ofr.svc.cluster.local
