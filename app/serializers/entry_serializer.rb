@@ -38,7 +38,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :citation do |e|
-    if e.presidential_document_type_id == PresidentialDocumentType::EXECUTIVE_ORDER.id && 
+    if e.presidential_document_type_id == PresidentialDocumentType::EXECUTIVE_ORDER.id &&
       e.presidential_document_number &&
       (e.presidential_document_number.to_i < Content::ExecutiveOrderImporter::HISTORICAL_EO_NUMBER_CUTOFF)
       # ie Don't require a start page for historical EOs
@@ -359,7 +359,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :signing_date do |entry|
-    entry.signing_date&.to_s(:iso) 
+    entry.signing_date&.to_s(:iso)
   end
 
   attribute :president_id do |entry|
@@ -369,7 +369,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :publication_date  do |document|
-    document.publication_date&.to_s(:iso) 
+    document.publication_date&.to_s(:iso)
   end
 
   attribute :correction do |entry|
@@ -446,7 +446,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :effective_on do |entry|
-    entry.effective_on&.to_s(:iso) 
+    entry.effective_on&.to_s(:iso)
   end
 
   attribute :effective_date do |entry|
