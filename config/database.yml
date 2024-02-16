@@ -5,7 +5,6 @@ shared: &shared
   password: <%= Rails.application.credentials.dig(:database, :password) %>
   port: <%= Settings.database.port %>
   host: '<%= Rails.application.credentials.dig(:database, :host) %>'
-  reconnect: <%= Settings.database.reconnect %>
   encoding: <%= Settings.database.encoding %>
 
 development:
@@ -16,8 +15,10 @@ development:
 
 test:
   <<: *shared
-  host: '<%= Settings.database.host || Rails.application.credentials.dig(:database, :host) %>'
   database: <%= Settings.database.name %>_test<%= (ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'] %>
+  host: '<%= Settings.database.host || Rails.application.credentials.dig(:database, :host) %>'
+  password: <%= Settings.database.password %>
+  username: <%= Settings.database.username %>
 
 staging:
   <<: *shared
