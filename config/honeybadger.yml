@@ -5,3 +5,4 @@ exceptions:
   ignore:
     - 'Content::PublicInspectionImporter::BatchedDocumentImporter::BatchTimeoutError'
   ignored_user_agents: [/ScanAlert/]
+revision: <%= Settings.container.revision %>

@@ -38,6 +38,12 @@ app:
     update_dockets: true
   reindex_all_agency_name_entries: false
 
+container:
+  git_repo: https://github.com/criticaljuncture/federalregister-api-core
+  process: rails
+  revision: <%= `git rev-parse --short HEAD` %>
+  role:
+
 # host, password and username are retrived from credentials
 # development environment uses ENV vars for these so keys are defined here
 database:
@@ -47,7 +53,6 @@ database:
   name: federal_register_api_core
   password:
   port: 3306
-  reconnect: true
   username:
 
 # host is retrived from credentials

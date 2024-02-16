@@ -5,6 +5,9 @@ app:
     index_since_date: "2019-04-08"
     page_view_start_date: "2020-10-02"
 
+container:
+  role: worker
+
 elasticsearch:
   host: http://admin:admin@elasticsearch:9200
 

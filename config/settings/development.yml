@@ -18,6 +18,9 @@ app:
     update_documents: false
     update_dockets: false
 
+container:
+  role: worker
+
 lograge:
   enabled: false
 

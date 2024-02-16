@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-if ! [ "$CONTAINER_ROLE" = "worker" ]; then
+if ! [ "$SETTINGS__CONTAINER__ROLE" = "worker" ]; then
   rm -rf /etc/my_init.d/elasticsearch
   rm -rf /etc/my_init.d/migrate
   rm -rf /etc/my_init.d/varnish

@@ -1,8 +1,8 @@
 #!/bin/sh
 cd /home/app
 
-if [ "$CONTAINER_PROCESS" = "rails" ]; then
+if [ "$SETTINGS__CONTAINER__PROCESS" = "rails" ]; then
   exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES
-elif [ "$CONTAINER_PROCESS" = "sidekiq" ]; then
+elif [ "$SETTINGS__CONTAINER__PROCESS" = "sidekiq" ]; then
   exec /sbin/setuser app bundle exec sidekiq $SIDEKIQ_OPTIONS
 fi
