@@ -5,7 +5,7 @@ Honeybadger.configure do |config|
     notice.context.merge!(
       application: "api-core",
       deployment_environment: Settings.container.role,
-      tags: "#{Settings.container.process}_process, #{Settings.container.role}",
+      tags: "#{Settings.container.process}_process, #{Settings.container.role} #{Settings.container.deployment_environment}",
       revision: Settings.container.revision
     )
   end

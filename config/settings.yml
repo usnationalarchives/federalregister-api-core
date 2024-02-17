@@ -19,7 +19,6 @@ app:
     report_only: false
   deliver_daily_import_email: true
   deliver_late_content_notifications: true
-  deployment_environment: blue
   google_analytics:
     update_document_counts: true
   images:
@@ -39,6 +38,7 @@ app:
   reindex_all_agency_name_entries: false
 
 container:
+  deployment_environment: blue
   git_repo: https://github.com/criticaljuncture/federalregister-api-core
   process: rails
   revision: <%= `git rev-parse --short HEAD` %>
