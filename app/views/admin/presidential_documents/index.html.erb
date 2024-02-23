@@ -8,16 +8,25 @@
     multipart: true
   } do |f| %>
 
-  <p>Uploaded files need to be in CSV format (.csv).  Click <%= link_to "here", api_v1_documents_path(
-  conditions: {
-    presidential_document_type: [:executive_order],
-  },
-  :fields                     => [:executive_order_number, :document_number, :html_url, :publication_date, :signing_date],
-  :per_page                   => 10000,
-  :maximum_per_page           => 10000,
-  :order                      => [:executive_order_number],
-  :format                     => 'csv',
-  ) %> to download existing executive orders.</p>
+  <p>Uploaded files need to be in CSV format (.csv).  Click
+    <%= link_to "here", api_v1_documents_path(
+      conditions: {
+        presidential_document_type: :executive_order,
+      },
+      fields: [
+        :executive_order_number,
+        :document_number,
+        :html_url,
+        :publication_date,
+        :signing_date,
+        :disposition_notes
+      ],
+      per_page: 10000,
+      maximum_per_page: 10000,
+      order: [:executive_order],
+      format: 'csv'
+    ) %>
+  to download existing executive orders.</p>
 
   <%= f.inputs do %>
     <%= f.input :csv_file, label: 'Executive Orders:', as: :file %>
