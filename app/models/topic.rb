@@ -41,7 +41,7 @@ class Topic < ApplicationModel
     else
       condition_sql = "(" + words.map{"topics.name REGEXP ?"}.join(" AND ") + ")"
       # '[[:<:]]' is MySQL regex for 'beginning of word'
-      bind_params = words.map{|word|"[[:<:]]#{Regexp.escape(word)}"}
+      bind_params = words.map{|word|"\\b#{Regexp.escape(word)}"}
       condition_sql = condition_sql + " && topics.entries_count > 0"
 
       topics = scoped(

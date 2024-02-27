@@ -77,7 +77,7 @@ class Agency < ApplicationModel
     else
       condition_sql = "(" + words.map{"agencies.name REGEXP ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name REGEXP ?"}.join(" AND ") + ")"
       # '[[:<:]]' is MySQL regex for 'beginning of word'
-      bind_params = words.map{|word|"[[:<:]]#{Regexp.escape(word)}"} * 2
+      bind_params = words.map{|word|"\\b#{Regexp.escape(word)}"} * 2
       agencies = scoped(
         :conditions => [
           condition_sql, *bind_params
