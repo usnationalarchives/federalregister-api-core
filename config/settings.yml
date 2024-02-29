@@ -70,7 +70,7 @@ elasticsearch:
 feature_flags:
   # TODO: this is now the default and we should be able to remove all the old code
   use_carrierwave_images_in_api: true
-  include_pre_1994_docs: false
+  include_pre_1994_docs: true
 
 lograge:
   enabled: true
