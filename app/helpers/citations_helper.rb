@@ -23,7 +23,15 @@ module CitationsHelper
       eo_number = $1.gsub(/,/,'').to_i
       if eo_number >= 7532
         if use_admin_path
-          content_tag :a, str, :href => edit_admin_executive_order_path(eo_number)
+          entry = Entry.find_by(
+            presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, 
+            presidential_document_number: eo_number
+          )
+          if entry
+            content_tag :a, str, :href => admin_executive_order_path(entry.id)
+          else
+            str
+          end
         else
           content_tag :a, str, :href => executive_order_path(eo_number), :class => "eo"
         end

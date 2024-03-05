@@ -48,7 +48,11 @@
         </tr>
         <tr>
           <th><%= Entry.human_attribute_name(:executive_order_notes).titleize %></th>
-          <td><%= simple_format(add_eo_links(@executive_order.executive_order_notes, true)) %></td>
+          <td>
+            <% if @executive_order.executive_order_notes %>
+              <%= simple_format(add_eo_links(@executive_order.executive_order_notes, true)) %>
+            <% end %>
+          </td>
         </tr>
     </tbody>
   </table>

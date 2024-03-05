@@ -6,7 +6,7 @@ class Admin::ExecutiveOrdersController < AdminController
       wants.html do
         load_search!
         if @search.result.to_a.count == 1
-          redirect_to edit_admin_executive_order_path(@search.result.first)
+          redirect_to admin_executive_order_path(@search.result.first)
         elsif params[:q]
           flash.now[:error] = "Executive order not found"
         end
