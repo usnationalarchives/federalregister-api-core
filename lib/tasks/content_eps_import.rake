@@ -115,7 +115,13 @@ namespace :content do
         rescue StandardError => e
           puts e.message
           puts e.backtrace.join("\n")
-          Honeybadger.notify(e, error_message: "An error occurred while creating image usages/marking them as public for the #{date} issue.  Make sure the DailyIssueImageUsageBuilder succeeds to ensure relevant images are made public for the issue.")
+          error_message = "An error occurred while creating image usages/marking them as public for the #{date} issue.  Make sure the DailyIssueImageUsageBuilder succeeds to ensure relevant images are made public for the issue."
+          Honeybadger.notify(e, error_message: error_message)
+          notifier = Slack::Notifier.new Rails.application.credentials.dig(:slack, :webhook_url) do
+            defaults channel: "#federalregister",
+                     username: "Image Import Notifier"
+          end
+          notifier.ping "#{Rails.env.upcase}: #{error_message}"
         end
       end
     end
