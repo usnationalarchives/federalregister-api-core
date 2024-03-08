@@ -34,6 +34,7 @@ module Content
       reprocess_issue
       reindex
       regenerate_toc_json
+      import_public_inspection_entry_id
       notify_of_updated_issue
       clear_cache
 
@@ -222,6 +223,11 @@ module Content
 
       puts "compiling daily table of contents json for #{date}..."
       Content::TableOfContentsCompiler.perform(date)
+    end
+
+    def import_public_inspection_entry_id
+      Terrapin::CommandLine.environment['DATE'] = reprocessed_issue.issue.publication_date
+      Terrapin::CommandLine.new('rake content:public_inspection:import:entry_id')
     end
 
   end
