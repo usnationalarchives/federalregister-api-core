@@ -1,6 +1,26 @@
 module Content
   class RegulatoryPlanImporterScheduler
 
+    def self.reimport_currently_stored_issue
+      start_time = Time.current
+      # Reimport all of currently-stored issue
+      currently_stored_issue = RegulatoryPlan.maximum(:issue)
+      Content::RegulatoryPlanImporter.
+        import_all_by_publication_date(currently_stored_issue)
+      # Recalculate current regulatory plans
+      entry_ids = Content::RegulatoryPlanImporter.recalculate_current(
+        calculate_entry_ids_for_reindex: true
+      )
+      # Reindex ES
+      Entry.
+        where(id: entry_ids).
+        pre_joined_for_es_indexing.
+        find_in_batches(batch_size: 500) do |entry_batch|
+          Entry.bulk_index(entry_batch, refresh: false)
+        end
+      notify_slack!("#{Rails.env.upcase}: Reimport of #{currently_stored_issue} unified agenda complete.  It took #{(Time.current - start_time).to_i/60} minutes.")
+    end
+
     def perform
       reindex = false
       while next_issue_available?
@@ -16,6 +36,14 @@ module Content
     end
 
     private
+
+    def self.notify_slack!(message)
+      notifier = Slack::Notifier.new Rails.application.credentials.dig(:slack, :webhook_url) do
+        defaults channel: "#federalregister",
+                 username: "Unified Agenda Reimport Notifier"
+      end
+      notifier.ping message
+    end
 
     def next_issue_available?
       response = Faraday.head(unified_agenda_url)

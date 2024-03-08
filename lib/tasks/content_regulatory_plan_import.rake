@@ -5,6 +5,11 @@ namespace :content do
       Content::RegulatoryPlanImporterScheduler.new.perform
     end
 
+    desc "Reimport the currently-stored issue"
+    task :import_currently_stored_issue => :environment do
+      Content::RegulatoryPlanImporterScheduler.reimport_currently_stored_issue
+    end
+
     desc "import regulatory plans"
     task :import => :environment do
       Content::RegulatoryPlanImporter.import_all_by_publication_date(ENV['ISSUE_TO_IMPORT'])

@@ -160,6 +160,10 @@ every 1.day, at: '3:00PM' do
   rake 'content:regulatory_plans:schedule'
 end
 
+every [:saturday], at: '4:00AM' do
+  rake 'content:regulatory_plans:import_currently_stored_issue'
+end
+
 ################################################
 # REGULATIONS.GOV DATA
 ################################################

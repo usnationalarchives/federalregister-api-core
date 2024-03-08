@@ -2,12 +2,25 @@ module Content
   class RegulatoryPlanImporter
     require 'fileutils'
 
-    def self.recalculate_current
+    def self.recalculate_current(calculate_entry_ids_for_reindex=false)
+      if calculate_entry_ids_for_reindex
+        old_entry_ids = RegulatoryPlan.
+          current.
+          joins(:entry_regulation_id_numbers).
+          pluck(:entry_id)
+      end
       ActiveRecord::Base.connection.execute("UPDATE regulatory_plans SET current = 1")
       ActiveRecord::Base.connection.execute("UPDATE regulatory_plans, regulatory_plans prior_reg_plan
                                             SET regulatory_plans.current = 0
                                             WHERE regulatory_plans.regulation_id_number = prior_reg_plan.regulation_id_number
                                             AND prior_reg_plan.issue > regulatory_plans.issue")
+      
+      if calculate_entry_ids_for_reindex
+        old_entry_ids & RegulatoryPlan.
+          current.
+          joins(:entry_regulation_id_numbers).
+          pluck(:entry_id)
+      end
     end
 
     def self.import_all_small_entities
