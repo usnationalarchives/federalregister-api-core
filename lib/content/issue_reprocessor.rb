@@ -226,8 +226,7 @@ module Content
     end
 
     def import_public_inspection_entry_id
-      Terrapin::CommandLine.environment['DATE'] = reprocessed_issue.issue.publication_date
-      Terrapin::CommandLine.new('rake content:public_inspection:import:entry_id')
+      Terrapin::CommandLine.new("DATE=#{reprocessed_issue.issue.publication_date.to_s(:iso)} rake content:public_inspection:import:entry_id").run
     end
 
   end
