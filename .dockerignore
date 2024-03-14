@@ -4,6 +4,8 @@
 .git*
 
 data/
+!data/historical_document_type_counts.csv
+!data/historical_page_counts.csv
 !data/holidays.yml
 !data/holidays_ad_hoc.yml
 !data/regulations_dot_gov_non_participating_agencies.csv
