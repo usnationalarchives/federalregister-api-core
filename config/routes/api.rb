@@ -36,6 +36,7 @@ FederalregisterApiCore::Application.routes.draw do
           :via => :get
         match 'public-inspection-documents/:id' => 'public_inspection_documents#show',
           :via => :get
+        resources :category_counts, :only => [:show]
         resources :images, :only => [:show], :constraints => { :id => /.*/ }
         resources :issues, :only => [:show]
         resources :site_notifications, :only => [:show]
