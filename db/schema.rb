@@ -473,6 +473,8 @@ ActiveRecord::Schema.define(version: 2024_04_09_235916) do
     t.string "toc_note_title"
     t.text "toc_note_text"
     t.boolean "toc_note_active", default: false
+    t.integer "correction_granule_class_count"
+    t.integer "correction_granule_class_page_count"
   end
 
   create_table "lede_photos", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

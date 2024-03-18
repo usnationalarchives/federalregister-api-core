@@ -1,6 +1,6 @@
 class Content::EntryImporter::IssueUpdater
   extend Memoist
-  KNOWN_DOCUMENT_TYPES = %w(NOTICE PRESDOCU PRORULE RULE)
+  KNOWN_DOCUMENT_TYPES = %w(NOTICE PRESDOCU PRORULE RULE CORRECT)
   CORRECTION_PREFIXES = %w(C1 C2 R1)
 
   def initialize(issue, modsFile, bulkdataFile)
@@ -42,12 +42,14 @@ class Content::EntryImporter::IssueUpdater
       presidential_document_count: entries_of_type("PRESDOCU").count,
       unknown_document_count: entries_of_type("UNKNOWN").count,
       correction_count: entries_of_type("CORRECTION").count,
+      correction_granule_class_count: entries_of_type("CORRECT").count,
       rule_page_count: pages_of_document_type("RULE").count,
       proposed_rule_page_count: pages_of_document_type("PRORULE").count,
       notice_page_count: pages_of_document_type("NOTICE").count,
       presidential_document_page_count: pages_of_document_type("PRESDOCU").count,
       unknown_document_page_count: pages_of_document_type("UNKNOWN").count, 
       correction_page_count: pages_of_document_type("CORRECTION").count,
+      correction_granule_class_page_count: pages_of_document_type("CORRECT").count,
       blank_page_count: blank_pages.count
     )
   end
