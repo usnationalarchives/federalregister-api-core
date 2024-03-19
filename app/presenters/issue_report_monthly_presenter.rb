@@ -121,10 +121,6 @@ class IssueReportMonthlyPresenter
       "Total Number of FR Documents",
     ]
 
-    historical_document_type_counts.each do |row|
-      rows << row       
-    end
-
     sql_results([
         "YEAR(publication_date)", 
         "SUM(presidential_document_count)",
@@ -135,8 +131,13 @@ class IssueReportMonthlyPresenter
         "SUM(correction_granule_class_count)",
         "SUM(presidential_document_count)+SUM(rule_count)+SUM(proposed_rule_count)+SUM(notice_count)+SUM(unknown_document_count)+SUM(correction_granule_class_count)",
       ],
-      "YEAR(publication_date) WITH ROLLUP"
-    ).each { |row| rows << row }
+      "YEAR(publication_date)"
+    ).reverse.each { |row| rows << row }
+
+    historical_document_type_counts.reverse.each do |row|
+      rows << row       
+    end
+
     rows.pop # remove grand total row
 
     rows
@@ -163,10 +164,6 @@ class IssueReportMonthlyPresenter
       "ACTUAL (Total minus Skips)",
     ]
 
-    historical_page_stats.each do |row|
-      rows << row       
-    end
-
     sql_results([
       "YEAR(publication_date)", 
       "SUM(presidential_document_page_count)",
@@ -179,8 +176,12 @@ class IssueReportMonthlyPresenter
       "SUM(presidential_document_page_count)+SUM(rule_page_count)+SUM(proposed_rule_page_count)+SUM(notice_page_count)+SUM(unknown_document_page_count)+SUM(correction_granule_class_page_count)+SUM(blank_page_count)",
       "SUM(presidential_document_page_count)+SUM(rule_page_count)+SUM(proposed_rule_page_count)+SUM(notice_page_count)+SUM(unknown_document_page_count)+SUM(correction_granule_class_page_count)",
       ],
-      "YEAR(publication_date) WITH ROLLUP"
-    ).each { |row| rows << row }
+      "YEAR(publication_date)"
+    ).reverse.each { |row| rows << row }
+
+    historical_page_stats.reverse.each do |row|
+      rows << row       
+    end
 
     rows.pop # remove grand total row
 
