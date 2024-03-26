@@ -29,7 +29,7 @@ RSpec.describe "Entries API", :type => :request, :es => true do
       'publication_date' => entry.publication_date.to_s(:iso),
       'title'    => 'goat',
       'type'     => 'Presidential Document',
-      'excerpts' => "<span class=\"match\">goat</span>",
+      'excerpts' => "",
     )
   end
 

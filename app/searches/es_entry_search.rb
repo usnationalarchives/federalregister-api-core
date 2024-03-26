@@ -571,24 +571,10 @@ class EsEntrySearch < EsApplicationSearch
 
   def highlight_fields
     {
-      "abstract" => {
-        matched_fields: ["abstract", "abstract.exact"],
-        fragment_size: 150,
-        number_of_fragments: 3,
-        order: 'score',
-        type: 'fvh',
-      },
-      "title" => {
-        matched_fields: ["title", "title.exact"],
-        fragment_size: 150,
-        number_of_fragments: 3,
-        order: 'score',
-        type: 'fvh',
-      },
       "full_text" => {
         matched_fields: ["full_text", "full_text.exact"],
-        fragment_size: 150,
-        number_of_fragments: 3,
+        fragment_size: 550,
+        number_of_fragments: 1,
         order: 'score',
         type: 'fvh',
       }

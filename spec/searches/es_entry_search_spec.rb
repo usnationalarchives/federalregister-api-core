@@ -617,7 +617,7 @@ describe EsEntrySearch, es: true do
 
       assert_valid_search(search)
       result = search.results.first.excerpt
-      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">fish</span> are great. … <span class=\"match\">Fish</span> stuff")
+      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond")
     end
 
     it "performs excerpting when a double-quoted phrase is included" do
@@ -643,7 +643,7 @@ describe EsEntrySearch, es: true do
 
       assert_valid_search(search)
       result = search.results.first.excerpt
-      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">fish</span> are great. … <span class=\"match\">Fish</span> stuff")
+      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond")
     end
 
     context "excerpts for multi-field mappings" do
@@ -668,44 +668,6 @@ describe EsEntrySearch, es: true do
         expect(result).to eq("<span class=\"match\">fish</span> are <span class=\"match\">great</span>")
       end
 
-      it "returns one excerpt for multiple hits on title" do
-        $entry_repository.create_index!(force: true)
-        entry = Factory(
-          :entry,
-          title: "fish are great",
-          raw_text_updated_at: Time.current
-        )
-        $entry_repository.save(entry, refresh: true)
-
-        search = EsEntrySearch.new(
-          excerpts: true,
-          conditions: {term: "\"fish\" great"}
-        )
-
-        assert_valid_search(search)
-        result = search.results.first.excerpt
-        expect(result).to eq("<span class=\"match\">fish</span> are <span class=\"match\">great</span>")
-      end
-
-      it "returns one excerpt for multiple hits on abstract" do
-        $entry_repository.create_index!(force: true)
-        entry = Factory(
-          :entry,
-          significant: 0,
-          abstract: "fish are great",
-          raw_text_updated_at: Time.current
-        )
-        $entry_repository.save(entry, refresh: true)
-
-        search = EsEntrySearch.new(
-          excerpts: true,
-          conditions: {significant: nil, term: "\"fish\" great"}
-        )
-
-        assert_valid_search(search)
-        result = search.results.first.excerpt
-        expect(result).to eq("<span class=\"match\">fish</span> are <span class=\"match\">great</span>")
-      end
     end
 
     it "Entry.bulk_index" do
