@@ -138,7 +138,6 @@ class IssueReportMonthlyPresenter
       rows << row       
     end
 
-    rows.pop # remove grand total row
 
     rows
   end
@@ -183,7 +182,7 @@ class IssueReportMonthlyPresenter
       rows << row       
     end
 
-    rows.pop # remove grand total row
+    # rows.pop # remove grand total row
 
     page_count_footnotes.each do |footnote|
       rows << Array.wrap(footnote)
