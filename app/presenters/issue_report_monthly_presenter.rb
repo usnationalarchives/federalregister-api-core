@@ -50,7 +50,7 @@ class IssueReportMonthlyPresenter
       "Proposed Rules",
       "Notices",
       "Unknown",
-      "Total Number of FR Documents",
+      "FR Documents",
       "Corrections"
     ]
 
@@ -118,7 +118,7 @@ class IssueReportMonthlyPresenter
       "Notices",
       "Unknown",
       "Corrections",
-      "Total Number of FR Documents",
+      "FR Documents*",
     ]
 
     sql_results([
@@ -138,6 +138,9 @@ class IssueReportMonthlyPresenter
       rows << row       
     end
 
+    document_type_footnotes.each do |footnote|
+      rows << Array.wrap(footnote)
+    end
 
     rows
   end
@@ -157,10 +160,10 @@ class IssueReportMonthlyPresenter
       "Proposed Rules",
       "Notices",
       "Unknowns",
-      "Corrections++",
+      "Corrections*",
       "Skips/Blanks",
-      "TOTAL* ** *** **** +",
-      "ACTUAL (Total minus Skips)",
+      "TOTAL†",
+      "ACTUAL‡",
     ]
 
     sql_results([
@@ -182,8 +185,6 @@ class IssueReportMonthlyPresenter
       rows << row       
     end
 
-    # rows.pop # remove grand total row
-
     page_count_footnotes.each do |footnote|
       rows << Array.wrap(footnote)
     end
@@ -195,14 +196,17 @@ class IssueReportMonthlyPresenter
 
   attr_reader :date_range
 
+  def document_type_footnotes
+    [
+      "* The first Federal Register was issued on March 14, 1936",
+    ]
+  end
+
   def page_count_footnotes
     [
-      "* The first Federal Register was issued on March 14, 1936 (Also, see Note below).",
-      "** The 1989 total includes twenty pages more than the last page of December 29, 1989 due to pp 16438-A through 16438-T in the issue of April 24, 1989",
-      "*** The 1990 total includes two pages more than the last page of December 31, 1990 due to pp 30192-1 through 30192-2 (blank) in the issue of July 25, 1990",
-      "**** The 1992 total includes eight pages more than the last page of December 31, 1992 due to pp 62808-a through 62808-h in the issue of December 31, 1992",
-      "+ The 2002 total includes 6,653 pages devoted to a single document (at 67 FR 23653-30305) in the issue of May 3, 2002",
-      "++ Beginning Jan. 1, 2009, Correction documents were published within the document category of the document being corrected."
+      "* Beginning Jan. 1, 2009, Correction documents were published within the document category of the document being corrected.",
+      "† The first Federal Register was issued on March 14, 1936.  The 1989 total includes twenty pages more than the last page of December 29, 1989 due to pp 16438-A through 16438-T in the issue of April 24, 1989.  The 1990 total includes two pages more than the last page of December 31, 1990 due to pp 30192-1 through 30192-2 (blank) in the issue of July 25, 1990.  The 1992 total includes eight pages more than the last page of December 31, 1992 due to pp 62808-a through 62808-h in the issue of December 31, 1992.  The 2002 total includes 6,653 pages devoted to a single document (at 67 FR 23653-30305) in the issue of May 3, 2002",
+      "‡ Total minus Skips"
     ]
   end
 
