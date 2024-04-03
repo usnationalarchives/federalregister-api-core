@@ -128,7 +128,7 @@ class IssueReportMonthlyPresenter
         "SUM(proposed_rule_count)",
         "SUM(notice_count)",
         "SUM(unknown_document_count)",
-        "SUM(correction_granule_class_count)",
+        "IF(YEAR(publication_date) > 2008, '-', SUM(correction_granule_class_count))", # Always display correction count past 2008 as 0 since corrections began to be folded into the standard document types
         "SUM(presidential_document_count)+SUM(rule_count)+SUM(proposed_rule_count)+SUM(notice_count)+SUM(unknown_document_count)+SUM(correction_granule_class_count)",
       ],
       "YEAR(publication_date)"
@@ -173,7 +173,7 @@ class IssueReportMonthlyPresenter
       "SUM(proposed_rule_page_count)",
       "SUM(notice_page_count)",
       "SUM(unknown_document_page_count)",
-      "SUM(correction_granule_class_page_count)",
+      "IF(YEAR(publication_date) > 2008, '-', SUM(correction_granule_class_page_count))", # Always display correction count past 2008 as 0 since corrections began to be folded into the standard document types
       "SUM(blank_page_count)",
       "SUM(presidential_document_page_count)+SUM(rule_page_count)+SUM(proposed_rule_page_count)+SUM(notice_page_count)+SUM(unknown_document_page_count)+SUM(correction_granule_class_page_count)+SUM(blank_page_count)",
       "SUM(presidential_document_page_count)+SUM(rule_page_count)+SUM(proposed_rule_page_count)+SUM(notice_page_count)+SUM(unknown_document_page_count)+SUM(correction_granule_class_page_count)",
