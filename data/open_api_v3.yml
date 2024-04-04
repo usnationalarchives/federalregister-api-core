@@ -660,7 +660,7 @@ components:
       type: array
       items:
         type: string
-        enum: <% President.all.each do |x| %>
+        enum: <% President.all.select{|x| x.starts_on >= Date.new(1993,1,20)}.each do |x| %>
         <%= "- #{x.identifier} " %>
         <% end %>
     PresidentialDocumentType:
