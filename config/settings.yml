@@ -87,6 +87,9 @@ redis:
   host:
   port: 6379
 
+redis_import:
+  db: 1
+
 open_calais:
   daily_api_call_limit: 500
   throttle:

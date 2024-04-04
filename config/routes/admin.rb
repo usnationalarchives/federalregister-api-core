@@ -4,7 +4,10 @@ require "sidekiq/throttled/web"
 FederalregisterApiCore::Application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   namespace :admin do
-    mount Sidekiq::Web => 'sidekiq'
+    mount Sidekiq::Web, at: "/sidekiq", as: "sidekiq"
+    mount Sidekiq::Pro::Web.with(redis_pool: $import_redis),
+      at: "/sidekiq-import",
+      as: "import_sidekiq"
 
     match '' => 'special#home', :as => :home, :via => :get
       resources :agencies do
