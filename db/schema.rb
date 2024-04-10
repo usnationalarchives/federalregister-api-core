@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_08_235855) do
+ActiveRecord::Schema.define(version: 2024_04_09_235916) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -594,6 +594,7 @@ ActiveRecord::Schema.define(version: 2024_01_08_235855) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "regulations_dot_gov_open_for_comment"
+    t.index ["docket_id"], name: "index_regs_dot_gov_documents_on_docket_id"
     t.index ["federal_register_document_number", "deleted_at"], name: "[:document_number_deleted_at]"
   end
 
