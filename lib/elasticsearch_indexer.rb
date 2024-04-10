@@ -19,7 +19,7 @@ module ElasticsearchIndexer
     EntryChange.delete_all
   end
 
-  BATCH_SIZE = 500
+  BATCH_SIZE = 325 #During the pre-joining of the scope used for ES indexing, the mysql query engine falls back to a full table scan of the entries table when calculating corrections instead of using the db index if the number of records in the IN clause exceeds ~325.
   def self.reindex_entries(recreate_index: false)
     if recreate_index
       $entry_repository.create_index!(force: true)
