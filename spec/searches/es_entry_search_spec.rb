@@ -354,6 +354,17 @@ describe EsEntrySearch, es: true do
       $entry_repository.create_index!(force: true)
     end
 
+    context "autocomplete" do
+      it "retrieves a basic autocomplete string and exludes one appropriately" do
+        entry_1 = build_entry_double(id: 1, search_term_completion: 'Fish are an aquatic species', )
+        entry_2 = build_entry_double(id: 2, search_term_completion: 'Whales are an aquatic species', )
+        Entry.bulk_index([entry_1, entry_2], refresh: true)
+
+        result = EsEntrySearch.autocomplete("fish")
+        expect(result).to eq(["Fish are an aquatic species"])
+      end
+    end
+
     context "full object characteristics" do
 
       it "does not retrieve nil document numbers by default" do

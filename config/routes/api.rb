@@ -17,6 +17,9 @@ FederalregisterApiCore::Application.routes.draw do
         match 'public-inspection-issues/facets/:facet' => 'public_inspection_issues#facets',
           :as => :public_inspection_issues_facets,
           :via => :get
+        match 'documents/autocomplete-suggestions' => 'entries#autocomplete_suggestions',
+          :as => :articles_autocomplete_suggestions,
+          :via => :get
         match 'documents/search-details' => 'entries#search_details',
           :as => :articles_search_details,
           :via => :get

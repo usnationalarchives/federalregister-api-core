@@ -1,4 +1,30 @@
 class EsEntrySearch < EsApplicationSearch
+
+  def self.autocomplete(search_term)
+    return [] unless search_term.present?
+ 
+    host = Rails.application.credentials.dig(:elasticsearch, :host) || Settings.elasticsearch.host
+    url = "#{host}/#{EntryRepository.index_name}/_search"
+    response = Faraday.get(url) do |req|
+      req.headers['Content-Type'] = 'application/json' # Set the content type if necessary
+      payload = {
+        "_source": ["search_term_completion"],
+        "size": 10,
+        "query": {
+          "match": {
+            "search_term_completion": {
+              "query": search_term,
+              "analyzer": "standard"
+            }
+          }
+        }
+      }
+      req.body = payload.to_json 
+    end
+  
+    JSON.parse(response.body).dig("hits","hits").map{|x| x.dig("_source","search_term_completion")}.uniq
+  end
+
   class CFR < Struct.new(:title, :part)
 
     TITLE_MULTIPLIER = 100000

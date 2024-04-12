@@ -21,9 +21,22 @@ class EntryRepository < BaseRepository
       "english_possessive_stemmer": {
         "type":       "stemmer",
         "language":   "possessive_english"
+      },
+      "edge_ngram_filter": {
+        "type": "edge_ngram",
+        "min_gram": 1,
+        "max_gram": 20
       }
     },
     "analyzer": {
+      "autocomplete": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "edge_ngram_filter"
+        ]
+      },
       "custom_english": {
         "tokenizer":  "standard",
         "filter": [
@@ -49,6 +62,11 @@ class EntryRepository < BaseRepository
           term_vector: 'with_positions_offsets'
         }
       }
+    }
+    indexes :search_term_completion, {
+      type: "text",
+      analyzer: "autocomplete",
+      search_analyzer: "standard",
     }
     indexes :abstract, {
       type:        'text',

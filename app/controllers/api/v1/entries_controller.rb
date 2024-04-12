@@ -77,6 +77,15 @@ class Api::V1::EntriesController < ApiController
     end
   end
 
+  def autocomplete_suggestions
+    respond_to do |wants|
+      cache_for 1.day
+      wants.json do
+        render_json_or_jsonp(EsEntrySearch.autocomplete(params[:conditions][:term]))
+      end
+    end
+  end
+
   def search_details
     search = entry_search(deserialized_params)
 
