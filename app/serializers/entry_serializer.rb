@@ -26,6 +26,13 @@ class EntrySerializer < ApplicationSerializer
     end
   end
 
+  attribute :passage_text do |entry|
+    path = "#{FileSystemPathManager.data_file_path}/documents/full_text/raw/#{entry.document_file_path}.txt"
+    if File.file?(path)
+      contents = File.read(path)
+    end
+  end
+
   attribute :excerpts, if: Proc.new { |document, params| params[:active_record_retrieval] } do |document|
     nil
   end

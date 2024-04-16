@@ -50,7 +50,7 @@ class ApplicationModel < ActiveRecord::Base
 
     remaining_retries = ES_INDEXING_RETRY_LIMIT
     begin
-      response = repository.client.bulk body: body, refresh: refresh
+      response = repository.client.bulk body: body, refresh: refresh, pipeline: 'nlp-ingest-pipeline'
       if response.fetch('errors')
         failed_items  = response.fetch('items').select{|x| x.fetch('index')['error'] }
         failed_ids    = failed_items.map{|x| x.fetch("index").fetch("_id") }

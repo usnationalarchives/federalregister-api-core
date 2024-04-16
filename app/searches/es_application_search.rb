@@ -585,14 +585,40 @@ class EsApplicationSearch
       if es_term.present?
         q[:query][:function_score][:query][:bool][:should] = [
           {
-            simple_query_string: {
-              query:            es_term,
-              fields:           es_fields_with_boosts,
-              default_operator: 'and',
-              quote_field_suffix: '.exact'
+            "script_score": {
+              "query": {
+                simple_query_string: {
+                  query:            es_term,
+                  fields:           es_fields_with_boosts,
+                  default_operator: 'and',
+                  quote_field_suffix: '.exact'
+                }
+              },
+              "script": {
+                "source": "_score * 1.7"
+              }
             }
           }
-        ]
+        ].tap do |should_clause|
+          if neural_querying_enabled?
+            should_clause << {
+              "script_score": {
+                "query": {
+                  "neural": {
+                    "passage_embedding": {
+                      "query_text": es_term,
+                      "model_id": text_embedding_model_id,
+                      "k": 1
+                    }
+                  }
+                },
+                "script": {
+                  "source": "_score * 1.5",
+                }
+              }
+            }
+          end
+        end
         q[:query][:function_score][:query][:bool][:minimum_should_match] = 1
       end
 
@@ -666,6 +692,14 @@ class EsApplicationSearch
     end
 
     query
+  end
+
+  def neural_querying_enabled?
+    false
+  end
+
+  def text_embedding_model_id
+    "oM0_z44BvKwC543PSZ1Z"
   end
 
   def es_scoring_functions
