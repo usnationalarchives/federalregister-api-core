@@ -1,5 +1,4 @@
 # This class is responsible for creating a model group, ML model, and deploying the ML model.
-
 class OpenSearchMlModelRegistrar
   extend Memoist
 
@@ -12,8 +11,12 @@ class OpenSearchMlModelRegistrar
     model_ids.each{|id| puts id; response = Faraday.delete("http://elasticsearch.brandon-fr.svc.cluster.local:9200/_plugins/_ml/models/#{id}"); puts response.body}
   end
 
+  def self.perform
+    new.perform
+  end
+
   def perform
-    # Register a model group (this is needed in order to register an ML model)
+    # Register a model group (an ML model needs to exist within a model group)
     if model_groups.count == 0
       model_group_id = register_model_group! 
       puts "Registered a new model group: #{model_group_id}"
@@ -30,7 +33,7 @@ class OpenSearchMlModelRegistrar
       puts "Registered model id #{model_id}"
     elsif models.count == 1
       model_id = models.first._id
-      puts "A model already exists: id #{model_id}"
+      puts "A model already exists: #{model_id}"
     else
       raise models.inspect
     end
@@ -39,17 +42,24 @@ class OpenSearchMlModelRegistrar
     deploy_model!(model_id)
   end
 
-  # private
+  private
+
+  def http_post(endpoint, body=nil)
+    response = Faraday.post("#{base_url}#{endpoint}") do |req|
+      req.headers['Content-Type'] = 'application/json'
+
+      if body
+        req.body = body.to_json
+      end
+    end
+  end
 
   def deploy_model!(model_id)
-    endpoint = "/_plugins/_ml/models/#{model_id}/_deploy"
-
-    if models.first.dig("_source","model_state") == "DEPLOYED"
-      puts "#{model_id} has already been deployed"
+    existing_model = models.first
+    if existing_model && existing_model.dig("_source","model_state") == "DEPLOYED"
+      puts "A model has already been deployed: #{model_id}"
     else
-      response = Faraday.post("#{base_url}#{endpoint}") do |req|
-        req.headers['Content-Type'] = 'application/json'
-      end
+      response = http_post("/_plugins/_ml/models/#{model_id}/_deploy")
 
       if !response.success?
         raise response.body
@@ -62,17 +72,15 @@ class OpenSearchMlModelRegistrar
   end
 
   def register_model!(model_group_id)
-    endpoint = "/_plugins/_ml/models/_register"
-
-    response = Faraday.post("#{base_url}#{endpoint}") do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = {
+    response = http_post(
+      "/_plugins/_ml/models/_register",
+      {
         "name": "huggingface/sentence-transformers/msmarco-distilbert-base-tas-b",
         "version": "1.0.2",
         "model_group_id": model_group_id,
         "model_format": "TORCH_SCRIPT"
       }.to_json
-    end
+    )
 
     if response.success?
       task_id = JSON.parse(response.body).fetch("task_id")
@@ -106,15 +114,13 @@ class OpenSearchMlModelRegistrar
   end
 
   def register_model_group!
-    endpoint = "/_plugins/_ml/model_groups/_register"
-
-    response = Faraday.post("#{base_url}#{endpoint}") do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = {
+    response = http_post(
+      "/_plugins/_ml/model_groups/_register",
+      {
         "name":        "local_model_group_throwaway",
         "description": "A model group for local models"
       }.to_json
-    end
+    )
 
     if response.success?
       task_id = JSON.parse(response.body).fetch("model_group_id").fetch("task_id")
@@ -124,56 +130,41 @@ class OpenSearchMlModelRegistrar
   end
 
   def model_groups
-    endpoint = "/_plugins/_ml/model_groups/_search"
+    response = http_post(
+      "/_plugins/_ml/model_groups/_search",
+      {
+        query: {
+          match_all: {}
+        },
+        size: 1000,
+      }
+    )
 
-    # Define the request body
-    request_body = {
-      query: {
-        match_all: {}
-      },
-      size: 1000,
-      # _source: ["id"] 
-    }
-
-    # Send the request
-    response = Faraday.post("#{base_url}#{endpoint}") do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = request_body.to_json
-    end
     parsed_response = JSON.parse(response.body).dig("hits","hits")
     model_groups = parsed_response.map{|x| OpenStruct.new(x) }
   end
   memoize :model_groups
 
   def models
-    endpoint = "/_plugins/_ml/models/_search"
-
-    # Define the request body
-    request_body = {
-      query: {
-        match_all: {}
-      },
-      size: 1000,
-      # _source: ["id"] 
-    }
-
-    # Send the request
-    response = Faraday.post("#{base_url}#{endpoint}") do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = request_body.to_json
-    end
+    response = http_post(
+      "/_plugins/_ml/models/_search",
+      {
+        query: {
+          match_all: {}
+        },
+        size: 1000,
+      }
+    )
     parsed_response = JSON.parse(response.body).dig("hits","hits")
     
     parsed_response.
       map{|x| OpenStruct.new(x) }.
-      select{|x| x.dig("_source","model_group_id")} #Note, depending on a model's size, it will be split into 'chunks' on deployment.  We're attempting to filter to the main model here by looking for the model that has a model group id assigned
+      select{|x| x.dig("_source","model_group_id")} #Note, depending on a model's size, it will be split into 'chunks' on deployment.  We're attempting to filter to the main model of concern here by looking for the model that has a model group id assigned
   end
   memoize :models
 
   def base_url
-    "http://elasticsearch.brandon-fr.svc.cluster.local:9200"
+    Settings.elasticsearch.host
   end
-
-  
 
 end
