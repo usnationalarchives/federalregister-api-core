@@ -605,10 +605,10 @@ class EsApplicationSearch
               "script_score": {
                 "query": {
                   "neural": {
-                    "passage_embedding": {
+                    "full_text_embedding": {
                       "query_text": es_term,
                       "model_id": text_embedding_model_id,
-                      "k": 1
+                      "k": k_value
                     }
                   }
                 },
@@ -694,12 +694,16 @@ class EsApplicationSearch
     query
   end
 
+  def k_value
+    20
+  end
+
   def neural_querying_enabled?
     false
   end
 
   def text_embedding_model_id
-    "oM0_z44BvKwC543PSZ1Z"
+    OpenSearchMlModelRegistrar.model_id
   end
 
   def es_scoring_functions

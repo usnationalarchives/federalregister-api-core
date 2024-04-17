@@ -6,7 +6,7 @@ class EntryRepository < BaseRepository
   ].compact.join('-')
   klass Entry
 
-  settings number_of_shards: Settings.elasticsearch.entry_index_shards, analysis: {
+  settings number_of_shards: Settings.elasticsearch.entry_index_shards, knn: true, analysis: {
     # Create custom analyzer based on default english analyzer
     # swap in KStem stemmer instead of Porter
     "filter": {

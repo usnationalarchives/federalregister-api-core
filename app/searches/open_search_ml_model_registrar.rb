@@ -1,6 +1,17 @@
-# This class is responsible for creating a model group, ML model, and deploying the ML model.
+# This class creates a model group, downloads the ML model, and deploys the ML model to OpenSearch.
 class OpenSearchMlModelRegistrar
   extend Memoist
+
+  @model_id = nil
+  def self.model_id
+    # OpenSearch needs a way to reference the active model id, but we don't want to be continually looking this up
+    # Potential performance optimization: Investigate whether there's a better way of handling this
+    @model_id || update_model_id
+  end
+
+  def self.update_model_id
+    @model_id = new.models.first&._id
+  end
 
   def self.destroy_all_models!
     model_ids = OpenSearchMlModelRegistrar.new.models.map{|x| x._id}
@@ -41,6 +52,25 @@ class OpenSearchMlModelRegistrar
     # Deploy the model
     deploy_model!(model_id)
   end
+
+  def models
+    response = http_post(
+      "/_plugins/_ml/models/_search",
+      {
+        query: {
+          match_all: {}
+        },
+        size: 1000,
+      }
+    )
+    parsed_response = JSON.parse(response.body).dig("hits","hits")
+    
+    parsed_response.
+      map{|x| OpenStruct.new(x) }.
+      select{|x| x.dig("_source","model_group_id")} #Note, depending on a model's size, it will be split into 'chunks' on deployment.  We're attempting to filter to the main model of concern here by looking for the model that has a model group id assigned
+  end
+  memoize :models
+
 
   private
 
@@ -144,24 +174,6 @@ class OpenSearchMlModelRegistrar
     model_groups = parsed_response.map{|x| OpenStruct.new(x) }
   end
   memoize :model_groups
-
-  def models
-    response = http_post(
-      "/_plugins/_ml/models/_search",
-      {
-        query: {
-          match_all: {}
-        },
-        size: 1000,
-      }
-    )
-    parsed_response = JSON.parse(response.body).dig("hits","hits")
-    
-    parsed_response.
-      map{|x| OpenStruct.new(x) }.
-      select{|x| x.dig("_source","model_group_id")} #Note, depending on a model's size, it will be split into 'chunks' on deployment.  We're attempting to filter to the main model of concern here by looking for the model that has a model group id assigned
-  end
-  memoize :models
 
   def base_url
     Settings.elasticsearch.host

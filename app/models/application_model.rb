@@ -41,7 +41,7 @@ class ApplicationModel < ActiveRecord::Base
   end
 
   ES_INDEXING_RETRY_LIMIT = 1
-  def self.bulk_index(active_record_collection, refresh: false, repository: default_repository)
+  def self.bulk_index(active_record_collection, refresh: false, repository: default_repository, pipeline: nil)
     current_time = Time.current
     body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
       request_body << { index: { _index: repository.index_name, _id: instance.id } }
@@ -50,7 +50,14 @@ class ApplicationModel < ActiveRecord::Base
 
     remaining_retries = ES_INDEXING_RETRY_LIMIT
     begin
-      response = repository.client.bulk body: body, refresh: refresh, pipeline: 'nlp-ingest-pipeline'
+      index_options = {
+        body: body, refresh: refresh
+      }.tap do |options|
+        if pipeline
+          options.merge!(pipeline: pipeline)
+        end
+      end
+      response = repository.client.bulk(**index_options)
       if response.fetch('errors')
         failed_items  = response.fetch('items').select{|x| x.fetch('index')['error'] }
         failed_ids    = failed_items.map{|x| x.fetch("index").fetch("_id") }
