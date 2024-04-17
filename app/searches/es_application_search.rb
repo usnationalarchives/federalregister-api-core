@@ -327,6 +327,7 @@ class EsApplicationSearch
       buckets
   end
 
+
   def results(args = {})
     # Retrieve AR ids from Elasticsearch
     es_search_invocation = repository.search(search_options)
@@ -498,6 +499,7 @@ class EsApplicationSearch
 
   def highlight_query
     {
+      highlight_query: simple_query_string, #NOTE: It's necessary to specify this option to ensure the highlights work since the simple_query_string is now nested inside script_score keys.
       pre_tags: ['<span class="match">'],
       post_tags: ["</span>"],
       fields:    highlight_fields,
@@ -692,6 +694,17 @@ class EsApplicationSearch
     end
 
     query
+  end
+
+  def simple_query_string
+    {
+      :simple_query_string=> {
+        :query=> es_term,
+        :fields=>["title^2.5", "full_text^1.25", "agency_name^1", "abstract^2", "docket_id^1", "regulation_id_number^1"], 
+        :default_operator=>"and",
+        :quote_field_suffix=>".exact"
+      }
+    }
   end
 
   def k_value
