@@ -532,6 +532,10 @@ class EsEntrySearch < EsApplicationSearch
 
   private
 
+  def neural_querying_enabled?
+    true
+  end
+
   def es_sort_order
     case @order
     when 'newest', 'date'
