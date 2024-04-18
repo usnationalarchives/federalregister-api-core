@@ -122,6 +122,8 @@ class EsApplicationSearch
 
     @excerpts = options.fetch(:excerpts, false)
     @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
+    @search_types = (options.dig("conditions", "search_type_ids") || [1]).
+      map{|id| SearchType.find(id)}
 
     set_defaults(options)
 
@@ -130,7 +132,7 @@ class EsApplicationSearch
 
     conditions = options[:conditions].blank? ? {} : options[:conditions]
     self.conditions = conditions.reject do |key,val|
-      unless self.respond_to?("#{key}=")
+      unless self.respond_to?("#{key}=") || (key == "search_type_ids")
         @errors[key] = "is not a valid field"
       end
     end.with_indifferent_access
@@ -454,7 +456,7 @@ class EsApplicationSearch
 
   private
 
-  attr_reader :aggregation_field, :date_histogram_interval
+  attr_reader :aggregation_field, :date_histogram_interval, :search_types
 
   def es_base_query
     {
@@ -586,23 +588,26 @@ class EsApplicationSearch
       # Handle term
       if es_term.present?
         q[:query][:function_score][:query][:bool][:should] = [
-          {
-            "script_score": {
-              "query": {
-                simple_query_string: {
-                  query:            es_term,
-                  fields:           es_fields_with_boosts,
-                  default_operator: 'and',
-                  quote_field_suffix: '.exact'
+        ].tap do |should_clause|
+          if search_types.include?(SearchType::TEXTUAL)
+            should_clause << {
+              "script_score": {
+                "query": {
+                  simple_query_string: {
+                    query:            es_term,
+                    fields:           es_fields_with_boosts,
+                    default_operator: 'and',
+                    quote_field_suffix: '.exact'
+                  }
+                },
+                "script": {
+                  "source": "_score * 1.7"
                 }
-              },
-              "script": {
-                "source": "_score * 1.7"
               }
             }
-          }
-        ].tap do |should_clause|
-          if neural_querying_enabled?
+          end
+
+          if neural_querying_enabled? && search_types.include?(SearchType::NEURAL_ML)
             should_clause << {
               "script_score": {
                 "query": {
