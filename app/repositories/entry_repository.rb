@@ -143,6 +143,16 @@ class EntryRepository < BaseRepository
         }
       }
     }
+    indexes :full_text_embedding, {
+      "type": "knn_vector",
+      "dimension": 768,
+      "method": {
+        "engine": "lucene",
+        "space_type": "l2",
+        "name": "hnsw",
+        "parameters": {}
+      }
+    }
     indexes :full_text_xml_url, {
       type: 'keyword',
       index: false
