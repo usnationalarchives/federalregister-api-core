@@ -333,6 +333,13 @@ class EsApplicationSearch
     results = es_search_invocation.results
 
     ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, results, page, per_page)
+  
+    if explain_results?
+      explanations = es_search_invocation.raw_response.dig("hits","hits")
+      ar_collection_with_metadata.each_with_index do |result, i|
+        result.explanation = explanations[i].fetch("_explanation")
+      end
+    end
 
     if ar_collection_with_metadata && @excerpts
       #NOTE: Formerly the actual AR object was being returned and so we could query the raw_text_updated_at column here, but now we're querying the actual ES document for teh raw_text_updated_at
@@ -450,7 +457,6 @@ class EsApplicationSearch
 
   def es_base_query
     {
-      # explain: true, #NOTE: Useful for investigating relevancy calcs.
       size: per_page,
       from: es_from,
       query: {
@@ -468,10 +474,18 @@ class EsApplicationSearch
       sort: es_sort_order,
       _source: es_source,
     }.tap do |query|
+      if explain_results?
+        query.merge!(explain: true) #NOTE: Useful for investigating relevancy calcs
+      end
+
       if excerpts
         query.merge!(highlight: highlight_query)
       end
     end
+  end
+
+  def explain_results?
+    Settings.feature_flags.explain_query_results
   end
 
   def es_base_must_conditions
@@ -534,7 +548,7 @@ class EsApplicationSearch
   end
 
   def count_search_options
-    options = search_options.except(:size, :from, :sort, :highlight).dup.tap do |ops|
+    options = search_options.except(:size, :from, :sort, :highlight, :explain).dup.tap do |ops|
       ops[:query][:function_score][:functions]= Array.new
       ops.delete(:_source)
     end

@@ -24,6 +24,7 @@ module EntryApiConfiguration
       :excerpts,
       :executive_order_notes,
       :executive_order_number,
+      :explanation,
       :full_text_xml_url,
       :html_url,
       :images,
@@ -58,7 +59,11 @@ module EntryApiConfiguration
   end
 
   def default_index_fields_json
-    [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts]
+    [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts].tap do |fields|
+      if Settings.feature_flags.explain_query_results
+        fields.merge!(:explanation)
+      end
+    end
   end
 
   def default_index_fields_csv
