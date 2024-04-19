@@ -329,7 +329,6 @@ class EsApplicationSearch
       buckets
   end
 
-
   def results(args = {})
     # Retrieve AR ids from Elasticsearch
     es_search_invocation = repository.search(search_options)
