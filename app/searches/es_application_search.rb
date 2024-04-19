@@ -558,6 +558,7 @@ class EsApplicationSearch
   end
 
   DEFAULT_RESULTS_PER_PAGE = 20
+  MINIMUM_SCORE_FOR_NEURAL_QUERY = 0.016
   def search_options
     @page ||= 1
     @per_page ||= DEFAULT_RESULTS_PER_PAGE
@@ -618,6 +619,7 @@ class EsApplicationSearch
                     }
                   }
                 },
+                "min_score": 0.016, #This seems to apply before the script multiplier is applied
                 "script": {
                   "source": "_score * 1.5",
                 }
