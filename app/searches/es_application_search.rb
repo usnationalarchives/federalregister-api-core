@@ -495,7 +495,7 @@ class EsApplicationSearch
   end
 
   def es_source
-    {excludes: ["full_text"]}
+    {excludes: ["full_text", "full_text_embedding"]}
   end
 
   def highlight_query
