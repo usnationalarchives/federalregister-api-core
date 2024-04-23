@@ -282,7 +282,7 @@ describe EsEntrySearch, es: true do
                 {:_score=>{:order=>"desc"}},
                 {:publication_date=>{:order=>"desc"}}
               ],
-              :_source => {excludes: ["full_text"]}}
+              :_source => {excludes: ["full_text", "full_text_embedding"]}}
       )
     end
 
@@ -315,7 +315,7 @@ describe EsEntrySearch, es: true do
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
           ],
-          :_source => {excludes: ["full_text"]}}
+          :_source => {excludes: ["full_text", "full_text_embedding"]}}
       )
     end
 
@@ -342,7 +342,7 @@ describe EsEntrySearch, es: true do
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
           ],
-          :_source => {excludes: ["full_text"]}}
+          :_source => {excludes: ["full_text", "full_text_embedding"]}}
       )
     end
 
@@ -461,6 +461,25 @@ describe EsEntrySearch, es: true do
 
     end
 
+    context "hybrid search" do
+      it "can perform hybrid search" do
+        entries = [
+          build_entry_double({full_text: "fried eggs potato", title: 'fried eggs potato', id: 777}),
+          build_entry_double({full_text: "donald trump presidency", title: 'donald trump presidency', id: 888}),
+          build_entry_double({full_text: "sharks and whales", title: 'sharks and whales', id: 999}),
+        ]
+        Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::INGEST_PIPELINE_NAME)
+
+        search = EsEntrySearch.new(conditions: {term: 'united states executive', search_type_ids: [SearchType::HYBRID.id]}) #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
+        allow(search).to receive(:neural_querying_enabled?).and_return(true) #Turn neural search on for testing
+        allow(search).to receive(:k_value).and_return(1)
+
+        assert_valid_search(search)
+
+        expect(search.results.es_ids).to match_array([888])
+      end
+    end
+
     context "vector search" do
       it "can perform a vector search" do
         entries = [
@@ -487,7 +506,7 @@ describe EsEntrySearch, es: true do
         ]
         Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::INGEST_PIPELINE_NAME)
 
-        search = EsEntrySearch.new(conditions: {term: 'executive office', search_type_ids: [2]}) #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
+        search = EsEntrySearch.new(conditions: {term: 'executive office', search_type_ids: [SearchType::HYBRID.id]}) #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
         allow(search).to receive(:neural_querying_enabled?).and_return(true) #Turn neural search on for testing
 
         assert_valid_search(search)
@@ -500,7 +519,7 @@ describe EsEntrySearch, es: true do
 
       it "handles a combination of advanced search syntax" do
         entries = [
-          build_entry_double({passage_embedding: "fried", title: 'fried eggs potato', id: 777}),
+          build_entry_double({title: 'fried eggs potato', id: 777}),
           build_entry_double({full_text: 'fried eggs eggplant', id: 888}),
           build_entry_double({full_text: 'fried eggs eggplant frittata', id: 888}),
           build_entry_double({agency_name: 'frittata', id: 999}),

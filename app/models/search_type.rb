@@ -5,11 +5,27 @@ class SearchType < ActiveHash::Base
   self.data = [
     {
       id: 1,
-      identifier: "textual",
+      identifier: "lexical",
+      name: "Lexical (Standard)",
+      supports_explain: true,
     },
     {
       id: 2,
-      identifier: "neural_ml",
+      identifier: "neural",
+      name: "Neural ML",
+      supports_explain: true,
+    },
+    {
+      id: 3,
+      identifier: "manually_weighted",
+      name: "Manually Weighted Combination",
+      supports_explain: true,
+    },
+    {
+      id: 4,
+      name: "Hybrid (Normalized Lexical & Neural)",
+      identifier: "hybrid",
+      supports_explain: false,
     }
   ]
 end

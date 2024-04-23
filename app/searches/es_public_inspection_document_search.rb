@@ -160,6 +160,10 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
     []
   end
 
+  def index_has_neural_querying_enabled?
+    false
+  end
+
   def highlight_fields
     #NOTE: It is necessary to include the .exact fields or no excerpts will be returned for queries that include double quotes.
     {

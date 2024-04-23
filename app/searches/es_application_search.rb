@@ -122,7 +122,8 @@ class EsApplicationSearch
 
     @excerpts = options.fetch(:excerpts, false)
     @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
-    @search_types = (options.dig("conditions", "search_type_ids") || [1]).
+    default_search_type_ids = 1
+    @search_types = (options.dig("conditions", "search_type_ids") || [default_search_type_ids]).
       map{|id| SearchType.find(id)}
 
     set_defaults(options)
@@ -487,7 +488,8 @@ class EsApplicationSearch
   end
 
   def explain_results?
-    Settings.feature_flags.explain_query_results
+    Settings.feature_flags.explain_query_results &&
+      search_types.all?{|x| x.supports_explain}
   end
 
   def es_base_must_conditions
@@ -587,46 +589,7 @@ class EsApplicationSearch
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?
-        q[:query][:function_score][:query][:bool][:should] = [
-        ].tap do |should_clause|
-          if search_types.include?(SearchType::TEXTUAL)
-            should_clause << {
-              "script_score": {
-                "query": {
-                  simple_query_string: {
-                    query:            es_term,
-                    fields:           es_fields_with_boosts,
-                    default_operator: 'and',
-                    quote_field_suffix: '.exact'
-                  }
-                },
-                "script": {
-                  "source": "_score * 1.7"
-                }
-              }
-            }
-          end
-
-          if neural_querying_enabled? && search_types.include?(SearchType::NEURAL_ML)
-            should_clause << {
-              "script_score": {
-                "query": {
-                  "neural": {
-                    "full_text_embedding": {
-                      "query_text": es_term,
-                      "model_id": text_embedding_model_id,
-                      "k": k_value
-                    }
-                  }
-                },
-                "min_score": 0.016, #This seems to apply before the script multiplier is applied
-                "script": {
-                  "source": "_score * 1.5",
-                }
-              }
-            }
-          end
-        end
+        q[:query][:function_score][:query][:bool][:should] = should_queries
         q[:query][:function_score][:query][:bool][:minimum_should_match] = 1
       end
 
@@ -700,6 +663,67 @@ class EsApplicationSearch
     end
 
     query
+  end
+
+  def should_queries
+    case search_types
+    when [SearchType::HYBRID]
+      [hybrid_query]
+    when [SearchType::MANUALLY_WEIGHTED]
+      manually_weighted_queries
+    when [SearchType::LEXICAL]
+      [lexical_query]
+    when [SearchType::NEURAL]
+      [neural_query]
+    end
+  end
+
+  def manually_weighted_queries
+    [
+      "script_score": {
+        "query": lexical_query,
+        "script": {
+          "source": "_score * 1.7"
+        }
+      },
+      "script_score": {
+        "query": neural_query,
+        "script": {
+          "source": "_score * 1.5"
+        }
+      },
+    ]
+  end
+
+  def hybrid_query
+    {
+      hybrid: {
+        queries: [lexical_query, neural_query]
+      }
+    }
+  end
+
+  def lexical_query
+    {
+      simple_query_string: {
+        query:            es_term,
+        fields:           es_fields_with_boosts,
+        default_operator: 'and',
+        quote_field_suffix: '.exact'
+      }
+    }
+  end
+
+  def neural_query
+    {
+      neural: {
+        full_text_embedding: {
+          query_text: es_term,
+          model_id: text_embedding_model_id,
+          k: k_value
+        }
+      }
+    }
   end
 
   def simple_query_string

@@ -532,7 +532,7 @@ class EsEntrySearch < EsApplicationSearch
 
   private
 
-  def neural_querying_enabled?
+  def index_has_neural_querying_enabled?
     true
   end
 
