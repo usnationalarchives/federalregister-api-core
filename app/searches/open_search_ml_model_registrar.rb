@@ -109,7 +109,7 @@ class OpenSearchMlModelRegistrar
         "version": "1.0.2",
         "model_group_id": model_group_id,
         "model_format": "TORCH_SCRIPT"
-      }.to_json
+      }
     )
 
     if response.success?
@@ -149,7 +149,7 @@ class OpenSearchMlModelRegistrar
       {
         "name":        "local_model_group_throwaway",
         "description": "A model group for local models"
-      }.to_json
+      }
     )
 
     if response.success?
