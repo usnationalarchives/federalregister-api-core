@@ -340,7 +340,15 @@ class EsApplicationSearch
     if explain_results?
       explanations = es_search_invocation.raw_response.dig("hits","hits")
       ar_collection_with_metadata.each_with_index do |result, i|
-        result.explanation = explanations[i].fetch("_explanation")
+        if search_types.all?{|x| x.supports_explain}
+          result.explanation = explanations[i].fetch("_explanation")
+        else
+          #Hybrid searches do not support/will fail if they include the _explanation paramter.  In these cases, create our own explanation based on the score value given the basic data we have available
+          result.explanation = {
+            value: explanations[i].fetch("_score"),
+            sort:  explanations[i].fetch("sort")
+          }
+        end
       end
     end
 
@@ -477,7 +485,7 @@ class EsApplicationSearch
       sort: es_sort_order,
       _source: es_source,
     }.tap do |query|
-      if explain_results?
+      if explain_results? && search_types.all?{|x| x.supports_explain}
         query.merge!(explain: true) #NOTE: Useful for investigating relevancy calcs
       end
 
@@ -488,8 +496,7 @@ class EsApplicationSearch
   end
 
   def explain_results?
-    Settings.feature_flags.explain_query_results &&
-      search_types.all?{|x| x.supports_explain}
+    Settings.feature_flags.explain_query_results
   end
 
   def es_base_must_conditions
