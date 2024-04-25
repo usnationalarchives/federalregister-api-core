@@ -47,7 +47,8 @@ class ApiController < ApplicationController
       return
     end
 
-    data = { :count => search.count, :description => search.summary }
+    count = search.count
+    data = { :count => count, :description => search.summary }
 
     unless metadata_only == "1"
       # NOTE: /documents needs the select clause to be nested inside a SQL block
@@ -56,7 +57,7 @@ class ApiController < ApplicationController
 
       results = search.results(options)
 
-      if search.count > 0 && results.count > 0
+      if count && results.count > 0
         data[:total_pages] = results.total_pages
 
         if results.next_page
