@@ -22,4 +22,13 @@ class OpenSearchIngestPipelineRegistrar
     puts response.body
   end
 
+  NORMALIZATION_PIPELINE_NAME = "normalization-pipeline"
+  def self.create_normalization_pipeline!
+    response = Faraday.put("#{Settings.elasticsearch.host}/_search/pipeline/#{NORMALIZATION_PIPELINE_NAME}") do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = SearchType::HYBRID.temporary_search_pipeline_configuration.to_json
+    end
+    puts response.body
+  end
+
 end

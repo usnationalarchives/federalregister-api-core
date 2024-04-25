@@ -26,6 +26,22 @@ class SearchType < ActiveHash::Base
       name: "Hybrid (Normalized Lexical & Neural)",
       identifier: "hybrid",
       supports_explain: false,
+      temporary_search_pipeline_configuration: {
+        # The purpose of this pipeline configuration is to collect results from all shards and normalize the relevance scores from a lexical query and neural query (these scores occur on different scales)
+        "description": "Post-processor for hybrid search",
+        "phase_results_processors": [
+          {
+            "normalization-processor": {
+              "normalization": {
+                "technique": "l2"
+              },
+              "combination": {
+                "technique": "arithmetic_mean"
+              }
+            }
+          }
+        ]
+      }
     }
   ]
 end

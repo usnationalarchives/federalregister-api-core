@@ -662,6 +662,12 @@ class EsApplicationSearch
 
     end
 
+    if search_types.first.temporary_search_pipeline_configuration
+      query.merge!(
+        search_pipeline: search_types.first.temporary_search_pipeline_configuration
+      )
+    end
+
     query
   end
 
