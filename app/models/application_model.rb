@@ -97,7 +97,7 @@ class ApplicationModel < ActiveRecord::Base
 
       if response.fetch('errors')
         if Rails.env.development?
-          raise response.fetch('errors')
+          raise response.fetch('errors').inspect
         else
           Honeybadger.notify(
             "ES bulk update encountered errors",
