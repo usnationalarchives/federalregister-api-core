@@ -47,7 +47,13 @@ class ApiController < ApplicationController
       return
     end
 
-    count = search.count
+
+    if params.dig("conditions","search_type_ids") == [4]
+      count = "Stubbed Count"
+    else
+      count = search.count
+    end
+
     data = { :count => count, :description => search.summary }
 
     unless metadata_only == "1"
@@ -57,7 +63,7 @@ class ApiController < ApplicationController
 
       results = search.results(options)
 
-      if count && results.count > 0
+      if results.count > 0
         data[:total_pages] = results.total_pages
 
         if results.next_page
