@@ -81,6 +81,7 @@ class PageViewCount
       # and then merge those into the historical counts
       update_counts(Date.yesterday, Date.yesterday, page_view_type.yesterday_set)
       collapse_counts
+      persist_redis_counts_to_database!
     else
       update_counts(Date.current, Date.current, page_view_type.today_set)
     end
@@ -96,6 +97,45 @@ class PageViewCount
   def collapse_counts
     $redis.zunionstore(page_view_type.historical_set, [page_view_type.yesterday_set, page_view_type.historical_set])
     $redis.del(page_view_type.yesterday_set)
+  end
+
+  def persist_redis_counts_to_database!
+    # On a daily basis, make sure we persist our accumulated redis totals to disk
+    total           = page_view_type.model.count
+    processed_total = 0
+    batch_size      = 1000
+    page_view_type.model.find_in_batches(batch_size: batch_size) do |batch|
+      doc_attributes = batch.pluck(:document_number, :id)
+    
+      doc_attributes.each do |document_number, id|
+        count = $redis.zscore page_view_type.historical_set, document_number
+        if count
+          page_view_type.model.where(id: id).update_all(historical_page_view_count: count)
+        end
+      end
+      processed_total += batch_size
+      puts "#{(processed_total.to_f/total)*100}% complete"
+    end
+  end
+
+  def repopulate_historical_set_from_database!
+    # Delete historical set
+    $redis.del(page_view_type.historical_set)
+
+    page_view_type.model.where.not(historical_page_view_count: nil).find_in_batches(batch_size: 1000) do |batch|
+      doc_attributes = batch.pluck(:document_number, :historical_page_view_count)
+
+      $redis.pipelined do
+        doc_attributes.each do |document_number, historical_page_view_count|
+          # puts "#{document_number}: #{historical_page_view_count}"
+          $redis.zincrby(
+            page_view_type.historical_set,
+            historical_page_view_count,
+            document_number
+          )
+        end
+      end
+    end
   end
 
 

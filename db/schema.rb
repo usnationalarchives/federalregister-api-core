@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2024_05_01_214711) do
-
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
     t.datetime "created_at"
@@ -207,6 +206,7 @@ ActiveRecord::Schema.define(version: 2024_05_01_214711) do
     t.integer "universal_analytics_page_views"
     t.boolean "not_received_for_publication"
     t.integer "president_id"
+    t.integer "historical_page_view_count"
     t.index ["citation"], name: "index_entries_on_citation"
     t.index ["citing_entries_count"], name: "index_entries_on_citing_entries_count"
     t.index ["correction_of_id"], name: "index_entries_on_correction_of"
@@ -547,6 +547,7 @@ ActiveRecord::Schema.define(version: 2024_05_01_214711) do
     t.datetime "update_pil_at"
     t.datetime "subscriptions_enqueued_at"
     t.integer "universal_analytics_page_views"
+    t.integer "historical_page_view_count"
     t.index ["document_number"], name: "index_public_inspection_documents_on_document_number"
     t.index ["entry_id"], name: "index_public_inspection_documents_on_entry_id"
     t.index ["publication_date"], name: "index_public_inspection_documents_on_publication_date"
