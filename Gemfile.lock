@@ -361,7 +361,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.3.0)
     mysql2 (0.5.6)
-    net-imap (0.2.3)
+    net-imap (0.2.4)
       digest
       net-protocol
       strscan
@@ -375,7 +375,7 @@ GEM
       net-ssh (>= 2.6.5, < 7.0.0)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-smtp (0.3.1)
+    net-smtp (0.3.1.1)
       digest
       net-protocol
       timeout
