@@ -83,7 +83,7 @@ rails:
 # host is retrived from credentials
 # development/test environment uses ENV vars for this so key is defined here
 redis:
-  db: 0
+  db: 2
   host:
   port: 6379
 
