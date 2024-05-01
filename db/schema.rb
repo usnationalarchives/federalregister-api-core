@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_09_235916) do
+ActiveRecord::Schema.define(version: 2024_05_01_214711) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -546,6 +546,7 @@ ActiveRecord::Schema.define(version: 2024_04_09_235916) do
     t.string "category", collation: "utf8_general_ci"
     t.datetime "update_pil_at"
     t.datetime "subscriptions_enqueued_at"
+    t.integer "universal_analytics_page_views"
     t.index ["document_number"], name: "index_public_inspection_documents_on_document_number"
     t.index ["entry_id"], name: "index_public_inspection_documents_on_entry_id"
     t.index ["publication_date"], name: "index_public_inspection_documents_on_publication_date"

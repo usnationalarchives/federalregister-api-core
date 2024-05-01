@@ -48,6 +48,21 @@ class PageViewType < ActiveHash::Base
       today_set:           "ua_doc_counts:today",
       yesterday_set:      "ua_doc_counts:yesterday",
     },
+    {
+      id: 4,
+      identifier:     'ua_public_inspection_document',
+      cache_expiry_urls:  ['/api/v1/public-inspection-documents', '/public-inspection/'],
+      current_as_of:  'ua_public_inspection_doc_counts:current_as_of',
+      document_number_position_index: 2,
+      filter_expressions: ["^/(public_inspection_documents/.*/.*/.*/.*/.*|public-inspection/[12][0-9][0-9][0-9]-)"],
+      google_analytics_url_regex: /^\/(public_inspection_documents\/.*\/.*\/.*\/.*\/.*|public-inspection\/\d{4}-.*\/.*)/,
+      ga4_url_regex: "^/(public_inspection_documents/.*/.*/.*/.*/.*|public-inspection/[0-9]{4}-.*\/.*)",
+      historical_set: "ua_public_inspection_doc_counts:historical",
+      namespace:       'ua_public_inspection_doc_counts',
+      temp_set:        "ua_public_inspection_doc_counts:in_progress",
+      today_set:       "ua_public_inspection_doc_counts:today",
+      yesterday_set:  "ua_public_inspection_doc_counts:yesterday",
+    },
   ]
 
 end
