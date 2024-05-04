@@ -30,6 +30,9 @@ prince:
   host: http://prince-xml-14.ofr.svc.cluster.local
   port: 3000
 
+redis:
+  db: 2
+
 services:
   fr:
     web:

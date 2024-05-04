@@ -18,3 +18,6 @@ app:
   images:
     download_daily_images_from_sftp: true
     download_and_process_from_holding_tank: true
+
+redis:
+  db: 0
