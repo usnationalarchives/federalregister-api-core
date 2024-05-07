@@ -332,7 +332,12 @@ class EsApplicationSearch
 
   def results(args = {})
     # Retrieve AR ids from Elasticsearch
-    es_search_invocation = repository.search(search_options)
+    if search_types.first == SearchType::HYBRID
+      es_search_invocation = repository.search(hybrid_search_options)
+    else
+      es_search_invocation = repository.search(search_options)
+    end
+
     results = es_search_invocation.results
 
     ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, results, page, per_page)
@@ -596,7 +601,16 @@ class EsApplicationSearch
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?
-        q[:query][:function_score][:query][:bool][:should] = should_queries
+        q[:query][:function_score][:query][:bool][:should] = [
+          {
+            simple_query_string: {
+              query:            es_term,
+              fields:           es_fields_with_boosts,
+              default_operator: 'and',
+              quote_field_suffix: '.exact'
+            }
+          }
+        ]
         q[:query][:function_score][:query][:bool][:minimum_should_match] = 1
       end
 
@@ -669,13 +683,36 @@ class EsApplicationSearch
 
     end
 
-    if search_types.first.temporary_search_pipeline_configuration
-      query.merge!(
+    query
+  end
+
+  def hybrid_search_options
+    base_query_options = search_options.except(:query)
+    old_lexical_query  = search_options[:query]
+
+    {
+      :query => {
+        :hybrid => {
+          :queries => [
+            old_lexical_query,
+            {
+              :neural => {
+                :full_text_embedding => {
+                  :query_text => es_term,
+                  :model_id => "TF2HEY8BSpP9cqMFr8Er",
+                  :k => 3
+                }
+              }
+            }
+          ]
+        }
+      }
+    }.tap do |options|
+      options.merge!(base_query_options)
+      options.merge!(
         search_pipeline: search_types.first.temporary_search_pipeline_configuration
       )
     end
-
-    query
   end
 
   def should_queries
@@ -706,14 +743,6 @@ class EsApplicationSearch
         }
       },
     ]
-  end
-
-  def hybrid_query
-    {
-      hybrid: {
-        queries: [lexical_query, neural_query]
-      }
-    }
   end
 
   def lexical_query
