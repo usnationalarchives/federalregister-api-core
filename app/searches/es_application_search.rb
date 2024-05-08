@@ -688,22 +688,16 @@ class EsApplicationSearch
 
   def hybrid_search_options
     base_query_options = search_options.except(:query)
-    old_lexical_query  = search_options[:query]
+    function_score_wrapped_lexical_query = search_options[:query]
+    function_score_wrapped_neural_query  = search_options[:query]
+    function_score_wrapped_neural_query[:function_score][:query][:bool][:should] = [neural_query]
 
     {
       :query => {
         :hybrid => {
           :queries => [
-            old_lexical_query,
-            {
-              :neural => {
-                :full_text_embedding => {
-                  :query_text => es_term,
-                  :model_id => "TF2HEY8BSpP9cqMFr8Er",
-                  :k => 3
-                }
-              }
-            }
+            function_score_wrapped_lexical_query,
+            function_score_wrapped_neural_query
           ]
         }
       }
