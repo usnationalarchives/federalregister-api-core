@@ -414,7 +414,21 @@ class EsApplicationSearch
   end
 
   def count
-    @count ||= repository.count(count_search_options)
+    if index_has_neural_querying_enabled? && use_hybrid_search_for_count_queries?
+      #TODO: This can likely be further optimized, perhaps by not sending to the normalization pipeline, removing gaussian decay via function scoring, etc.  Hybrid search does not appear to be supported using the OpenSearch _count endpoint
+      hybrid_search_count_options = hybrid_search_options.dup.tap do |options|
+        options["_source"] = false #ie don't return the object attributes
+      end
+
+      @count ||= repository.
+        search(hybrid_search_count_options).
+        raw_response.
+        fetch("hits").
+        fetch("total").
+        fetch("value")
+    else  
+      @count ||= repository.count(count_search_options)
+    end
   end
 
   def term_count
@@ -434,6 +448,7 @@ class EsApplicationSearch
   end
 
   def es_search_count(term, options)
+    raise NotImplementedError
     es_retry do
       begin
         model.search_count(term, options)
@@ -470,6 +485,10 @@ class EsApplicationSearch
   private
 
   attr_reader :aggregation_field, :date_histogram_interval, :search_types
+
+  def use_hybrid_search_for_count_queries?
+    true
+  end
 
   def es_base_query
     {
@@ -565,9 +584,17 @@ class EsApplicationSearch
   end
 
   def count_search_options
-    options = search_options.except(:size, :from, :sort, :highlight, :explain).dup.tap do |ops|
-      ops[:query][:function_score][:functions]= Array.new
-      ops.delete(:_source)
+    if index_has_neural_querying_enabled? && use_hybrid_search_for_count_queries?
+      hybrid_search_options.except(:from, :sort, :highlight, :explain, :_source).dup.tap do |ops|
+        ops[:query][:hybrid][:queries][0][:function_score][:functions] = Array.new
+        ops[:query][:hybrid][:queries][1][:function_score][:functions] = Array.new
+        ops[:_source] = false
+      end
+    else
+      options = search_options.except(:size, :from, :sort, :highlight, :explain).dup.tap do |ops|
+        ops[:query][:function_score][:functions]= Array.new
+        ops.delete(:_source)
+      end
     end
   end
 
