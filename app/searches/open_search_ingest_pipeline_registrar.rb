@@ -22,6 +22,48 @@ class OpenSearchIngestPipelineRegistrar
     puts response.body
   end
 
+  CHUNKING_PIPELINE_NAME = "nlp-chunking-ingest-pipeline"
+  TOKEN_LIMIT = 256 # We may want to experiment with this value
+  def self.create_chunking_pipeline!(model_id)
+    response = Faraday.put("#{Settings.elasticsearch.host}/_ingest/pipeline/#{CHUNKING_PIPELINE_NAME}") do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = {
+        "description": "A pipeline that chunks and subsequently generates text embeddings",
+        "processors": [
+          {
+            "text_chunking": {
+              "algorithm": {
+                "fixed_token_length": {
+                  "token_limit": TOKEN_LIMIT,
+                  "overlap_rate": 0.2,
+                  "tokenizer": "standard"
+                }
+              },
+              "field_map": {
+                "full_text": "full_text_chunk"
+              }
+            }
+          },
+          {
+            "text_embedding": {
+              "model_id": OpenSearchMlModelRegistrar.model_id,
+              "field_map": {
+                "full_text_chunk": "full_text_chunk_embedding"
+              }
+            }
+          },
+          #NOTE: The removal step appears to be necessary or the 
+          {
+            "remove": {
+              "field": "full_text_chunk"
+            }
+          }
+        ]
+      }.to_json
+    end
+    puts response.body
+  end
+
   NORMALIZATION_PIPELINE_NAME = "normalization-pipeline"
   def self.create_normalization_pipeline!
     response = Faraday.put("#{Settings.elasticsearch.host}/_search/pipeline/#{NORMALIZATION_PIPELINE_NAME}") do |req|

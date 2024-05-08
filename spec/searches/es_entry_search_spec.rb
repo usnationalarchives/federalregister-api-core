@@ -480,7 +480,7 @@ describe EsEntrySearch, es: true do
       end
     end
 
-    context "vector search" do
+    context "hybrid searches" do
       it "can perform a vector search" do
         entries = [
           build_entry_double({full_text: "fried eggs potato", title: 'fried eggs potato', id: 777}),
@@ -511,6 +511,24 @@ describe EsEntrySearch, es: true do
 
         assert_valid_search(search)
 
+        expect(search.results.es_ids).to match_array([888])
+      end
+      it "can search the full_text_chunk_embeddings" do
+        # SEEMS LIKE THIS IS A PIPELINE PROBLEM WITH THE 
+        OpenSearchIngestPipelineRegistrar.create_chunking_pipeline!(OpenSearchMlModelRegistrar.model_id)
+
+        entries = [
+          build_entry_double({full_text: "fried eggs potato", title: 'fried eggs potato', id: 777}),
+          build_entry_double({full_text: "donald trump presidency", title: 'donald trump presidency', id: 888}),
+          build_entry_double({full_text: "sharks and whales", title: 'sharks and whales', id: 999}),
+        ]
+        Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
+        expect($entry_repository.count).to eq(3)
+
+        search = EsEntrySearch.new(conditions: {term: 'executive office', search_type_ids: [SearchType::HYBRID.id]}) #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
+        allow(search).to receive(:k_value).and_return(1)
+
+        assert_valid_search(search)
         expect(search.results.es_ids).to match_array([888])
       end
     end

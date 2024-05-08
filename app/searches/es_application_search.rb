@@ -779,11 +779,17 @@ class EsApplicationSearch
 
   def neural_query
     {
-      neural: {
-        full_text_embedding: {
-          query_text: es_term,
-          model_id: text_embedding_model_id,
-          k: k_value
+      "nested": {
+        "score_mode": "max",
+        "path": "full_text_chunk_embedding",
+        "query": {
+          "neural": {
+            "full_text_chunk_embedding.knn": {
+              "query_text": es_term,
+              "model_id": text_embedding_model_id,
+              "k": k_value
+            }
+          }
         }
       }
     }
