@@ -143,15 +143,24 @@ class EntryRepository < BaseRepository
         }
       }
     }
-    indexes :full_text_embedding, {
-      "type": "knn_vector",
-      "dimension": 768,
-      "method": {
-        "engine": "lucene",
-        "space_type": "l2",
-        "name": "hnsw",
-        "parameters": {}
+    indexes :full_text_chunk_embedding, {
+      type: 'nested',
+      properties: {
+        knn: {
+          type: "knn_vector",
+          dimension: 768,
+          method: {
+            engine: "lucene", #Evaluated against NMSLIB and FAISS and lucene since it prioritizes seamless integration over speed.  Supposedly good for datasets that contain < 10M vectors.  As our comfort and scale grows, we may want to consider moving to NMSLIB or FAISS.
+            space_type: "cosinesimil", # The method used to compare vector proximity.  Evaluated against inner product and went with cosine similarity since it emphasizes vector direction more than vector magnitude and is a good fit for semantic search.
+            name: "hnsw", # Hierarchical Navigable Small Worlds.  Defines the algorithm for vector space traversal.  Traversal starts at a coarse level and traverses through finer and finer levels to identify the closest neighbor.
+            parameters: {}
+          }
+        }
       }
+      # FUTURE ITEMS:
+      # 1. We may want to consider storing the source full_text_chunks so we can surface them to the user accordingly
+      # 2. If we continue to use the Lucene engine, we may want to investigate storing vectors as byte vectors in lieu of float vectors.  Open Search documentation states: "In k-NN benchmarking tests, the use of byte rather than float vectors resulted in a significant reduction in storage and memory usage as well as improved indexing throughput and reduced query latency. Additionally, precision on recall was not greatly affected (note that recall can depend on various factors, such as the quantization technique and data distribution)."
+      # See https://opensearch.org/docs/latest/field-types/supported-field-types/knn-vector/
     }
     indexes :full_text_xml_url, {
       type: 'keyword',
