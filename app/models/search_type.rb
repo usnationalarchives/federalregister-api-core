@@ -36,7 +36,14 @@ class SearchType < ActiveHash::Base
                 "technique": "l2"
               },
               "combination": {
-                "technique": "arithmetic_mean"
+                "technique": "arithmetic_mean",
+                "parameters": {
+                  "weights": [
+                    # NOTE: Given the nature of our corpus (where specific regulatory terms are often searched for) and the fact that query analytics suggest most of our queries are not several words long and thus don't benefit as much from neural search, apply a heavy weighting towards BM25
+                    0.7, # (BM25 Weighting)
+                    0.3, # (Neural Weighting)
+                  ]
+                }
               }
             }
           }
