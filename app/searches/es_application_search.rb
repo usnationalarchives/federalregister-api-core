@@ -413,12 +413,7 @@ class EsApplicationSearch
   end
 
   def count
-    if index_has_neural_querying_enabled? && use_hybrid_search_for_count_queries?
-      #TODO: This can likely be further optimized, perhaps by not sending to the normalization pipeline, removing gaussian decay via function scoring, etc.  Hybrid search does not appear to be supported using the OpenSearch _count endpoint
-      hybrid_search_count_options = hybrid_search_options.dup.tap do |options|
-        options["_source"] = false #ie don't return the object attributes
-      end
-
+    if index_has_neural_querying_enabled? && use_hybrid_search_for_count_queries? && es_term.present?
       @count ||= repository.
         search(hybrid_search_count_options).
         raw_response.
@@ -580,6 +575,13 @@ class EsApplicationSearch
         }
       }
     )
+  end
+
+  def hybrid_search_count_options
+    #TODO: This can likely be further optimized, perhaps by not sending to the normalization pipeline, removing gaussian decay via function scoring, etc.  Hybrid search does not appear to be supported using the OpenSearch _count endpoint
+    hybrid_search_options.except(:explain).dup.tap do |options|
+      options["_source"] = false #ie don't return the object attributes
+    end
   end
 
   def count_search_options
