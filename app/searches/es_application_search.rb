@@ -122,7 +122,7 @@ class EsApplicationSearch
 
     @excerpts = options.fetch(:excerpts, false)
     @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
-    default_search_type_ids = 1
+    default_search_type_ids = SearchType::HYBRID.id
     @search_types = (options.dig("conditions", "search_type_ids") || [default_search_type_ids]).
       map{|id| SearchType.find(id)}
 
@@ -348,10 +348,9 @@ class EsApplicationSearch
         if search_types.all?{|x| x.supports_explain}
           result.explanation = explanations[i].fetch("_explanation")
         else
-          #Hybrid searches do not support/will fail if they include the _explanation paramter.  In these cases, create our own explanation based on the score value given the basic data we have available
+          #Hybrid searches do not support/will fail if the _explanation parameter is included.  In these cases, create our own explanation based on the score value given the basic data we have available
           result.explanation = {
             value: explanations[i].fetch("_score"),
-            sort:  explanations[i].fetch("sort")
           }
         end
       end
@@ -584,17 +583,9 @@ class EsApplicationSearch
   end
 
   def count_search_options
-    if index_has_neural_querying_enabled? && use_hybrid_search_for_count_queries?
-      hybrid_search_options.except(:from, :sort, :highlight, :explain, :_source).dup.tap do |ops|
-        ops[:query][:hybrid][:queries][0][:function_score][:functions] = Array.new
-        ops[:query][:hybrid][:queries][1][:function_score][:functions] = Array.new
-        ops[:_source] = false
-      end
-    else
-      options = search_options.except(:size, :from, :sort, :highlight, :explain).dup.tap do |ops|
-        ops[:query][:function_score][:functions]= Array.new
-        ops.delete(:_source)
-      end
+    search_options.except(:size, :from, :sort, :highlight, :explain).dup.tap do |ops|
+      ops[:query][:function_score][:functions]= Array.new
+      ops.delete(:_source)
     end
   end
 
@@ -732,7 +723,7 @@ class EsApplicationSearch
     }.tap do |options|
       options.merge!(base_query_options)
       options.merge!(
-        search_pipeline: search_types.first.temporary_search_pipeline_configuration
+        search_pipeline: SearchType::HYBRID.temporary_search_pipeline_configuration
       )
     end
   end
@@ -812,7 +803,7 @@ class EsApplicationSearch
   end
 
   def neural_querying_enabled?
-    false
+    raise NotImplementedError
   end
 
   def text_embedding_model_id

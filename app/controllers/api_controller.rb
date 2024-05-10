@@ -47,12 +47,7 @@ class ApiController < ApplicationController
       return
     end
 
-
-    if params.dig("conditions","search_type_ids") == [4]
-      count = "Stubbed Count"
-    else
-      count = search.count
-    end
+    count = search.count
 
     data = { :count => count, :description => search.summary }
 

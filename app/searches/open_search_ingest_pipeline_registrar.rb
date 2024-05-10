@@ -52,7 +52,7 @@ class OpenSearchIngestPipelineRegistrar
               }
             }
           },
-          #NOTE: The removal step appears to be necessary or the 
+          #NOTE: The removal step appears to be necessary or OpenSearch will assume you're trying to persist the "full_text_chunk" when it's really just an ephemeral part of the processor logic
           {
             "remove": {
               "field": "full_text_chunk"
