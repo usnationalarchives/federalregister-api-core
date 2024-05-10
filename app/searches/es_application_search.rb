@@ -599,7 +599,6 @@ class EsApplicationSearch
   end
 
   DEFAULT_RESULTS_PER_PAGE = 20
-  MINIMUM_SCORE_FOR_NEURAL_QUERY = 0.016
   def search_options
     @page ||= 1
     @per_page ||= DEFAULT_RESULTS_PER_PAGE
@@ -713,11 +712,13 @@ class EsApplicationSearch
     query
   end
 
+  NEURAL_MINIMUM_SCORE = 1.9
   def hybrid_search_options
     base_query_options = search_options.except(:query)
     function_score_wrapped_lexical_query = search_options[:query]
     function_score_wrapped_neural_query  = search_options[:query]
     function_score_wrapped_neural_query[:function_score][:query][:bool][:should] = [neural_query]
+    function_score_wrapped_neural_query[:function_score].merge!(min_score: NEURAL_MINIMUM_SCORE)
 
     {
       :query => {
@@ -807,7 +808,7 @@ class EsApplicationSearch
   end
 
   def k_value
-    20
+    10
   end
 
   def neural_querying_enabled?
