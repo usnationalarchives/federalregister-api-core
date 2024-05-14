@@ -739,19 +739,6 @@ class EsApplicationSearch
     end
   end
 
-  def should_queries
-    case search_types
-    when [SearchType::HYBRID]
-      [hybrid_query]
-    when [SearchType::MANUALLY_WEIGHTED]
-      manually_weighted_queries
-    when [SearchType::LEXICAL]
-      [lexical_query]
-    when [SearchType::NEURAL]
-      [neural_query]
-    end
-  end
-
   def manually_weighted_queries
     [
       "script_score": {
