@@ -12,7 +12,12 @@ class XmlTableOfContentsTransformer
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
     @issue = Issue.find_by(publication_date: date)
-    @table_of_contents = {agencies:[]}
+    @table_of_contents = {
+      agencies:[],
+      meta: {
+        publication_date: @issue.publication_date.to_s(:iso)
+      }
+    }
     @path_manager = FileSystemPathManager.new(@date)
   end
 
