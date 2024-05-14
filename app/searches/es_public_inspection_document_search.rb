@@ -149,6 +149,10 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
 
   private
 
+  def default_search_type
+    SearchType::LEXICAL
+  end
+
   def es_sort_order
     [
       {filed_at: {order: "desc"}},

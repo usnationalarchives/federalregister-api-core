@@ -532,6 +532,10 @@ class EsEntrySearch < EsApplicationSearch
 
   private
 
+  def default_search_type
+    SearchType::HYBRID
+  end
+
   def index_has_neural_querying_enabled?
     true
   end

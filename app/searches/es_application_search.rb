@@ -122,8 +122,8 @@ class EsApplicationSearch
 
     @excerpts = options.fetch(:excerpts, false)
     @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
-    default_search_type_ids = SearchType::HYBRID.id
-    @search_types = (options.dig("conditions", "search_type_ids") || [default_search_type_ids]).
+    default_search_type_ids = [default_search_type.id]
+    @search_types = (options.dig("conditions", "search_type_ids") || default_search_type_ids).
       map{|id| SearchType.find(id)}
 
     set_defaults(options)
@@ -479,6 +479,10 @@ class EsApplicationSearch
   private
 
   attr_reader :aggregation_field, :date_histogram_interval, :search_types
+
+  def default_search_type
+    SearchType::HYBRID
+  end
 
   def use_hybrid_search_for_count_queries?
     true
