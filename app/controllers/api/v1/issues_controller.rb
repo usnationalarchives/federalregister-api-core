@@ -6,8 +6,10 @@ class Api::V1::IssuesController < ApiController
     respond_to do |wants|
       wants.json do
         begin
-          date = Date.parse(params[:id])
+          date = params[:id] == "current" ? Issue.last.publication_date : Date.parse(params[:id])
+
           path = FileSystemPathManager.new(date).document_issue_json_toc_path
+
           if File.exist?(path)
             render file: path, layout: false
           else
