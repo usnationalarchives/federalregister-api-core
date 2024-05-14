@@ -332,7 +332,7 @@ class EsApplicationSearch
 
   def results(args = {})
     # Retrieve AR ids from Elasticsearch
-    if search_types.first == SearchType::HYBRID
+    if (search_types.first == SearchType::HYBRID) && neural_search_appropriate?
       es_search_invocation = repository.search(hybrid_search_options)
     else
       es_search_invocation = repository.search(search_options)
@@ -482,6 +482,11 @@ class EsApplicationSearch
 
   def default_search_type
     SearchType::HYBRID
+  end
+
+  def neural_search_appropriate?
+    # It doesn't make to employ a neural search if there's no relationship between the words to derive
+    es_term.present?
   end
 
   def use_hybrid_search_for_count_queries?
