@@ -40,4 +40,14 @@ namespace :elasticsearch do
     ElasticsearchIndexer.delete_entry_changes
   end
 
+  desc "Launch a machine learning model into the Opensearch cluster if it does not yet exist"
+  task :launch_ml_model => :environment do
+    OpenSearchMlModelRegistrar.perform
+  end
+
+  desc "Create an ingest pipeline that chunks document full text and generates vector embeddings"
+  task :create_chunking_ingest_pipeline => :environment do
+    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!
+  end
+
 end
