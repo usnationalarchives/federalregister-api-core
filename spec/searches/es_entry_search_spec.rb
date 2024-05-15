@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe EsEntrySearch, es: true do
+  before(:context) do
+    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
+  end
 
   def build_entry_double(hsh)
     if hsh[:document_number].blank?
@@ -466,8 +469,6 @@ describe EsEntrySearch, es: true do
       it "if a non-existent pipeline is specified on bulk index, an error is thrown"
 
       it "can search the full_text_chunk_embeddings" do
-        OpenSearchIngestPipelineRegistrar.create_chunking_pipeline!(OpenSearchMlModelRegistrar.model_id)
-
         entries = [
           build_entry_double({full_text: "fried eggs potato", title: 'fried eggs potato', id: 777}),
           build_entry_double({full_text: "american presidency", title: 'donald trump presidency', id: 888}),
@@ -483,8 +484,6 @@ describe EsEntrySearch, es: true do
       end
 
       it "filters out completely irrelevant results even if a k-value greater than 1 is specified" do
-        OpenSearchIngestPipelineRegistrar.create_chunking_pipeline!(OpenSearchMlModelRegistrar.model_id)
-
         entries = [
           build_entry_double({full_text: "fried eggs potato", title: 'fried eggs potato', id: 777}),
           build_entry_double({full_text: "donald trump presidency", title: 'donald trump presidency', id: 888}),
@@ -493,7 +492,6 @@ describe EsEntrySearch, es: true do
         Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
         expect($entry_repository.count).to eq(3)
 
-        MINIMUM_SCORE = 0.2
         search = EsEntrySearch.new(conditions: {term: 'asdfasdfasdfasdf', search_type_ids: [SearchType::HYBRID.id]}) #This is a completely non-sensical term.  KNN should not return anything
         allow(search).to receive(:k_value).and_return(3)
 
