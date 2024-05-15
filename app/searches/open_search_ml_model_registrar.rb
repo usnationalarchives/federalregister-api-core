@@ -153,7 +153,7 @@ class OpenSearchMlModelRegistrar
     )
 
     if response.success?
-      task_id = JSON.parse(response.body).fetch("model_group_id").fetch("task_id")
+      task_id = JSON.parse(response.body).fetch("model_group_id")
     else
       raise response.body
     end
