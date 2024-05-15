@@ -499,6 +499,22 @@ describe EsEntrySearch, es: true do
         expect(search.results.es_ids).to match_array([])
       end
 
+      it "applies sort ordering" do
+        pending("sort ordering is currently not supported with neural search, but it seems likely this will be supported as OpenSearch builds out more extensive support for  hybrid search.  At that time (perhaps Fall 2024), we should enable this spec")
+        entries = [
+          build_entry_double({full_text: "american presidency", title: 'donald trump presidency', id: 777, publication_date: Date.new(2020,1,1)}),
+          build_entry_double({full_text: "american presidency", title: 'donald trump presidency', id: 888, publication_date: Date.new(2021,1,1)}),
+          build_entry_double({full_text: "american presidency", title: 'donald trump presidency', id: 999, publication_date: Date.new(2023,1,1)}),
+        ]
+        Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
+        expect($entry_repository.count).to eq(3)
+
+        search = EsEntrySearch.new(conditions: {term: 'united states executive office', search_type_ids: [SearchType::HYBRID.id]}, order: 'newest') #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
+
+        assert_valid_search(search)
+        expect(search.results.es_ids).to eq([999, 888, 777])
+      end
+
     end
 
     context "advanced search terms" do
