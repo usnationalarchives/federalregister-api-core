@@ -43,4 +43,8 @@ RSpec.configure do |config|
     allow_any_instance_of(CacheUtils::Client).to receive(:purge)
   end
 
+  config.before(:suite) do
+    OpenSearchMlModelRegistrar.perform
+  end
+
 end
