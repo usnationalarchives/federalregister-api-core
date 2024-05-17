@@ -42,6 +42,7 @@ FederalregisterApiCore::Application.routes.draw do
     match 'index/:year/:agency/:type' => 'indexes#year_agency_type', :as => :index_year_agency_type, :via => :get
     resources :executive_orders, only: [:index, :show, :edit, :update]
     resources :generated_files, :only => [:show]
+    resources :search_evaluations, :only => [:index]
     resources :topics
     resources :topic_names do
       collection do

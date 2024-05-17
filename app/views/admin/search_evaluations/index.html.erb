@@ -1,0 +1,34 @@
+<% super_title 'Search Relevancy Evaluations' %>
+
+<%= semantic_form_for :search_evaluations, url: admin_search_evaluations_path, method: :GET do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :k_value,
+          label: "Precision at K Value",
+          as: :select,
+          collection: [3,5,10,20,50,100].map{|x| [x,x]},
+          selected: @presenter.k_value %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, :label => 'Recalculate K', :button_html => {:class => "btn btn-success"} %>
+  <% end %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <th>Query Terms</th>
+    <th>Notes</th>
+    <% @presenter.search_types.each do |search_type| %>
+      <th><%= search_type.name %></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <% @presenter.search_rankings.each do |row| %>
+      <tr>
+        <% row.each do |cell| %>
+          <td><%= cell %></td>
+        <% end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
