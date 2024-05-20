@@ -34,6 +34,7 @@ services:
     environment:
       - plugins.security.ssl.http.enabled=false
       - plugins.security.disabled=true
+      - plugins.ml_commons.native_memory_threshold=100
       - DISABLE_INSTALL_DEMO_CONFIG=true
       - plugins.ml_commons.only_run_on_ml_node=false
       - discovery.type=single-node
