@@ -45,6 +45,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     OpenSearchMlModelRegistrar.perform
+    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
   end
 
 end

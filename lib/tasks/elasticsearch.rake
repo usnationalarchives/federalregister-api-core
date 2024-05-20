@@ -47,7 +47,7 @@ namespace :elasticsearch do
 
   desc "Create an ingest pipeline that chunks document full text and generates vector embeddings"
   task :create_chunking_ingest_pipeline => :environment do
-    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!
+    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
   end
 
 end
