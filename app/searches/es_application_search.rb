@@ -123,8 +123,9 @@ class EsApplicationSearch
     @excerpts = options.fetch(:excerpts, false)
     @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
     default_search_type_ids = [default_search_type.id]
-    @search_types = (options.dig("conditions", "search_type_ids") || default_search_type_ids).
-      map{|id| SearchType.find(id)}
+    search_types = (options.dig("conditions", "search_type_ids") || default_search_type_ids).map{|id| SearchType.find(id)}
+    raise NotImplementedError if search_types.count != 1 # Originally, the search interface was conceived as being multi-select, but as the infrastructure developed, it started to make more sense to have a search be associated with a single search type
+    @search_type = search_types.first
 
     set_defaults(options)
 
@@ -332,7 +333,7 @@ class EsApplicationSearch
 
   def results(args = {})
     # Retrieve AR ids from Elasticsearch
-    if (search_types.first == SearchType::HYBRID) && neural_search_appropriate?
+    if search_type.is_hybrid_search && neural_search_appropriate?
       es_search_invocation = repository.search(hybrid_search_options)
     else
       es_search_invocation = repository.search(search_options)
@@ -345,7 +346,7 @@ class EsApplicationSearch
     if explain_results?
       explanations = es_search_invocation.raw_response.dig("hits","hits")
       ar_collection_with_metadata.each_with_index do |result, i|
-        if search_types.all?{|x| x.supports_explain}
+        if search_type.supports_explain
           result.explanation = explanations[i].fetch("_explanation")
         else
           #Hybrid searches do not support/will fail if the _explanation parameter is included.  In these cases, create our own explanation based on the score value given the basic data we have available
@@ -478,7 +479,7 @@ class EsApplicationSearch
 
   private
 
-  attr_reader :aggregation_field, :date_histogram_interval, :search_types
+  attr_reader :aggregation_field, :date_histogram_interval, :search_type
 
   def default_search_type
     SearchType::HYBRID
@@ -512,7 +513,7 @@ class EsApplicationSearch
       sort: es_sort_order,
       _source: es_source,
     }.tap do |query|
-      if explain_results? && search_types.all?{|x| x.supports_explain}
+      if explain_results? && search_type.supports_explain
         query.merge!(explain: true) #NOTE: Useful for investigating relevancy calcs
       end
 
@@ -714,13 +715,15 @@ class EsApplicationSearch
     query
   end
 
-  NEURAL_MINIMUM_SCORE = 1.9
   def hybrid_search_options
     base_query_options = search_options.except(:query)
     function_score_wrapped_lexical_query = search_options[:query]
     function_score_wrapped_neural_query  = search_options[:query]
     function_score_wrapped_neural_query[:function_score][:query][:bool][:should] = [neural_query]
-    function_score_wrapped_neural_query[:function_score].merge!(min_score: NEURAL_MINIMUM_SCORE)
+
+    if search_type.min_function_score_for_neural_query
+      function_score_wrapped_neural_query[:function_score].merge!(min_score: search_type.min_function_score_for_neural_query)
+    end
 
     {
       :query => {
@@ -734,7 +737,7 @@ class EsApplicationSearch
     }.tap do |options|
       options.merge!(base_query_options)
       options.merge!(
-        search_pipeline: SearchType::HYBRID.temporary_search_pipeline_configuration
+        search_pipeline: search_type.search_pipeline_configuration
       )
     end
   end
@@ -777,8 +780,15 @@ class EsApplicationSearch
             "full_text_chunk_embedding.knn": {
               "query_text": es_term,
               "model_id": text_embedding_model_id,
-              "k": k_value
-            }
+            }.tap do |knn_config|
+              if search_type.k_nearest_neighbors
+                knn_config.merge!("k": search_type.k_nearest_neighbors)
+              end
+
+              if search_type.min_score
+                knn_config.merge!("min_score": search_type.min_score)
+              end
+            end
           }
         }
       }
@@ -796,9 +806,6 @@ class EsApplicationSearch
     }
   end
 
-  def k_value
-    10
-  end
 
   def neural_querying_enabled?
     raise NotImplementedError
