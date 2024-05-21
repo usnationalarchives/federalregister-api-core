@@ -11,5 +11,6 @@ workflows:
           context: [ofr-ecr, cj-quay-base, orb-slack, pilot, sidekiq-pro, ofr-rails-test-credentials]
           ecr: true
           repo_image: federalregister-api-core
+          resource_class: large
           skip_lint: true
           test_command: docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && bin/wait_for_es && ASSUME_UNITIALIZED_DB=1 rake parallel:setup && RAILS_ENV=test parallel_rspec -o '--tag ~no_ci' && rake jshint"
