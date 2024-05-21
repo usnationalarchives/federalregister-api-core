@@ -191,8 +191,8 @@ class SearchEvaluationPresenter
 
   def search_types
     [
-      OpenStruct.new(name: "Lexical Search w/Gaussian Decay"),
-      OpenStruct.new(name: "Lexical Search", query_customization: {es_scoring_functions: []}),
+      SearchType::LEXICAL,
+      SearchType::HYBRID,
     ]
   end
 
@@ -233,7 +233,9 @@ class SearchEvaluationPresenter
       req.body = {
         "metric": {"precision": {k: k_value}},
         "requests": (DATA.map.with_index do |attr, i|
-          es_query = EsEntrySearch.new(conditions: {term: attr.fetch(:query_terms)}).send(:search_options).fetch(:query)
+          es_query = EsEntrySearch.new(
+            conditions: {term: attr.fetch(:query_terms), search_type_ids: [search_type.id]},
+          ).send(:search_options).fetch(:query)
           query_customization = search_type.query_customization
           if query_customization
             es_query[:function_score][:functions] = []

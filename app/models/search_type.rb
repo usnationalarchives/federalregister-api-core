@@ -51,4 +51,8 @@ class SearchType < ActiveHash::Base
       }
     }
   ]
+
+  def query_customization 
+    false
+  end
 end
