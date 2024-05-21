@@ -487,7 +487,12 @@ class EsApplicationSearch
 
   def neural_search_appropriate?
     # It doesn't make to employ a neural search if there's no relationship between the words to derive
-    es_term.present?
+    es_term.present? && !advanced_search?
+  end
+
+  COMPLEX_SEARCH_CHARACTERS = ['|','&','!','(',')']
+  def advanced_search?
+    es_term.present? && COMPLEX_SEARCH_CHARACTERS.any?{|char| es_term.include?(char) }
   end
 
   def use_hybrid_search_for_count_queries?
