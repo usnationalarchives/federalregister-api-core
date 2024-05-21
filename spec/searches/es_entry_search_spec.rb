@@ -1,6 +1,11 @@
 require "spec_helper"
 
 describe EsEntrySearch, es: true do
+  before(:context) do
+    # The ML setup should only be run in the context of this spec to avoid errors with the parallel_tests gem
+    OpenSearchMlModelRegistrar.perform
+    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
+  end
 
   def build_entry_double(hsh)
     if hsh[:document_number].blank?
