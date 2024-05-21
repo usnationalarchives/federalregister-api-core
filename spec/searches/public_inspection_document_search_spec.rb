@@ -5,6 +5,13 @@ describe EsPublicInspectionDocumentSearch, es: true do
     recreate_actual_pi_index_and_assign_alias!
   end
 
+  after(:each) do
+    if DEFAULT_ES_CLIENT.indices.exists?(index: PublicInspectionDocumentRepository::ACTUAL_INDEX_NAME)
+      DEFAULT_ES_CLIENT.indices.delete(index: PublicInspectionDocumentRepository::ACTUAL_INDEX_NAME)
+    end
+  end
+
+
   def build_pi_doc_double(hsh)
     pi_doc = double('public_inspection_document')
     allow(pi_doc).to receive(:to_hash).and_return(hsh)
@@ -58,10 +65,6 @@ describe EsPublicInspectionDocumentSearch, es: true do
   end
 
   context "ES Retrieval" do
-    before(:each) do
-      recreate_actual_pi_index_and_assign_alias!
-    end
-
     context "Searching by term" do
       it "can search titles by term" do
         pi_doc = build_pi_doc_double(
