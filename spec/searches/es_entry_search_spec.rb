@@ -1,6 +1,7 @@
 require "spec_helper"
 
-describe EsEntrySearch, es: true do
+describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this file is actually a request spec, but it requires the presence of the ML model to pass, which is only guaranteed to deterministically exist in this spec
+
   before(:context) do
     # The ML setup should only be run in the context of this spec to avoid errors with the parallel_tests gem
     OpenSearchMlModelRegistrar.perform
@@ -27,6 +28,39 @@ describe EsEntrySearch, es: true do
       publication_date: Date.new(2020,1,1),
       significant: 1,
     )
+  end
+
+  context "Request specs" do
+    it "Basic search query" do
+      agency = Factory(:agency)
+      agency_name = Factory(:agency_name, agency: agency)
+      entry = Factory(
+        :entry,
+        significant: nil,
+        title: 'goat',
+        publication_date: Date.current,
+        agency_names: [agency_name],
+        granule_class: 'PRESDOCU',
+        raw_text_updated_at: Time.current
+      )
+      ElasticsearchIndexer.reindex_entries(recreate_index: true)
+  
+      get "/api/v1/documents.json?per_page=20&conditions[term]=goat"
+      json_response = JSON.parse(response.body)
+  
+      expect(json_response).to include(
+        'count' => 1
+      )
+  
+      expect(json_response.fetch('results').first).to include(
+        'html_url' => "http://www.fr2.local:8081/documents/#{entry.publication_date.year}/#{sprintf('%02i',entry.publication_date.month)}/#{sprintf('%02i',entry.publication_date.day)}/#{entry.document_number}/#{entry.slug}",
+        'pdf_url'  => "https://www.govinfo.gov/content/pkg/FR-#{entry.publication_date.to_s(:iso)}/pdf/#{entry.document_number}.pdf",
+        'publication_date' => entry.publication_date.to_s(:iso),
+        'title'    => 'goat',
+        'type'     => 'Presidential Document',
+        'excerpts' => "",
+      )
+    end
   end
 
   context "Pre-ES specs" do
