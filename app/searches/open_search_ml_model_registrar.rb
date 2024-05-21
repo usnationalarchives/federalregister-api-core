@@ -16,10 +16,10 @@ class OpenSearchMlModelRegistrar
   def self.destroy_all_models!
     model_ids = OpenSearchMlModelRegistrar.new.models.map{|x| x._id}
     # Undeploy models
-    model_ids.each{|id| puts id; response = Faraday.post("http://elasticsearch.brandon-fr.svc.cluster.local:9200/_plugins/_ml/models/#{id}/_undeploy"); puts response.body}
+    model_ids.each{|id| puts id; response = Faraday.post("http://#{new.base_url}/_plugins/_ml/models/#{id}/_undeploy"); puts response.body}
 
     # Deploy models
-    model_ids.each{|id| puts id; response = Faraday.delete("http://elasticsearch.brandon-fr.svc.cluster.local:9200/_plugins/_ml/models/#{id}"); puts response.body}
+    model_ids.each{|id| puts id; response = Faraday.delete("http://#{new.base_url}/_plugins/_ml/models/#{id}"); puts response.body}
   end
 
   def self.perform
@@ -71,6 +71,9 @@ class OpenSearchMlModelRegistrar
   end
   memoize :models
 
+  def base_url
+    Settings.elasticsearch.host || Rails.application.credentials.dig(:elasticsearch, :host)
+  end
 
   private
 
@@ -174,9 +177,5 @@ class OpenSearchMlModelRegistrar
     model_groups = parsed_response.map{|x| OpenStruct.new(x) }
   end
   memoize :model_groups
-
-  def base_url
-    Settings.elasticsearch.host
-  end
 
 end

@@ -1,5 +1,5 @@
 base_es_settings = {
-  host: Rails.application.credentials.dig(:elasticsearch, :host) || Settings.elasticsearch.host,
+  host: Settings.elasticsearch.host || Rails.application.credentials.dig(:elasticsearch, :host),
   transport_options: {
     request: { timeout: 15 }
   },
