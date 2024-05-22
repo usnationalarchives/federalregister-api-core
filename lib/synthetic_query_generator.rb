@@ -15,19 +15,13 @@ class SyntheticQueryGenerator
     # Output file for generated queries and metadata
     output_file = '/home/app/data/efs/output_queries.json'
 
-    # Prompt
-    prompt = "Pretend you are a regular user of average intelligence using FederalRegister.gov who is using its search engine for doing regulatory research.  Generate a succinct query (no more than 7 words) for this document."
-
     # Initialize an empty array to store results
     results = []
 
-
-    # Process each document
     id = 21
-    Dir.foreach(documents_dir) do |filename|
-      next if ['.', '..'].include?(filename)
-      document_path = File.join(documents_dir, filename)
-      document_text = File.read(document_path)
+    # Process each 
+    Entry.where("publication_date > '2024-01-01'").sample(50).each do |entry|
+      document_text = entry.raw_text
 
       # Call the API to generate a query
       result = generate_query(document_text, api_key)
@@ -37,10 +31,11 @@ class SyntheticQueryGenerator
       if generated_query
         entry = {
           id: id,
-          notes: "",
+          llm_generated_query: true
+          notes: nil,
           query_terms: generated_query,
           ratings: [
-            {document_number: filename.gsub('.txt', ''), rating: 4}
+            {document_number: entry.document_number, rating: 4}
           ]
         }
         results.push(entry)
@@ -56,6 +51,10 @@ class SyntheticQueryGenerator
 
   # Method to call the OpenAI ChatGPT API
   def self.generate_query(document, api_key)
+    # Prompt
+    prompt = "Pretend you are a regular user of average intelligence using FederalRegister.gov who is using its search engine for doing regulatory research.  Generate a succinct query (no more than 7 words) for this document."
+
+
     uri = URI('https://api.openai.com/v1/chat/completions')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
