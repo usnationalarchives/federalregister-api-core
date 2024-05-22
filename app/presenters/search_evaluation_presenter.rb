@@ -209,7 +209,7 @@ class SearchEvaluationPresenter
     {
       "id": 22,
       "notes": "",
-      "query_terms": "Search query: Large Power Transformers AD Order Korea",
+      "query_terms": "Large Power Transformers AD Order Korea",
       "ratings": [
         {
           "document_number": "2023-28946",
@@ -275,7 +275,7 @@ class SearchEvaluationPresenter
     {
       "id": 28,
       "notes": "",
-      "query_terms": "Fish and Wildlife Service information collection comments.",
+      "query_terms": "Fish and Wildlife Service information collection comments",
       "ratings": [
         {
           "document_number": "2024-05184",
@@ -297,7 +297,7 @@ class SearchEvaluationPresenter
     {
       "id": 30,
       "notes": "",
-      "query_terms": "Correction Notice for Task Force Comments Deadline.",
+      "query_terms": "Correction Notice for Task Force Comments Deadline",
       "ratings": [
         {
           "document_number": "2024-01010",
@@ -352,7 +352,7 @@ class SearchEvaluationPresenter
     {
       "id": 35,
       "notes": "",
-      "query_terms": "Correcting amendment for Dix Avenue Bridge regulation.",
+      "query_terms": "Correcting amendment for Dix Avenue Bridge regulation",
       "ratings": [
         {
           "document_number": "2024-04273",
@@ -363,7 +363,7 @@ class SearchEvaluationPresenter
     {
       "id": 36,
       "notes": "",
-      "query_terms": "Query: 2024 civil penalty inflation adjustments BOEM.",
+      "query_terms": "Query: 2024 civil penalty inflation adjustments BOEM",
       "ratings": [
         {
           "document_number": "2024-01412",
@@ -385,7 +385,7 @@ class SearchEvaluationPresenter
     {
       "id": 38,
       "notes": "",
-      "query_terms": "Wind-down procedures and impacts on ACP.",
+      "query_terms": "Wind-down procedures and impacts on ACP",
       "ratings": [
         {
           "document_number": "2024-02093",
@@ -407,7 +407,7 @@ class SearchEvaluationPresenter
     {
       "id": 40,
       "notes": "",
-      "query_terms": "Establishing Retirement Savings Lost and Found database.",
+      "query_terms": "Establishing Retirement Savings Lost and Found database",
       "ratings": [
         {
           "document_number": "2024-07968",
@@ -418,7 +418,7 @@ class SearchEvaluationPresenter
     {
       "id": 41,
       "notes": "",
-      "query_terms": "Establishment of San Juan Islands MAC nominations.",
+      "query_terms": "Establishment of San Juan Islands MAC nominations",
       "ratings": [
         {
           "document_number": "2024-02939",
@@ -429,7 +429,7 @@ class SearchEvaluationPresenter
     {
       "id": 42,
       "notes": "",
-      "query_terms": "Evaluate U.S. Fish and Wildlife Service Concessions.",
+      "query_terms": "Evaluate U.S. Fish and Wildlife Service Concessions",
       "ratings": [
         {
           "document_number": "2023-28829",
@@ -451,7 +451,7 @@ class SearchEvaluationPresenter
     {
       "id": 44,
       "notes": "",
-      "query_terms": "Submit comments for IMLS reviewer forms.",
+      "query_terms": "Submit comments for IMLS reviewer forms",
       "ratings": [
         {
           "document_number": "2024-04411",
@@ -473,7 +473,7 @@ class SearchEvaluationPresenter
     {
       "id": 46,
       "notes": "",
-      "query_terms": "Regulation details for Revolution Wind Farm project.",
+      "query_terms": "Regulation details for Revolution Wind Farm project",
       "ratings": [
         {
           "document_number": "2024-05992",
@@ -484,7 +484,7 @@ class SearchEvaluationPresenter
     {
       "id": 47,
       "notes": "",
-      "query_terms": "File protest or motion to intervene.",
+      "query_terms": "File protest or motion to intervene",
       "ratings": [
         {
           "document_number": "2024-02033",
@@ -495,7 +495,7 @@ class SearchEvaluationPresenter
     {
       "id": 48,
       "notes": "",
-      "query_terms": "Senior Loan Officer Opinion Survey extension inquiry.",
+      "query_terms": "Senior Loan Officer Opinion Survey extension inquiry",
       "ratings": [
         {
           "document_number": "2024-07089",
@@ -506,7 +506,7 @@ class SearchEvaluationPresenter
     {
       "id": 49,
       "notes": "",
-      "query_terms": "Postal Service competitive product agreement comments due.",
+      "query_terms": "Postal Service competitive product agreement comments due",
       "ratings": [
         {
           "document_number": "2024-04759",
@@ -517,7 +517,7 @@ class SearchEvaluationPresenter
     {
       "id": 50,
       "notes": "",
-      "query_terms": "LSC regulation changes governing body requirements.",
+      "query_terms": "LSC regulation changes governing body requirements",
       "ratings": [
         {
           "document_number": "2024-07762",
@@ -550,7 +550,7 @@ class SearchEvaluationPresenter
     {
       "id": 53,
       "notes": "",
-      "query_terms": "Stars and Stripes Media Organization rule revision.",
+      "query_terms": "Stars and Stripes Media Organization rule revision",
       "ratings": [
         {
           "document_number": "2024-08527",
@@ -561,7 +561,7 @@ class SearchEvaluationPresenter
     {
       "id": 54,
       "notes": "",
-      "query_terms": "Comment on 10 CFR part 72 renewal.",
+      "query_terms": "Comment on 10 CFR part 72 renewal",
       "ratings": [
         {
           "document_number": "2024-07286",
@@ -572,7 +572,7 @@ class SearchEvaluationPresenter
     {
       "id": 55,
       "notes": "",
-      "query_terms": "SEC order cancelling registrations of investment advisers.",
+      "query_terms": "SEC order cancelling registrations of investment advisers",
       "ratings": [
         {
           "document_number": "2024-00941",
@@ -583,7 +583,7 @@ class SearchEvaluationPresenter
     {
       "id": 56,
       "notes": "",
-      "query_terms": "Review State Highway-Rail Grade Crossing Action Plan.",
+      "query_terms": "Review State Highway-Rail Grade Crossing Action Plan",
       "ratings": [
         {
           "document_number": "2024-06511",
@@ -594,7 +594,7 @@ class SearchEvaluationPresenter
     {
       "id": 57,
       "notes": "",
-      "query_terms": "Loan volume eligibility criteria for PLP lenders.",
+      "query_terms": "Loan volume eligibility criteria for PLP lenders",
       "ratings": [
         {
           "document_number": "2024-03687",
@@ -605,7 +605,7 @@ class SearchEvaluationPresenter
     {
       "id": 58,
       "notes": "",
-      "query_terms": "Comment request on IRS Form 4797.",
+      "query_terms": "Comment request on IRS Form 4797",
       "ratings": [
         {
           "document_number": "2024-06383",
@@ -616,7 +616,7 @@ class SearchEvaluationPresenter
     {
       "id": 59,
       "notes": "",
-      "query_terms": "Review schedule for National Cancer Institute panels.",
+      "query_terms": "Review schedule for National Cancer Institute panels",
       "ratings": [
         {
           "document_number": "2024-08285",
@@ -627,7 +627,7 @@ class SearchEvaluationPresenter
     {
       "id": 60,
       "notes": "",
-      "query_terms": "FAA airworthiness directive for GE engines.",
+      "query_terms": "FAA airworthiness directive for GE engines",
       "ratings": [
         {
           "document_number": "2024-05547",
@@ -638,7 +638,7 @@ class SearchEvaluationPresenter
     {
       "id": 61,
       "notes": "",
-      "query_terms": "Extend comment period for Summer EBT rule.",
+      "query_terms": "Extend comment period for Summer EBT rule",
       "ratings": [
         {
           "document_number": "2024-08369",
@@ -649,7 +649,7 @@ class SearchEvaluationPresenter
     {
       "id": 62,
       "notes": "",
-      "query_terms": "CINTAC meeting registration and public comments.",
+      "query_terms": "CINTAC meeting registration and public comments",
       "ratings": [
         {
           "document_number": "2024-00196",
@@ -660,7 +660,7 @@ class SearchEvaluationPresenter
     {
       "id": 63,
       "notes": "",
-      "query_terms": "Request termination of debarment for Brendon Gagne.",
+      "query_terms": "Request termination of debarment for Brendon Gagne",
       "ratings": [
         {
           "document_number": "2024-02706",
@@ -682,7 +682,7 @@ class SearchEvaluationPresenter
     {
       "id": 65,
       "notes": "",
-      "query_terms": "NMFS Pacific cod reallocation 2024 season.",
+      "query_terms": "NMFS Pacific cod reallocation 2024 season",
       "ratings": [
         {
           "document_number": "2024-07483",
@@ -693,7 +693,7 @@ class SearchEvaluationPresenter
     {
       "id": 66,
       "notes": "",
-      "query_terms": "Search for PJM Interconnection L.L.C rate filings.",
+      "query_terms": "PJM Interconnection L.L.C rate filings",
       "ratings": [
         {
           "document_number": "2024-02609",

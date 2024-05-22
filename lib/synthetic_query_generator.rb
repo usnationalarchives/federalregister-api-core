@@ -31,7 +31,7 @@ class SyntheticQueryGenerator
       if generated_query
         entry = {
           id: id,
-          llm_generated_query: true
+          llm_generated_query: true,
           notes: nil,
           query_terms: generated_query,
           ratings: [
