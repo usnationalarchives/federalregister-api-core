@@ -235,7 +235,7 @@ class SearchEvaluationPresenter
         "requests": (DATA.map.with_index do |attr, i|
           es_query = EsEntrySearch.new(
             conditions: {term: attr.fetch(:query_terms), search_type_ids: [search_type.id]},
-          ).send(:search_options).fetch(:query)
+          ).send(search_type.is_hybrid_search ? :hybrid_search_options : :search_options).fetch(:query)
           query_customization = search_type.query_customization
           if query_customization
             es_query[:function_score][:functions] = []
