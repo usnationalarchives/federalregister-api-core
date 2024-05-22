@@ -718,49 +718,70 @@ class SearchEvaluationPresenter
   def search_types
     [
       SearchType::LEXICAL,
+      SearchType::LEXICAL_NO_DECAY,
       SearchType::HYBRID,
       SearchType::HYBRID_KNN_MIN_SCORE,
     ]
   end
 
-  def search_type_rank_eval_responses
-    search_types.map{|search_type| rank_eval_request(search_type)}
-  end
-  memoize :search_type_rank_eval_responses
 
-  def filtered_data
-    DATA.select do |x|
-      x.fetch(:ratings).all?{|x| x.fetch(:document_number).start_with?('2024')}
+  def table_rows
+    filtered_data.map do |attr|
+      TableRow.new(
+        query_terms: attr.fetch(:query_terms),
+        notes:       attr[:notes],
+        ratings:     attr.fetch(:ratings),
+        rank_eval_responses_by_search_type: rank_eval_responses_by_search_type,
+        query_id:    attr.fetch(:id)
+      )
     end
-  end
-
-  ROUNDING_DIGITS = 2
-  def search_rankings
-    rankings = filtered_data.
-      map.each do |attr|
-      [
-        attr.fetch(:query_terms), 
-        attr[:notes], 
-      ].tap do |row|
-        search_types.each_with_index do |search_type, search_type_i|
-          row << search_type_rank_eval_responses[search_type_i].
-            fetch("details").
-            fetch("query_#{attr.fetch(:id)}").
-            fetch("metric_score").
-            round(ROUNDING_DIGITS)
-        end
-      end
-    end
-    total_row = ["TOTAL SCORE", nil]
-    search_types.each_with_index do |search_type, i|
-      total_row << rankings.sum{|x| x[2+i].round(ROUNDING_DIGITS) }
-    end
-    rankings << total_row
-
   end
 
   private
 
+  class TableRow
+    attr_reader :query_terms, :notes, :ratings
+
+    def initialize(query_terms:, notes:, ratings:, rank_eval_responses_by_search_type:, query_id:)
+      @query_terms        = query_terms
+      @notes              = notes
+      @ratings        = ratings
+      @rank_eval_responses_by_search_type = rank_eval_responses_by_search_type
+      @query_id = query_id
+    end
+
+    def metric_score(search_type)
+      rank_eval_responses_by_search_type[search_type].
+        fetch("details").
+        fetch("query_#{query_id}").
+        fetch("metric_score").
+        round(ROUNDING_DIGITS)
+    end
+
+    private
+
+    attr_reader :rank_eval_responses_by_search_type, :query_id
+
+  end
+
+  def rank_eval_responses_by_search_type
+    search_types.each_with_object(Hash.new) do |search_type, hsh|
+      hsh[search_type] =rank_eval_request(search_type)
+    end
+  end
+  memoize :rank_eval_responses_by_search_type
+
+  def filtered_data
+    if Rails.env.development?
+      DATA.select do |x|
+        x.fetch(:ratings).all?{|x| x.fetch(:document_number).start_with?('2024')}
+      end
+    else
+      DATA
+    end
+  end
+
+  ROUNDING_DIGITS = 2
   def rank_eval_request(search_type)
     response = Faraday.get("#{es_host}/#{index_name}/_rank_eval") do |req|
       req.headers['Content-Type'] = 'application/json'

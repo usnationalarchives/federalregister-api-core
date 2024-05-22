@@ -6,7 +6,14 @@ class SearchType < ActiveHash::Base
     {
       id: 1,
       identifier: "lexical",
-      name: "Lexical (Standard)",
+      name: "Lexical (w/decay)",
+      decay: true,
+      supports_explain: true,
+    },
+    {
+      id: 6,
+      identifier: "lexical_no_decay",
+      name: "Lexical (no decay)",
       supports_explain: true,
     },
     {
@@ -24,6 +31,7 @@ class SearchType < ActiveHash::Base
     {
       id: 4,
       name: "Hybrid (Function min score)",
+      decay: true,
       identifier: "hybrid",
       is_hybrid_search: true,
       k_nearest_neighbors: 10,
@@ -34,6 +42,7 @@ class SearchType < ActiveHash::Base
     {
       id: 5,
       name: "Hybrid (KNN min score)",
+      decay: true,
       identifier: "hybrid_knn_min_score",
       is_hybrid_search: true,
       k_nearest_neighbors: nil,

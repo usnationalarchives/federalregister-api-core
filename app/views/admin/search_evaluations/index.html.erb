@@ -5,7 +5,7 @@
     <%= f.input :k_value,
           label: "Precision at K Value",
           as: :select,
-          collection: [3,5,10,20,50,100].map{|x| [x,x]},
+          collection: [1,3,5,10,20,50,100].map{|x| [x,x]},
           selected: @presenter.k_value %>
   <% end %>
   <%= f.actions do %>
@@ -20,15 +20,33 @@
     <% @presenter.search_types.each do |search_type| %>
       <th><%= search_type.name %></th>
     <% end %>
+    <th>Ranked Docs (0-4 Scale)</th>
   </thead>
   <tbody>
-    <% @presenter.search_rankings.each do |row| %>
+    <% @presenter.table_rows.each do |table_row| %>
       <tr>
-        <% row.each do |cell| %>
-          <td><%= cell %></td>
-        <% end%>
+        <td><%= table_row.query_terms %></td>
+        <td><%= table_row.notes %></td>
+        <% @presenter.search_types.each do |search_type| %>
+          <td><%= link_to table_row.metric_score(search_type), "/documents/search?#{Rack::Utils.build_nested_query({conditions: {term: table_row.query_terms, search_type_ids: [search_type.id]}})}" %></td>
+        <% end %>
+        <td>
+          <ul>
+          <% table_row.ratings.each do |rating_attrs| %>
+            <li><%= link_to "#{rating_attrs.fetch(:document_number)} (#{rating_attrs.fetch(:rating)})", "/d/#{rating_attrs.fetch(:document_number)}" %></li>
+          <% end %>
+          </ul>
+        </td>
       </tr>
     <% end %>
+    <tr>
+      <td><b>Aggregate Score</b></td>
+      <td></td>
+      <% @presenter.search_types.each do |search_type| %>
+        <td><%= @presenter.table_rows.sum{|table_row| table_row.metric_score(search_type).round(2) } %></td>
+      <% end %>
+      <td></td>
+    </tr>
   </tbody>
 </table>
 

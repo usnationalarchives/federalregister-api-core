@@ -821,18 +821,22 @@ class EsApplicationSearch
   end
 
   def es_scoring_functions
-    [
-      {
-        "gauss": {
-            "publication_date": {
-                "origin": "now",
-                "scale":  "365d",
-                "offset": "30d",
-                "decay":  "0.5" #0.5 is the default
-            }
-        },
-      }
-    ]
+    if search_type.decay
+      [
+        {
+          "gauss": {
+              "publication_date": {
+                  "origin": "now",
+                  "scale":  "365d",
+                  "offset": "30d",
+                  "decay":  "0.5" #0.5 is the default
+              }
+          },
+        }
+      ]
+    else
+      []
+    end
   end
 
   def with_date
