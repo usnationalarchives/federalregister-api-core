@@ -631,16 +631,7 @@ class EsApplicationSearch
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?
-        q[:query][:function_score][:query][:bool][:should] = [
-          {
-            simple_query_string: {
-              query:            es_term,
-              fields:           es_fields_with_boosts,
-              default_operator: 'and',
-              quote_field_suffix: '.exact'
-            }
-          }
-        ]
+        q[:query][:function_score][:query][:bool][:should] = simple_query_string
         q[:query][:function_score][:query][:bool][:minimum_should_match] = 1
       end
 
@@ -783,7 +774,7 @@ class EsApplicationSearch
     {
       :simple_query_string=> {
         :query=> es_term,
-        :fields=>["title^2.5", "full_text^1.25", "agency_name^1", "abstract^2", "docket_id^1", "regulation_id_number^1"], 
+        :fields=> es_fields_with_boosts, 
         :default_operator=>"and",
         :quote_field_suffix=>".exact"
       }
