@@ -786,7 +786,13 @@ class SearchEvaluationPresenter
     response = Faraday.get("#{es_host}/#{index_name}/_rank_eval") do |req|
       req.headers['Content-Type'] = 'application/json'
       req.body = {
-        "metric": {"precision": {k: k_value}},
+        "metric": {
+          "precision": {
+            "k": k_value,
+            "relevant_rating_threshold": 1, #sets the rating threshold above which documents are considered to be "relevant"
+            "ignore_unlabeled": true #controls whether unlabeled documents are ignored and neither count as relevant or irrelevant for scoring purposes
+          }
+        },
         "requests": (filtered_data.map.with_index do |attr, i|
           es_query = EsEntrySearch.new(
             conditions: {term: attr.fetch(:query_terms), search_type_ids: [search_type.id]},
