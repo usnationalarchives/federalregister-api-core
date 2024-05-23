@@ -818,8 +818,13 @@ class SearchEvaluationPresenter
           {
             "id": "query_#{attr.fetch(:id)}",                        
             "request": {                                              
-                "query": es_query
-            },
+                "query": es_query,
+            }.tap do |request_params|
+              if search_type.search_pipeline_configuration
+                #NOTE: Without this, hybrid search results will be duplicative and inaccurate
+                request_params.merge!("search_pipeline": search_type.search_pipeline_configuration)
+              end 
+            end,
             "ratings": ratings
           }
         end),
