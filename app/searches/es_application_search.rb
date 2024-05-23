@@ -414,7 +414,7 @@ class EsApplicationSearch
   end
 
   def count
-    if index_has_neural_querying_enabled? && use_hybrid_search_for_count_queries? && es_term.present?
+    if index_has_neural_querying_enabled? && search_type.is_hybrid_search && es_term.present?
       @count ||= repository.
         search(hybrid_search_count_options).
         raw_response.
@@ -493,10 +493,6 @@ class EsApplicationSearch
   COMPLEX_SEARCH_CHARACTERS = ['|','&','!','(',')']
   def advanced_search?
     es_term.present? && COMPLEX_SEARCH_CHARACTERS.any?{|char| es_term.include?(char) }
-  end
-
-  def use_hybrid_search_for_count_queries?
-    true
   end
 
   def es_base_query
