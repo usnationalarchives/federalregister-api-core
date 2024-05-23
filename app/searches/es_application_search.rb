@@ -533,7 +533,7 @@ class EsApplicationSearch
   end
 
   def es_source
-    {excludes: ["full_text", "full_text_embedding"]}
+    {excludes: ["full_text", "full_text_chunk_embedding"]}
   end
 
   def highlight_query

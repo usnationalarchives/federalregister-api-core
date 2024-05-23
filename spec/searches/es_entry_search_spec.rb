@@ -321,7 +321,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
                 {:_score=>{:order=>"desc"}},
                 {:publication_date=>{:order=>"desc"}}
               ],
-              :_source => {excludes: ["full_text", "full_text_embedding"]}}
+              :_source => {excludes: ["full_text", "full_text_chunk_embedding"]}}
       )
     end
 
@@ -354,7 +354,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
           ],
-          :_source => {excludes: ["full_text", "full_text_embedding"]}}
+          :_source => {excludes: ["full_text", "full_text_chunk_embedding"]}}
       )
     end
 
@@ -381,7 +381,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
           ],
-          :_source => {excludes: ["full_text", "full_text_embedding"]}}
+          :_source => {excludes: ["full_text", "full_text_chunk_embedding"]}}
       )
     end
 
