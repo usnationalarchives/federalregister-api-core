@@ -11,25 +11,13 @@ class SearchType < ActiveHash::Base
       supports_explain: true,
     },
     {
-      id: 6,
+      id: 2,
       identifier: "lexical_no_decay",
       name: "Lexical (no decay)",
       supports_explain: true,
     },
     {
-      id: 2,
-      identifier: "neural",
-      name: "Neural ML",
-      supports_explain: true,
-    },
-    {
       id: 3,
-      identifier: "manually_weighted",
-      name: "Manually Weighted Combination",
-      supports_explain: true,
-    },
-    {
-      id: 4,
       name: "Hybrid (Function min score)",
       decay: true,
       identifier: "hybrid",
@@ -40,7 +28,7 @@ class SearchType < ActiveHash::Base
       supports_explain: false,
     },
     {
-      id: 5,
+      id: 4,
       name: "Hybrid (KNN min score)",
       decay: true,
       identifier: "hybrid_knn_min_score",

@@ -17,8 +17,7 @@ class OpenSearchMlModelRegistrar
     model_ids = OpenSearchMlModelRegistrar.new.models.map{|x| x._id}
     # Undeploy models
     model_ids.each{|id| puts id; response = Faraday.post("http://#{new.base_url}/_plugins/_ml/models/#{id}/_undeploy"); puts response.body}
-
-    # Deploy models
+    # Delete models
     model_ids.each{|id| puts id; response = Faraday.delete("http://#{new.base_url}/_plugins/_ml/models/#{id}"); puts response.body}
   end
 

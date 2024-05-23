@@ -743,23 +743,6 @@ class EsApplicationSearch
     end
   end
 
-  def manually_weighted_queries
-    [
-      "script_score": {
-        "query": lexical_query,
-        "script": {
-          "source": "_score * 1.7"
-        }
-      },
-      "script_score": {
-        "query": neural_query,
-        "script": {
-          "source": "_score * 1.5"
-        }
-      },
-    ]
-  end
-
   def lexical_query
     {
       simple_query_string: {
