@@ -24,7 +24,7 @@ class OpenSearchIngestPipelineRegistrar
   end
 
   CHUNKING_PIPELINE_NAME = "nlp-chunking-ingest-pipeline"
-  TOKEN_LIMIT = 256 # We may want to experiment with this value
+  TOKEN_LIMIT = 512 # We may want to experiment with this value
   def self.create_chunking_ingest_pipeline!(model_id)
     response = Faraday.put("#{base_url}/_ingest/pipeline/#{CHUNKING_PIPELINE_NAME}") do |req|
       req.headers['Content-Type'] = 'application/json'
