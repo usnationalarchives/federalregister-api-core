@@ -1,4 +1,5 @@
 <% super_title 'Search Relevancy Evaluations' %>
+<% set_content_for :content_area_span, 'span12' %>
 
 <%= semantic_form_for :search_evaluations, url: admin_search_evaluations_path, method: :GET do |f| %>
   <%= f.inputs do %>
@@ -13,27 +14,53 @@
   <% end %>
 <% end %>
 
-<table class="table">
+<table class="table search-evaluations">
   <thead>
     <th>Query Terms</th>
     <th>Notes</th>
+    <th>Query Type</th>
     <% @presenter.search_types.each do |search_type| %>
       <th><%= search_type.name %></th>
     <% end %>
     <th>
       Ranked Docs (0-4 Scale)
-      <%= link_to "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-rank-eval.html#k-precision" do %>
+      <%= link_to "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-rank-eval.html#k-precision", data: {toggle: "tooltip"}, title: rating_scale_explanation do %>
         <i class="icon-question-sign"></i>
       <% end %>
     </th>
   </thead>
   <tbody>
+    <tr>
+      <td><b>Total (Manually Scored Queries)</b></td>
+      <td></td>
+      <td></td>
+      <% @presenter.search_types.each do |search_type| %>
+        <td><%= @presenter.table_rows.select{|table_row| !table_row.llm_generated_query  }.sum{|table_row| table_row.metric_score(search_type).round(2) } %></td>
+      <% end %>
+      <td></td>
+    </tr>
+    <tr>
+      <td><b>Total (LLM-generated Queries)</b></td>
+      <td></td>
+      <td></td>
+      <% @presenter.search_types.each do |search_type| %>
+        <td><%= @presenter.table_rows.select{|table_row| table_row.llm_generated_query }.sum{|table_row| table_row.metric_score(search_type).round(2) } %></td>
+      <% end %>
+      <td></td>
+    </tr>
     <% @presenter.table_rows.each do |table_row| %>
       <tr>
         <td><%= table_row.query_terms %></td>
         <td><%= table_row.notes %></td>
+        <td>
+          <% if table_row.llm_generated_query %>
+            Machine
+          <% else %>
+            Human
+          <% end %>
+        </td>
         <% @presenter.search_types.each do |search_type| %>
-          <td><%= link_to table_row.metric_score(search_type), "/documents/search?#{Rack::Utils.build_nested_query({conditions: {term: table_row.query_terms, search_type_ids: [search_type.id]}})}" %></td>
+          <td class="text-right"><%= link_to table_row.metric_score(search_type), "/documents/search?#{Rack::Utils.build_nested_query({conditions: {term: table_row.query_terms, search_type_ids: [search_type.id]}})}" %></td>
         <% end %>
         <td>
           <ul>
@@ -44,14 +71,6 @@
         </td>
       </tr>
     <% end %>
-    <tr>
-      <td><b>Aggregate Score</b></td>
-      <td></td>
-      <% @presenter.search_types.each do |search_type| %>
-        <td><%= @presenter.table_rows.sum{|table_row| table_row.metric_score(search_type).round(2) } %></td>
-      <% end %>
-      <td></td>
-    </tr>
   </tbody>
 </table>
 

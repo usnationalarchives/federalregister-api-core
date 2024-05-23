@@ -726,13 +726,10 @@ class SearchEvaluationPresenter
 
 
   def table_rows
-    filtered_data.map do |attr|
+    filtered_data.map do |evaluation_attr|
       TableRow.new(
-        query_terms: attr.fetch(:query_terms),
-        notes:       attr[:notes],
-        ratings:     attr.fetch(:ratings),
-        rank_eval_responses_by_search_type: rank_eval_responses_by_search_type,
-        query_id:    attr.fetch(:id)
+        evaluation_attrs: evaluation_attr,
+        rank_eval_responses_by_search_type: rank_eval_responses_by_search_type
       )
     end
   end
@@ -740,14 +737,15 @@ class SearchEvaluationPresenter
   private
 
   class TableRow
-    attr_reader :query_terms, :notes, :ratings
+    attr_reader :query_terms, :notes, :ratings, :llm_generated_query
 
-    def initialize(query_terms:, notes:, ratings:, rank_eval_responses_by_search_type:, query_id:)
-      @query_terms        = query_terms
-      @notes              = notes
-      @ratings        = ratings
+    def initialize(evaluation_attrs:, rank_eval_responses_by_search_type:)
+      @query_terms         = evaluation_attrs.fetch(:query_terms)
+      @notes               = evaluation_attrs[:notes]
+      @ratings             = evaluation_attrs.fetch(:ratings)
+      @query_id            = evaluation_attrs.fetch(:id)
+      @llm_generated_query = evaluation_attrs[:llm_generated_query] || query_id > 20 
       @rank_eval_responses_by_search_type = rank_eval_responses_by_search_type
-      @query_id = query_id
     end
 
     def metric_score(search_type)
