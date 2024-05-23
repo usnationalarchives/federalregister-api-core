@@ -20,7 +20,12 @@
     <% @presenter.search_types.each do |search_type| %>
       <th><%= search_type.name %></th>
     <% end %>
-    <th>Ranked Docs (0-4 Scale)</th>
+    <th>
+      Ranked Docs (0-4 Scale)
+      <%= link_to "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-rank-eval.html#k-precision" do %>
+        <i class="icon-question-sign"></i>
+      <% end %>
+    </th>
   </thead>
   <tbody>
     <% @presenter.table_rows.each do |table_row| %>
