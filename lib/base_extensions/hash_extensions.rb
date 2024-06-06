@@ -12,6 +12,20 @@ module HashExtensions
     end
     hash
   end
+
+  # recursive implementation of active support compact_blank
+  def deep_compact_blank
+    compact.transform_values do |v|
+      case v
+      when Hash
+        v.deep_compact_blank.compact_blank
+      when Array
+        v.compact_blank
+      else
+        v
+      end
+    end
+  end
 end
 
 Hash.send(:include, HashExtensions)
