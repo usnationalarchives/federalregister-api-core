@@ -143,6 +143,7 @@ class EntryRepository < BaseRepository
         }
       }
     }
+    if Settings.feature_flags.open_search_version_supports_vectors
     indexes :full_text_chunk_embedding, {
       type: 'nested',
       properties: {
@@ -162,6 +163,7 @@ class EntryRepository < BaseRepository
       # 2. If we continue to use the Lucene engine, we may want to investigate storing vectors as byte vectors in lieu of float vectors.  Open Search documentation states: "In k-NN benchmarking tests, the use of byte rather than float vectors resulted in a significant reduction in storage and memory usage as well as improved indexing throughput and reduced query latency. Additionally, precision on recall was not greatly affected (note that recall can depend on various factors, such as the quantization technique and data distribution)."
       # See https://opensearch.org/docs/latest/field-types/supported-field-types/knn-vector/
     }
+    end
     indexes :full_text_xml_url, {
       type: 'keyword',
       index: false

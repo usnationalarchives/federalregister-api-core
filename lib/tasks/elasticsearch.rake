@@ -42,12 +42,20 @@ namespace :elasticsearch do
 
   desc "Launch a machine learning model into the Opensearch cluster if it does not yet exist"
   task :launch_ml_model => :environment do
-    OpenSearchMlModelRegistrar.perform
+    if Settings.feature_flags.open_search_version_supports_vectors
+      OpenSearchMlModelRegistrar.perform
+    else
+      puts "Unable to launch ML model since your Settings file has disabled this"
+    end
   end
 
   desc "Create an ingest pipeline that chunks document full text and generates vector embeddings"
   task :create_chunking_ingest_pipeline => :environment do
-    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
+    if Settings.feature_flags.open_search_version_supports_vectors
+      OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
+    else
+      puts "Unable to create ingest pipeline since your Settings file has disabled this"
+    end
   end
 
 end

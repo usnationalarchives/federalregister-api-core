@@ -72,6 +72,7 @@ feature_flags:
   use_carrierwave_images_in_api: true
   include_pre_1994_docs: true
   explain_query_results: false
+  open_search_version_supports_vectors: false
 
 lograge:
   enabled: true

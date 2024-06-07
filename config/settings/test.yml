@@ -16,3 +16,6 @@ lograge:
 
 redis:
   host: 127.0.0.1
+
+feature_flags:
+  open_search_version_supports_vectors: true
