@@ -70,7 +70,7 @@ class OpenSearchIngestPipelineRegistrar
     # NOTE: They hybrid search normalization pipeline is currently being specified at search runtime.  As we move to a more OpenSearch-centric client library, for simplicity's sake, we may want to register this pipeline configuration advance and just reference the pipeline name instead.
     response = Faraday.put("#{base_url}/_search/pipeline/#{HYBRID_SEARCH_NORMALIZATION_PIPELINE_NAME}") do |req|
       req.headers['Content-Type'] = 'application/json'
-      req.body = SearchType::HYBRID.temporary_search_pipeline_configuration.to_json
+      req.body = SearchType::HYBRID.search_pipeline_configuration.to_json
     end
     puts response.body
   end
