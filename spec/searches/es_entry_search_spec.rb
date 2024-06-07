@@ -528,7 +528,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
         Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
         expect($entry_repository.count).to eq(3)
 
-        search = EsEntrySearch.new(conditions: {term: 'asdfasdfasdfasdf', search_type_ids: [SearchType::HYBRID.id]}) #This is a completely non-sensical term.  KNN should not return anything
+        search = EsEntrySearch.new(conditions: {term: 'asdfasdfasdfasdf', search_type_id: SearchType::HYBRID.id}) #This is a completely non-sensical term.  KNN should not return anything
         allow(search).to receive(:k_value).and_return(3)
 
         assert_valid_search(search)
@@ -545,7 +545,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
         Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
         expect($entry_repository.count).to eq(3)
 
-        search = EsEntrySearch.new(conditions: {term: 'united states executive office', search_type_ids: [SearchType::HYBRID.id]}, order: 'newest') #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
+        search = EsEntrySearch.new(conditions: {term: 'united states executive office', search_type_id: SearchType::HYBRID.id}, order: 'newest') #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
 
         assert_valid_search(search)
         expect(search.results.es_ids).to eq([999, 888, 777])

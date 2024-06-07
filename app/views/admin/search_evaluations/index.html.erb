@@ -60,7 +60,7 @@
           <% end %>
         </td>
         <% @presenter.search_types.each do |search_type| %>
-          <td class="text-right"><%= link_to table_row.metric_score(search_type), "/documents/search?#{Rack::Utils.build_nested_query({conditions: {term: table_row.query_terms, search_type_ids: [search_type.id]}})}" %></td>
+          <td class="text-right"><%= link_to table_row.metric_score(search_type), "/documents/search?#{Rack::Utils.build_nested_query({conditions: {term: table_row.query_terms, search_type_id: search_type.id}})}" %></td>
         <% end %>
         <td>
           <ul>

@@ -145,7 +145,7 @@ class Api::V1::EntriesController < ApiController
     'place_ids',
     'presidential_document_type_id',
     'small_entity_ids',
-    'search_type_ids',
+    'search_type_id',
   ]
   def deserialized_params
     params.tap do |modified_params|

@@ -122,10 +122,11 @@ class EsApplicationSearch
 
     @excerpts = options.fetch(:excerpts, false)
     @include_pre_1994_docs = options.fetch(:include_pre_1994_docs, false)
-    default_search_type_ids = [default_search_type.id]
-    search_types = (options.dig("conditions", "search_type_ids") || default_search_type_ids).map{|id| SearchType.find(id)}
-    raise NotImplementedError if search_types.count != 1 # Originally, the search interface was conceived as being multi-select, but as the infrastructure developed, it started to make more sense to have a search be associated with a single search type
-    @search_type = search_types.first
+    custom_search_type_id = options.dig("conditions", "search_type_id")
+    if custom_search_type_id.is_a?(Array)
+      custom_search_type_id = custom_search_type_id.first
+    end
+    @search_type = SearchType.find(custom_search_type_id || default_search_type.id)
 
     set_defaults(options)
 
@@ -134,7 +135,7 @@ class EsApplicationSearch
 
     conditions = options[:conditions].blank? ? {} : options[:conditions]
     self.conditions = conditions.reject do |key,val|
-      unless self.respond_to?("#{key}=") || (key == "search_type_ids")
+      unless self.respond_to?("#{key}=") || (key == "search_type_id")
         @errors[key] = "is not a valid field"
       end
     end.with_indifferent_access
@@ -414,7 +415,13 @@ class EsApplicationSearch
   end
 
   def count
-    if index_has_neural_querying_enabled? && search_type.is_hybrid_search && es_term.present?
+    if false#index_has_neural_querying_enabled? && search_type.is_hybrid_search && es_term.present?
+      # @count ||= repository.
+      #   search(hybrid_search_count_options).
+      #   raw_response.
+      #   fetch("hits").
+      #   fetch("total").
+      #   fetch("value")
       @count ||= repository.
         search(hybrid_search_count_options).
         raw_response.
@@ -498,7 +505,7 @@ class EsApplicationSearch
   def es_base_query
     {
       size: per_page,
-      from: es_from,
+      # from: es_from,
       query: {
         function_score: {
           query: {
@@ -511,7 +518,7 @@ class EsApplicationSearch
           boost_mode: 'multiply',
         }
       },
-      sort: es_sort_order,
+      # sort: es_sort_order,
       _source: es_source,
     }.tap do |query|
       if explain_results? && search_type.supports_explain
@@ -590,8 +597,16 @@ class EsApplicationSearch
 
   def hybrid_search_count_options
     #TODO: This can likely be further optimized, perhaps by not sending to the normalization pipeline, removing gaussian decay via function scoring, etc.  Hybrid search does not appear to be supported using the OpenSearch _count endpoint
-    hybrid_search_options.except(:explain).dup.tap do |options|
-      options["_source"] = false #ie don't return the object attributes
+    hybrid_search_options.except(:explain, :size).dup.tap do |ops|
+      # binding.remote_pry
+      # ops[:query][:function_score][:functions]= Array.new
+      # ops.delete(:_source)
+      # ops.merge!(_source: false) #ie don't return the object attributes
+      # ops.merge!(size: 0)
+    end
+
+    hybrid_search_options.except(:explain, :size).dup.tap do |options|
+      options[:_source] = false #ie don't return the object attributes
     end
   end
 
@@ -707,6 +722,35 @@ class EsApplicationSearch
     query
   end
 
+  def example_hybrid_queries
+    [
+      {
+        "match": {
+          "full_text": {
+            "query": es_term
+          }
+        }
+      },
+      {
+        "neural": {
+          "full_text_chunk_embedding.knn": {
+            "query_text": es_term,
+            "model_id": text_embedding_model_id,
+          }.tap do |knn_config|
+            if search_type.k_nearest_neighbors
+              # knn_config.merge!("k": search_type.k_nearest_neighbors)
+              knn_config.merge!("k": 66)
+            end
+
+            if search_type.min_score
+              knn_config.merge!("min_score": search_type.min_score)
+            end
+          end
+        }
+      }
+    ]
+  end
+
   def hybrid_search_options
     base_query_options = search_options.except(:query)
     function_score_wrapped_lexical_query = search_options[:query]
@@ -720,6 +764,7 @@ class EsApplicationSearch
     {
       :query => {
         :hybrid => {
+          # :queries => example_hybrid_queries
           :queries => [
             function_score_wrapped_lexical_query,
             function_score_wrapped_neural_query
@@ -757,7 +802,8 @@ class EsApplicationSearch
               "model_id": text_embedding_model_id,
             }.tap do |knn_config|
               if search_type.k_nearest_neighbors
-                knn_config.merge!("k": search_type.k_nearest_neighbors)
+                # knn_config.merge!("k": search_type.k_nearest_neighbors)
+                knn_config.merge!("k": 66)
               end
 
               if search_type.min_score

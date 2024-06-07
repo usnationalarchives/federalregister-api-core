@@ -772,6 +772,7 @@ class SearchEvaluationPresenter
   def filtered_data
     if Rails.env.development?
       DATA.select do |x|
+        # x[:id] == 23
         x.fetch(:ratings).all?{|x| x.fetch(:document_number).start_with?('2024')}
       end
     else
@@ -793,7 +794,7 @@ class SearchEvaluationPresenter
         },
         "requests": (filtered_data.map.with_index do |attr, i|
           es_query = EsEntrySearch.new(
-            conditions: {term: attr.fetch(:query_terms), search_type_ids: [search_type.id]},
+            conditions: {term: attr.fetch(:query_terms), search_type_id: search_type.id},
           ).send(search_type.is_hybrid_search ? :hybrid_search_options : :search_options).fetch(:query)
           query_customization = search_type.query_customization
           if query_customization
