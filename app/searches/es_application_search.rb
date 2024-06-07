@@ -489,7 +489,7 @@ class EsApplicationSearch
   attr_reader :aggregation_field, :date_histogram_interval, :search_type
 
   def default_search_type
-    SearchType::HYBRID
+    SearchType::LEXICAL
   end
 
   def neural_search_appropriate?
@@ -518,7 +518,7 @@ class EsApplicationSearch
           boost_mode: 'multiply',
         }
       },
-      # sort: es_sort_order,
+      # sort: es_sort_order, #We may want to turn this off when testing hybrid
       _source: es_source,
     }.tap do |query|
       if explain_results? && search_type.supports_explain
