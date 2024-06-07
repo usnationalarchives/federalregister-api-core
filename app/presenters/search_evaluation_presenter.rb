@@ -719,9 +719,12 @@ class SearchEvaluationPresenter
     [
       SearchType::LEXICAL,
       SearchType::LEXICAL_NO_DECAY,
-      SearchType::HYBRID,
-      SearchType::HYBRID_KNN_MIN_SCORE,
-    ]
+    ].tap do |options|
+      if Settings.feature_flags.open_search_version_supports_vectors
+        options << SearchType::HYBRID
+        options << SearchType::HYBRID_KNN_MIN_SCORE
+      end
+    end
   end
 
 
