@@ -9,12 +9,14 @@ class SearchType < ActiveHash::Base
       name: "Lexical (w/decay)",
       decay: true,
       supports_explain: true,
+      supports_pagination: true,
     },
     {
       id: 2,
       identifier: "lexical_no_decay",
       name: "Lexical (no decay)",
       supports_explain: true,
+      supports_pagination: true,
     },
     {
       id: 3,
@@ -26,6 +28,7 @@ class SearchType < ActiveHash::Base
       min_function_score_for_neural_query: 1.9,
       min_score: nil, # The min score is handled via a somewhat manual function score threshold.  We'll probably want to use the hybrid KNN min score search
       supports_explain: false,
+      supports_pagination: true,
     },
     {
       id: 4,
@@ -37,6 +40,7 @@ class SearchType < ActiveHash::Base
       min_function_score_for_neural_query: nil, # The minimum score is handled via the min_score knn query parameters
       min_score: 0.90,
       supports_explain: false,
+      supports_pagination: false,
     }
   ]
 

@@ -505,7 +505,6 @@ class EsApplicationSearch
   def es_base_query
     {
       size: per_page,
-      # from: es_from,
       query: {
         function_score: {
           query: {
@@ -518,9 +517,15 @@ class EsApplicationSearch
           boost_mode: 'multiply',
         }
       },
-      # sort: es_sort_order, #We may want to turn this off when testing hybrid
       _source: es_source,
     }.tap do |query|
+      if search_type.supports_pagination
+        query.merge!(
+          from: es_from,
+          sort: es_sort_order,
+        )
+      end
+
       if explain_results? && search_type.supports_explain
         query.merge!(explain: true) #NOTE: Useful for investigating relevancy calcs
       end
