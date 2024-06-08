@@ -799,8 +799,7 @@ class SearchEvaluationPresenter
           es_query = EsEntrySearch.new(
             conditions: {term: attr.fetch(:query_terms), search_type_id: search_type.id},
           ).send(search_type.is_hybrid_search ? :hybrid_search_options : :search_options).fetch(:query)
-          query_customization = search_type.query_customization
-          if query_customization
+          if search_type.decay.blank?
             es_query[:function_score][:functions] = []
           end
 

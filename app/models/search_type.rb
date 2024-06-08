@@ -44,10 +44,6 @@ class SearchType < ActiveHash::Base
     }
   ]
 
-  def query_customization 
-    false
-  end
-
   def search_pipeline_configuration
     return unless is_hybrid_search
 
