@@ -1191,7 +1191,6 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
 
     describe ".result_ids" do
       it "returns result IDs from all returned pages of results" do
-        pending("This should be addressed before productionizing")
         entries = []
         (1..100).each do |i|
           entries << build_entry_double({full_text: 'fried eggs', id: i})
