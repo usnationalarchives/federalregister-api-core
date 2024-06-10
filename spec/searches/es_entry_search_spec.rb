@@ -504,6 +504,19 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
 
       it "if a non-existent pipeline is specified on bulk index, an error is thrown"
 
+      it "count searches work as expected" do
+        entries = (1..119).to_a.map do |i|
+          build_entry_double({full_text: "test", id: i})
+        end
+        Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
+
+        search = EsEntrySearch.new(conditions: {term: 'test', search_type_id: [SearchType::HYBRID_KNN_MIN_SCORE.id]})
+
+        count = search.count
+
+        expect(count).to eq(119)
+      end
+
       it "can search the full_text_chunk_embeddings" do
         entries = [
           build_entry_double({full_text: "fried eggs potato", title: 'fried eggs potato', id: 777}),
@@ -513,8 +526,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
         Entry.bulk_index(entries, refresh: true, pipeline: OpenSearchIngestPipelineRegistrar::CHUNKING_PIPELINE_NAME)
         expect($entry_repository.count).to eq(3)
 
-        search = EsEntrySearch.new(conditions: {term: 'united states executive office', search_type_ids: [SearchType::HYBRID.id]}) #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
-
+        search = EsEntrySearch.new(conditions: {term: 'united states executive office', search_type_id: SearchType::HYBRID.id}) #Note that this is a domain-specific term not mentioned exactly in any of the indexed text
         assert_valid_search(search)
         expect(search.results.es_ids).to match_array([888])
       end
