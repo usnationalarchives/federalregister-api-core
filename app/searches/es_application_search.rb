@@ -651,7 +651,13 @@ class EsApplicationSearch
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?
-        q[:query][:function_score][:query][:bool][:should] = simple_query_string
+        q[:query][:function_score][:query][:bool][:should] = [
+          simple_query_string
+        ].tap do |should_options|
+          if search_type.includes_multi_match_query
+            should_options << multi_match_query
+          end
+        end
         q[:query][:function_score][:query][:bool][:minimum_should_match] = 1
       end
 
@@ -802,6 +808,14 @@ class EsApplicationSearch
     }
   end
 
+  def multi_match_query
+    {
+      multi_match: {
+        query: es_term,
+        fields: es_fields_with_boosts,
+      }
+    }
+  end
 
   def neural_querying_enabled?
     raise NotImplementedError

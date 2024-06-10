@@ -23,6 +23,7 @@ class SearchType < ActiveHash::Base
       name: "Hybrid (Function min score)",
       decay: true,
       identifier: "hybrid",
+      includes_multi_match_query: true,
       is_hybrid_search: true,
       k_nearest_neighbors: 10,
       min_function_score_for_neural_query: 1.9,
