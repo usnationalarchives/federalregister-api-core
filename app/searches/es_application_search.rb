@@ -803,16 +803,20 @@ class EsApplicationSearch
         :query=> es_term,
         :fields=> es_fields_with_boosts, 
         :default_operator=>"and",
-        :quote_field_suffix=>".exact"
+        :quote_field_suffix=>".exact",
+        :lenient=> false
       }
     }
   end
 
+  PHRASE_MATCHING_BOOST = 10
   def multi_match_query
     {
       multi_match: {
         query: es_term,
-        fields: es_fields_with_boosts,
+        fields: ['full_text.exact', 'title.exact', 'abstract.exact'],
+        type: 'phrase',
+        boost: PHRASE_MATCHING_BOOST
       }
     }
   end

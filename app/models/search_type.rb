@@ -13,8 +13,9 @@ class SearchType < ActiveHash::Base
     },
     {
       id: 2,
-      identifier: "lexical_no_decay",
-      name: "Lexical (no decay)",
+      identifier: "lexical_optimized",
+      includes_multi_match_query: true,
+      name: "Lexical Optimized",
       supports_explain: true,
       supports_pagination: true,
     },
@@ -36,6 +37,7 @@ class SearchType < ActiveHash::Base
       name: "Hybrid (KNN min score)",
       decay: true,
       identifier: "hybrid_knn_min_score",
+      includes_multi_match_query: true,
       is_hybrid_search: true,
       k_nearest_neighbors: nil,
       min_function_score_for_neural_query: nil, # The minimum score is handled via the min_score knn query parameters
