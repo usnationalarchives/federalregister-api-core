@@ -727,35 +727,6 @@ class EsApplicationSearch
     query
   end
 
-  def example_hybrid_queries
-    [
-      {
-        "match": {
-          "full_text": {
-            "query": es_term
-          }
-        }
-      },
-      {
-        "neural": {
-          "full_text_chunk_embedding.knn": {
-            "query_text": es_term,
-            "model_id": text_embedding_model_id,
-          }.tap do |knn_config|
-            if search_type.k_nearest_neighbors
-              # knn_config.merge!("k": search_type.k_nearest_neighbors)
-              knn_config.merge!("k": 66)
-            end
-
-            if search_type.min_score
-              knn_config.merge!("min_score": search_type.min_score)
-            end
-          end
-        }
-      }
-    ]
-  end
-
   def hybrid_search_options
     base_query_options = search_options.except(:query)
     function_score_wrapped_lexical_query = search_options[:query]
@@ -769,7 +740,6 @@ class EsApplicationSearch
     {
       :query => {
         :hybrid => {
-          # :queries => example_hybrid_queries
           :queries => [
             function_score_wrapped_lexical_query,
             function_score_wrapped_neural_query
