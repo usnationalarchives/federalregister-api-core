@@ -20,7 +20,7 @@
     <th>Notes</th>
     <th>Query Type</th>
     <% @presenter.search_types.each do |search_type| %>
-      <th><%= search_type.name %></th>
+      <th data-toggle="tooltip" title="<%= search_type.attributes %>"><%= search_type.name %></th>
     <% end %>
     <th>
       Ranked Docs (0-4 Scale)
