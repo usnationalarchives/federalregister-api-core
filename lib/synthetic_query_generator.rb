@@ -6,7 +6,7 @@ require 'pry'
 # This class can be used to generate synthetic queries for use in search relevancy evaluations 
 class SyntheticQueryGenerator
 
-  def self.perform
+  def self.perform(entry_scope)
     api_key = Settings.open_ai_key
 
     # Directory containing your documents
@@ -20,7 +20,7 @@ class SyntheticQueryGenerator
 
     id = 21
     # Process each 
-    Entry.where("publication_date > '2024-01-01'").sample(50).each do |entry|
+    entry_scope.each do |entry|
       document_text = entry.raw_text
 
       # Call the API to generate a query
@@ -52,7 +52,7 @@ class SyntheticQueryGenerator
   # Method to call the OpenAI ChatGPT API
   def self.generate_query(document, api_key)
     # Prompt
-    prompt = "Pretend you are a regular user of average intelligence using FederalRegister.gov who is using its search engine for doing regulatory research.  Generate a succinct query (no more than 7 words) for this document."
+    prompt = "Pretend you are a regular user of average intelligence using FederalRegister.gov who is using its search engine for doing regulatory research.  Generate a specific query for this document that can be used to evaluate search relevancy on an automated basis (no more than 2-3 words).  Make sure the query does not end with a period or begin with the word 'query'"
 
 
     uri = URI('https://api.openai.com/v1/chat/completions')
