@@ -513,7 +513,7 @@ class EsApplicationSearch
               filter: []
             }
           },
-          functions: es_scoring_functions,
+          functions: search_type.es_scoring_functions,
           boost_mode: 'multiply',
         }
       },
@@ -827,25 +827,6 @@ class EsApplicationSearch
 
   def text_embedding_model_id
     OpenSearchMlModelRegistrar.model_id
-  end
-
-  def es_scoring_functions
-    if search_type.decay
-      [
-        {
-          "gauss": {
-              "publication_date": {
-                  "origin": "now",
-                  "scale":  "365d",
-                  "offset": "30d",
-                  "decay":  "0.5" #0.5 is the default
-              }
-          },
-        }
-      ]
-    else
-      []
-    end
   end
 
   def with_date

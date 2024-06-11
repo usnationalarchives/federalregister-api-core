@@ -6,8 +6,19 @@ class SearchType < ActiveHash::Base
     {
       id: 1,
       identifier: "lexical",
-      name: "Lexical (w/decay)",
-      decay: true,
+      name: "Lexical (Current)",
+      es_scoring_functions: [
+        {
+          "gauss": {
+              "publication_date": {
+                  "origin": "now",
+                  "scale":  "365d",
+                  "offset": "30d",
+                  "decay":  "0.5" #0.5 is the default
+              }
+          },
+        }
+      ],
       supports_explain: true,
       supports_pagination: true,
     },
@@ -16,13 +27,32 @@ class SearchType < ActiveHash::Base
       identifier: "lexical_optimized",
       includes_multi_match_query: true,
       name: "Lexical Optimized",
+      es_scoring_functions: [],
+      supports_explain: true,
+      supports_pagination: true,
+    },
+    {
+      id: 5,
+      identifier: "lexical_optimized_with_decay",
+      includes_multi_match_query: true,
+      name: "Lexical Optimized",
+      es_scoring_functions: [{
+        "gauss": {
+            "publication_date": {
+                "origin": "now",
+                "scale":  "3y",
+                "offset": "1y",
+                "decay":  "0.3"
+            }
+        },
+      }],
       supports_explain: true,
       supports_pagination: true,
     },
     {
       id: 3,
       name: "Hybrid (Function min score)",
-      decay: true,
+      es_scoring_functions: [],
       identifier: "hybrid",
       includes_multi_match_query: true,
       is_hybrid_search: true,
@@ -35,7 +65,7 @@ class SearchType < ActiveHash::Base
     {
       id: 4,
       name: "Hybrid (KNN min score)",
-      decay: true,
+      es_scoring_functions: [],
       identifier: "hybrid_knn_min_score",
       includes_multi_match_query: true,
       is_hybrid_search: true,
