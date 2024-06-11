@@ -93,14 +93,14 @@ class SearchEvaluationPresenter
         {document_number: '2024-08735', rating: 1},
       ]
     },
-    # {
-    #   id: 9,
-    #   query_terms: "mattresses from the Philippines",
-    #   ratings: [
-    #     {document_number: '2024-10567', rating: 4},
-    #     {document_number: '2024-04322', rating: 4},
-    #   ]
-    # },
+    {
+      id: 9,
+      query_terms: "mattresses from the Philippines",
+      ratings: [
+        {document_number: '2024-10567', rating: 4},
+        {document_number: '2024-04322', rating: 4},
+      ]
+    },
     {
       id: 10,
       query_terms: "Unlicensed Use of the 6 GHz Band",
@@ -111,17 +111,17 @@ class SearchEvaluationPresenter
         {document_number: '2024-04494', rating: 4},
       ],
     },
-    # {
-    #   id: 11,
-    #   notes: "Example of a query for which there are minimially useful results in our corpus, but some things of tangential relevance",
-    #   query_terms: "Grants for women out of prison",
-    #   ratings: [
-    #     {document_number: '2024-09614', rating: 1},
-    #     {document_number: '2024-09795', rating: 1},
-    #     {document_number: '2024-09797', rating: 1},
-    #     {document_number: '2024-09796', rating: 1},
-    #   ]
-    # },
+    {
+      id: 11,
+      notes: "Example of a query for which there are minimially useful results in our corpus, but some things of tangential relevance",
+      query_terms: "Grants for women out of prison",
+      ratings: [
+        {document_number: '2024-09614', rating: 1},
+        {document_number: '2024-09795', rating: 1},
+        {document_number: '2024-09797', rating: 1},
+        {document_number: '2024-09796', rating: 1},
+      ]
+    },
     {
       id: 12,
       query_terms: "Medicare Program; Changes to the Medicare Advantage and the Medicare Prescription Drug Benefit Program",
@@ -171,21 +171,21 @@ class SearchEvaluationPresenter
         {document_number: '2024-02871', rating: 4},
       ]
     },
-    # {
-    #   id: 18,
-    #   query_terms: 'CMS-2439-F',
-    #   notes: "Example of a case where only one result is available",
-    #   ratings: [
-    #     {document_number: '2024-08085', rating: 4},
-    #   ]
-    # },
-    # {
-    #   id: 19,
-    #   query_terms: 'May 10, 2024 and CMS and minimum nursing standards',
-    #   ratings: [
-    #     {document_number: '2024-08273', rating: 4},
-    #   ]
-    # },
+    {
+      id: 18,
+      query_terms: 'CMS-2439-F',
+      notes: "Example of a case where only one result is available",
+      ratings: [
+        {document_number: '2024-08085', rating: 4},
+      ]
+    },
+    {
+      id: 19,
+      query_terms: 'May 10, 2024 and CMS and minimum nursing standards',
+      ratings: [
+        {document_number: '2024-08273', rating: 4},
+      ]
+    },
     {
       id: 20,
       query_terms: 'Native American Early childhood Education infrastructure Funding',
