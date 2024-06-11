@@ -773,13 +773,10 @@ class SearchEvaluationPresenter
   memoize :rank_eval_responses_by_search_type
 
   def filtered_data
-    if Rails.env.development?
-      DATA.select do |x|
-        # x[:id] == 23
-        x.fetch(:ratings).all?{|x| x.fetch(:document_number).start_with?('2024')}
-      end
-    else
-      DATA
+    all_document_numbers = DATA.map{|x| x.fetch(:ratings)}.flatten.map{|y| y.fetch(:document_number)}
+    available_document_numbers = Entry.where(document_number: all_document_numbers).pluck(:document_number)
+    DATA.select do |evaluation|
+      evaluation.fetch(:ratings).all?{|rating| available_document_numbers.include? rating.fetch(:document_number)} 
     end
   end
 
