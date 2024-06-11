@@ -194,531 +194,335 @@ class SearchEvaluationPresenter
         {document_number: '2024-03631', rating: 3},
       ]
     },
-
     {
-      "id": 21,
-      "notes": "",
-      "query_terms": "Chesapeake and Ohio Canal National Park meeting",
-      "ratings": [
-        {
-          "document_number": "2024-06964",
-          "rating": 4
-        }
+      id: 48,
+      query_terms: 'CLC Holdings Limited',
+      notes: "Good example of a query that uses common generic terms, but should be interpreted as a phrase",
+      ratings: [
+        {document_number: '2020-28101', rating: 4},
+        {document_number: '2019-17409', rating: 4},
+        {document_number: '2018-18766', rating: 4},
       ]
     },
     {
       "id": 22,
-      "notes": "",
-      "query_terms": "Large Power Transformers AD Order Korea",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Find information on Historically Black Colleges advisory meeting.",
       "ratings": [
         {
-          "document_number": "2023-28946",
+          "document_number": "2015-10596",
           "rating": 4
         }
       ]
     },
     {
       "id": 23,
-      "notes": "",
-      "query_terms": "Rescindment of HUD/HOU-55 Debt Collection System",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Feedback on FRA Safety Advisory Extension.",
       "ratings": [
         {
-          "document_number": "2024-02128",
+          "document_number": "2015-12580",
           "rating": 4
         }
       ]
     },
     {
       "id": 24,
-      "notes": "",
-      "query_terms": "OPM information collection RI 38-47 comments",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "\"Steel wire garment hangers PRC antidumping review\"",
       "ratings": [
         {
-          "document_number": "2024-04350",
+          "document_number": "2015-28757",
           "rating": 4
         }
       ]
     },
     {
       "id": 25,
-      "notes": "",
-      "query_terms": "IHS Mashantucket Pequot Tribal Nation PRCDA Expansion",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "DEA summary disposition for lack of state authority.",
       "ratings": [
         {
-          "document_number": "2024-01017",
+          "document_number": "2016-08572",
           "rating": 4
         }
       ]
     },
     {
       "id": 26,
-      "notes": "",
-      "query_terms": "EIS weekly receipt and review schedule",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Customs duties interest rates for July 2016.",
       "ratings": [
         {
-          "document_number": "2024-06098",
+          "document_number": "2016-19167",
           "rating": 4
         }
       ]
     },
     {
       "id": 27,
-      "notes": "",
-      "query_terms": "SEC Closed Meeting Topics February 1, 2024",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "North Carolina Ward Transformer Superfund Site Consent",
       "ratings": [
         {
-          "document_number": "2024-01786",
+          "document_number": "2016-23386",
           "rating": 4
         }
       ]
     },
     {
       "id": 28,
-      "notes": "",
-      "query_terms": "Fish and Wildlife Service information collection comments",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Cancelation of United States Investment Advisory Council meeting.",
       "ratings": [
         {
-          "document_number": "2024-05184",
+          "document_number": "2017-02393",
           "rating": 4
         }
       ]
     },
     {
       "id": 29,
-      "notes": "",
-      "query_terms": "OFAC Specially Designated Nationals List Update",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Amendments to Coast Guard organizational changes.",
       "ratings": [
         {
-          "document_number": "2024-08350",
+          "document_number": "2017-12578",
           "rating": 4
         }
       ]
     },
     {
       "id": 30,
-      "notes": "",
-      "query_terms": "Correction Notice for Task Force Comments Deadline",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "\"United Rolls Inc. Consent Decree public comment\"",
       "ratings": [
         {
-          "document_number": "2024-01010",
+          "document_number": "2017-23915",
           "rating": 4
         }
       ]
     },
     {
       "id": 31,
-      "notes": "",
-      "query_terms": "BBC Studios commercial marine photography permit application",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "\"Class E airspace Spanish Fork UT rule\"",
       "ratings": [
         {
-          "document_number": "2024-05263",
+          "document_number": "2018-02325",
           "rating": 4
         }
       ]
     },
     {
       "id": 32,
-      "notes": "",
-      "query_terms": "USACE South Fork Wind project judicial review",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "MSHA Petition Modification Prairie Eagle Mine.",
       "ratings": [
         {
-          "document_number": "2024-07467",
+          "document_number": "2018-24913",
           "rating": 4
         }
       ]
     },
     {
       "id": 33,
-      "notes": "",
-      "query_terms": "NIH Special Emphasis Panel Meeting Notice",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Coast Guard Information Collection Request Comments.",
       "ratings": [
         {
-          "document_number": "2024-02087",
+          "document_number": "2018-25481",
           "rating": 4
         }
       ]
     },
     {
       "id": 34,
-      "notes": "",
-      "query_terms": "Search: Rural Business-Cooperative Service information collection OMB 0570-0065.",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "FDA approved information collections list 2019.",
       "ratings": [
         {
-          "document_number": "2024-05431",
+          "document_number": "2019-01812",
           "rating": 4
         }
       ]
     },
     {
       "id": 35,
-      "notes": "",
-      "query_terms": "Correcting amendment for Dix Avenue Bridge regulation",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Submit comments for Atlantic Mackerel, Squid, Amendment.",
       "ratings": [
         {
-          "document_number": "2024-04273",
+          "document_number": "2019-02697",
           "rating": 4
         }
       ]
     },
     {
       "id": 36,
-      "notes": "",
-      "query_terms": "Query: 2024 civil penalty inflation adjustments BOEM",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Airbus SAS Main Landing Gear Inspection AD",
       "ratings": [
         {
-          "document_number": "2024-01412",
+          "document_number": "2019-02938",
           "rating": 4
         }
       ]
     },
     {
       "id": 37,
-      "notes": "",
-      "query_terms": "FDA Susceptibility Test Interpretive Criteria Annual Compilation",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Query: Antidumping and countervailing duty orders initiation summary.",
       "ratings": [
         {
-          "document_number": "2024-07495",
+          "document_number": "2019-14951",
           "rating": 4
         }
       ]
     },
     {
       "id": 38,
-      "notes": "",
-      "query_terms": "Wind-down procedures and impacts on ACP",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Exclusive Patent License for Targeted CAR Therapies.",
       "ratings": [
         {
-          "document_number": "2024-02093",
+          "document_number": "2019-17866",
           "rating": 4
         }
       ]
     },
     {
       "id": 39,
-      "notes": "",
-      "query_terms": "\"MIAX Open-Close Report Fee Schedule Amendment\"",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Loan Rehabilitation Payment Collection - Extension Request",
       "ratings": [
         {
-          "document_number": "2024-03646",
+          "document_number": "2020-06899",
           "rating": 4
         }
       ]
     },
     {
       "id": 40,
-      "notes": "",
-      "query_terms": "Establishing Retirement Savings Lost and Found database",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Emergency Beacon Registrations for NOAA.",
       "ratings": [
         {
-          "document_number": "2024-07968",
+          "document_number": "2020-27112",
           "rating": 4
         }
       ]
     },
     {
       "id": 41,
-      "notes": "",
-      "query_terms": "Establishment of San Juan Islands MAC nominations",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Petition for Banggai cardinalfish conservation comment.",
       "ratings": [
         {
-          "document_number": "2024-02939",
+          "document_number": "2021-16220",
           "rating": 4
         }
       ]
     },
     {
       "id": 42,
-      "notes": "",
-      "query_terms": "Evaluate U.S. Fish and Wildlife Service Concessions",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "CDC Lead Exposure Prevention Advisory Committee nominations",
       "ratings": [
         {
-          "document_number": "2023-28829",
+          "document_number": "2021-19222",
           "rating": 4
         }
       ]
     },
     {
       "id": 43,
-      "notes": "",
-      "query_terms": "DFAS Personal Check Cashing Agreement Notice",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Establish RNAV route T-374 in Alaska.",
       "ratings": [
         {
-          "document_number": "2024-08475",
+          "document_number": "2021-24631",
           "rating": 4
         }
       ]
     },
     {
       "id": 44,
-      "notes": "",
-      "query_terms": "Submit comments for IMLS reviewer forms",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "NIH grant applications meeting closed March 2022.",
       "ratings": [
         {
-          "document_number": "2024-04411",
+          "document_number": "2022-00257",
           "rating": 4
         }
       ]
     },
     {
       "id": 45,
-      "notes": "",
-      "query_terms": "USPTO Patent and Trademark Resource Center",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Electronic Funds Transfer Market Research Study comments.",
       "ratings": [
         {
-          "document_number": "2024-04116",
+          "document_number": "2022-25611",
           "rating": 4
         }
       ]
     },
     {
       "id": 46,
-      "notes": "",
-      "query_terms": "Regulation details for Revolution Wind Farm project",
+      "llm_generated_query": true,
+      "notes": nil,
+      "query_terms": "Cancellation notice Advanced Aviation Advisory Committee meetings.",
       "ratings": [
         {
-          "document_number": "2024-05992",
+          "document_number": "2024-11872",
           "rating": 4
         }
       ]
     },
-    {
-      "id": 47,
-      "notes": "",
-      "query_terms": "File protest or motion to intervene",
-      "ratings": [
-        {
-          "document_number": "2024-02033",
+    {                             
+      "id": 47,                   
+      "llm_generated_query": true,
+      "notes": nil,              
+      "query_terms": "Form OPIC-50 comments due within 60 days.",
+      "ratings": [                
+        {                         
+          "document_number": "2015-01879",
           "rating": 4
         }
       ]
     },
-    {
-      "id": 48,
-      "notes": "",
-      "query_terms": "Senior Loan Officer Opinion Survey extension inquiry",
-      "ratings": [
-        {
-          "document_number": "2024-07089",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 49,
-      "notes": "",
-      "query_terms": "Postal Service competitive product agreement comments due",
-      "ratings": [
-        {
-          "document_number": "2024-04759",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 50,
-      "notes": "",
-      "query_terms": "LSC regulation changes governing body requirements",
-      "ratings": [
-        {
-          "document_number": "2024-07762",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 51,
-      "notes": "",
-      "query_terms": "\"Idaho Clean Water Act section 401 certification\"",
-      "ratings": [
-        {
-          "document_number": "2024-04046",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 52,
-      "notes": "",
-      "query_terms": "\"Feedback on GSA/OAP-3 System of Records\"",
-      "ratings": [
-        {
-          "document_number": "2024-03007",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 53,
-      "notes": "",
-      "query_terms": "Stars and Stripes Media Organization rule revision",
-      "ratings": [
-        {
-          "document_number": "2024-08527",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 54,
-      "notes": "",
-      "query_terms": "Comment on 10 CFR part 72 renewal",
-      "ratings": [
-        {
-          "document_number": "2024-07286",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 55,
-      "notes": "",
-      "query_terms": "SEC order cancelling registrations of investment advisers",
-      "ratings": [
-        {
-          "document_number": "2024-00941",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 56,
-      "notes": "",
-      "query_terms": "Review State Highway-Rail Grade Crossing Action Plan",
-      "ratings": [
-        {
-          "document_number": "2024-06511",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 57,
-      "notes": "",
-      "query_terms": "Loan volume eligibility criteria for PLP lenders",
-      "ratings": [
-        {
-          "document_number": "2024-03687",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 58,
-      "notes": "",
-      "query_terms": "Comment request on IRS Form 4797",
-      "ratings": [
-        {
-          "document_number": "2024-06383",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 59,
-      "notes": "",
-      "query_terms": "Review schedule for National Cancer Institute panels",
-      "ratings": [
-        {
-          "document_number": "2024-08285",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 60,
-      "notes": "",
-      "query_terms": "FAA airworthiness directive for GE engines",
-      "ratings": [
-        {
-          "document_number": "2024-05547",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 61,
-      "notes": "",
-      "query_terms": "Extend comment period for Summer EBT rule",
-      "ratings": [
-        {
-          "document_number": "2024-08369",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 62,
-      "notes": "",
-      "query_terms": "CINTAC meeting registration and public comments",
-      "ratings": [
-        {
-          "document_number": "2024-00196",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 63,
-      "notes": "",
-      "query_terms": "Request termination of debarment for Brendon Gagne",
-      "ratings": [
-        {
-          "document_number": "2024-02706",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 64,
-      "notes": "",
-      "query_terms": "Neurological Disorders and Stroke Special Panel Meeting",
-      "ratings": [
-        {
-          "document_number": "2024-05727",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 65,
-      "notes": "",
-      "query_terms": "NMFS Pacific cod reallocation 2024 season",
-      "ratings": [
-        {
-          "document_number": "2024-07483",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 66,
-      "notes": "",
-      "query_terms": "PJM Interconnection L.L.C rate filings",
-      "ratings": [
-        {
-          "document_number": "2024-02609",
-          "rating": 4
-        }
-      ]
-    },
-    {
-      "id": 67,
-      "notes": "",
-      "query_terms": "\"EPA ENERGY STAR Program ICR review\"",
-      "ratings": [
-        {
-          "document_number": "2024-01805",
-          "rating": 4
-        }
-      ]
-    },
-
   ]
 
   def search_types
     [
       SearchType::LEXICAL,
       SearchType::LEXICAL_OPTIMIZED,
+      SearchType::LEXICAL_OPTIMIZED_WITH_DECAY,
     ].tap do |options|
       if Settings.feature_flags.open_search_version_supports_vectors
         options << SearchType::HYBRID
@@ -749,7 +553,7 @@ class SearchEvaluationPresenter
       @notes               = evaluation_attrs[:notes]
       @ratings             = evaluation_attrs.fetch(:ratings)
       @query_id            = evaluation_attrs.fetch(:id)
-      @llm_generated_query = evaluation_attrs[:llm_generated_query] || query_id > 20 
+      @llm_generated_query = evaluation_attrs[:llm_generated_query] 
       @rank_eval_responses_by_search_type = rank_eval_responses_by_search_type
       @search_types = search_types
     end
