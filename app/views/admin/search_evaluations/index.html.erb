@@ -49,7 +49,7 @@
       <td></td>
     </tr>
     <% @presenter.table_rows.each do |table_row| %>
-      <tr>
+      <tr class="<%= table_row.css_class %>" >
         <td><%= table_row.query_terms %></td>
         <td><%= table_row.notes %></td>
         <td>

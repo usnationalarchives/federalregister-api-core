@@ -732,7 +732,8 @@ class SearchEvaluationPresenter
     filtered_data.map do |evaluation_attr|
       TableRow.new(
         evaluation_attrs: evaluation_attr,
-        rank_eval_responses_by_search_type: rank_eval_responses_by_search_type
+        rank_eval_responses_by_search_type: rank_eval_responses_by_search_type,
+        search_types: search_types
       )
     end
   end
@@ -740,15 +741,17 @@ class SearchEvaluationPresenter
   private
 
   class TableRow
+    extend Memoist
     attr_reader :query_terms, :notes, :ratings, :llm_generated_query
 
-    def initialize(evaluation_attrs:, rank_eval_responses_by_search_type:)
+    def initialize(evaluation_attrs:, rank_eval_responses_by_search_type:, search_types:)
       @query_terms         = evaluation_attrs.fetch(:query_terms)
       @notes               = evaluation_attrs[:notes]
       @ratings             = evaluation_attrs.fetch(:ratings)
       @query_id            = evaluation_attrs.fetch(:id)
       @llm_generated_query = evaluation_attrs[:llm_generated_query] || query_id > 20 
       @rank_eval_responses_by_search_type = rank_eval_responses_by_search_type
+      @search_types = search_types
     end
 
     def metric_score(search_type)
@@ -758,10 +761,24 @@ class SearchEvaluationPresenter
         fetch("metric_score").
         round(ROUNDING_DIGITS)
     end
+    memoize :metric_score
+
+    def css_class
+      if has_differences? # Highlight rows with differences in different shade
+        'info'
+      end
+    end
 
     private
 
-    attr_reader :rank_eval_responses_by_search_type, :query_id
+    attr_reader :rank_eval_responses_by_search_type, :query_id, :search_types
+
+    def has_differences?
+      first_metric_score = metric_score(search_types.first)
+      search_types.any? do |search_type|
+        metric_score(search_type) != first_metric_score
+      end
+    end
 
   end
 
