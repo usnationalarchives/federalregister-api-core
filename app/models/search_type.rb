@@ -35,17 +35,19 @@ class SearchType < ActiveHash::Base
       id: 5,
       identifier: "lexical_optimized_with_decay",
       includes_multi_match_query: true,
-      name: "Lexical Optimized",
-      es_scoring_functions: [{
-        "gauss": {
-            "publication_date": {
-                "origin": "now",
-                "scale":  "3y",
-                "offset": "1y",
-                "decay":  "0.3"
-            }
-        },
-      }],
+      name: "Lexical Optimized (with decay)",
+      es_scoring_functions: [
+        {
+          "gauss": {
+              "publication_date": {
+                  "origin": "now",
+                  "scale":  "1095d",
+                  "offset": "365d",
+                  "decay":  "0.3" #0.5 is the default
+              }
+          },
+        }
+      ],
       supports_explain: true,
       supports_pagination: true,
     },
