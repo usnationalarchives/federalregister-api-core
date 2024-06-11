@@ -718,7 +718,7 @@ class SearchEvaluationPresenter
   def search_types
     [
       SearchType::LEXICAL,
-      SearchType::LEXICAL_NO_DECAY,
+      SearchType::LEXICAL_OPTIMIZED,
     ].tap do |options|
       if Settings.feature_flags.open_search_version_supports_vectors
         options << SearchType::HYBRID
