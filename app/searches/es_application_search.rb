@@ -170,7 +170,6 @@ class EsApplicationSearch
   end
 
   def valid?
-
     @errors.empty?
   end
 

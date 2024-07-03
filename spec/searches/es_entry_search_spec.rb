@@ -956,6 +956,38 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
       expect(search.results.count).to eq 1
     end
 
+    it "handles a notice_type_id search" do
+      entries = [
+        build_entry_double({notice_type_id: NoticeType::SORN.id, id: 111 }),
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(
+        conditions: {
+          notice_type_id: [NoticeType::SORN.id],
+        }
+      )
+
+      assert_valid_search(search)
+      expect(search.results.count).to eq 1
+    end
+
+    it "handles a notice_type search" do
+      entries = [
+        build_entry_double({notice_type_id: NoticeType::SORN.id, id: 111 }),
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(
+        conditions: {
+          notice_type: [NoticeType::SORN.identifier],
+        }
+      )
+
+      assert_valid_search(search)
+      expect(search.results.count).to eq 1
+    end
+
     it "handles es multi-value attribute queries" do
       agencies = (1..2).map{ Factory.create(:agency) } #Note that actual agencies must exist in order for the search to register the filter
       entries = [

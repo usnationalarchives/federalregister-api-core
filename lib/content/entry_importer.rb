@@ -18,6 +18,7 @@ module Content
     include Content::EntryImporter::Urls
     include Content::EntryImporter::Action
     include Content::EntryImporter::TextCitations
+    include Content::EntryImporter::SornDetails
 
     def self.process_all_by_date(date, *attributes)
       AgencyObserver.disabled = true

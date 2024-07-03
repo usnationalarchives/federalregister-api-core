@@ -47,6 +47,8 @@ module EntryApiConfiguration
       :regulations_dot_gov_url,
       :significant,
       :signing_date,
+      :sorn_system_name,
+      :sorn_system_number,
       :start_page,
       :subtype,
       :title,

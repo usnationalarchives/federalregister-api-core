@@ -184,6 +184,16 @@ class EsEntrySearch < EsApplicationSearch
                   types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
+  define_filter :notice_type_id,
+                :es_type => :with
+
+
+  define_filter :notice_type,
+                :es_type => :with,
+                :es_attribute => :notice_type_id,
+                :model_es_method => :id,
+                :model_id_method => :identifier
+
   define_filter :presidential_document_type_id,
                 :es_type => :with
 

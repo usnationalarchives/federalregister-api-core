@@ -260,6 +260,7 @@ class EntryRepository < BaseRepository
     indexes :toc_doc, {type: 'text', index: false}
     indexes :toc_subject, {type: 'text', index: false}
     indexes :type, {type: 'keyword'}
+    indexes :notice_type_id, {type: 'integer'}
     indexes :presidential_document_type_id, {type: 'integer'}
     indexes :presidential_document_number, {type: 'keyword', index: false}
     indexes :publication_date_week, {type: 'date'}
@@ -272,6 +273,8 @@ class EntryRepository < BaseRepository
     indexes :correction, {type: 'boolean'}
     indexes :correction_of, {type: 'keyword', index: false}
     indexes :corrections, {type: 'keyword', index: true}
+    indexes :sorn_system_name, {type: 'keyword', index: false}
+    indexes :sorn_system_number, {type: 'keyword', index: false}
     indexes :start_page, {type: 'integer'}
     indexes :topics, {type: 'keyword', index: false}
     indexes :subtype, {type: 'keyword', index: false}

@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_01_214711) do
+ActiveRecord::Schema.define(version: 2024_07_02_183452) do
+
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
     t.datetime "created_at"
@@ -207,6 +208,9 @@ ActiveRecord::Schema.define(version: 2024_05_01_214711) do
     t.boolean "not_received_for_publication"
     t.integer "president_id"
     t.integer "historical_page_view_count"
+    t.string "sorn_system_name"
+    t.string "sorn_system_number"
+    t.integer "notice_type_id"
     t.index ["citation"], name: "index_entries_on_citation"
     t.index ["citing_entries_count"], name: "index_entries_on_citing_entries_count"
     t.index ["correction_of_id"], name: "index_entries_on_correction_of"
