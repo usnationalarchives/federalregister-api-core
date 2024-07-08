@@ -529,6 +529,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    saxerator (0.9.9)
     sendgrid (1.2.4)
       json
     sidekiq (6.4.1)
@@ -694,6 +695,7 @@ DEPENDENCIES
   rubocop
   rubyzip
   sass-rails
+  saxerator
   sendgrid
   sidekiq-pro!
   sidekiq-throttled

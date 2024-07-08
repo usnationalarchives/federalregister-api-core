@@ -84,6 +84,8 @@ gem 'bootsnap'
 gem 'jquery-rails'
 
 gem 'elasticsearch-persistence', '~> 7.0'
+# Used by SornXmlParser for extracting SORN details
+gem 'saxerator'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
