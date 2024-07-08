@@ -32,7 +32,7 @@ module Content::EntryImporter::SornDetails
   def sorn?
     priact_node && priact_node.text
   end
-  memoize :priact_node
+  memoize :sorn?
 
   def priact_node
     @bulkdata_node && @bulkdata_node.css('PRIACT P').first

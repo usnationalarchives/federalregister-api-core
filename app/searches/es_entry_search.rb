@@ -467,7 +467,8 @@ class EsEntrySearch < EsApplicationSearch
         EntrySearch::Suggestor::Date,
         EntrySearch::Suggestor::EntryType,
         EntrySearch::Suggestor::RegulationIdNumber,
-        EntrySearch::Suggestor::Spelling
+        EntrySearch::Suggestor::Sorn,
+        EntrySearch::Suggestor::Spelling,
       ].reduce(self) {|suggestion, suggestor| suggestor.new(suggestion).suggestion || suggestion }
       @suggestion = nil if @suggestion == self
     end
@@ -506,6 +507,8 @@ class EsEntrySearch < EsApplicationSearch
       ['of type', :type],
       ['of presidential document type', :presidential_document_type_id],
       ['of presidential document type', :presidential_document_type],
+      ['of notice type', :notice_type],
+      ['of notice type', :notice_type_id],
       ['filed under agency docket', :docket_id],
       ['whose', :significant],
       ['associated with', :regulation_id_number],
