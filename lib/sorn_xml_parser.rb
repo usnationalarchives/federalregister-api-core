@@ -59,6 +59,7 @@ class SornXmlParser
     # clean the contents of the array
     # add p tags if needed and return a single string
     paragraph_content = paragraph_content.map { |node| cleanup_xml_element_to_string(node) }
+
     add_p_tags(paragraph_content).join(" ")
   end
 
@@ -121,6 +122,8 @@ class SornXmlParser
   end
 
   def add_p_tags(content)
+    return content #NOTE: For our purposes, don't add additional paragraph tags
+
     if content.length > 1
       content.map{|paragraph| "<p>#{paragraph}</p>" }
     else
