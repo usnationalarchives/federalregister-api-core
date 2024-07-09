@@ -18,11 +18,24 @@ module Content::EntryImporter::SornDetails
   def notice_type_id
     if sorn?
       NoticeType::SORN.id
+    elsif sunshine_act_meeting?
+      NoticeType::SUNSHINE_ACT_MEETING.id
     end
   end
 
-
   private
+
+  SUNSHINE_ACT_SUBJECT_REGEX = /^sunshine\s+act\s+meetings?/i
+  def sunshine_act_meeting?
+    subject_node &&
+    subject_node.text &&
+    SUNSHINE_ACT_SUBJECT_REGEX.match?(subject_node.text)
+  end
+
+  def subject_node
+    @bulkdata_node.css('PREAMB SUBJECT')
+  end
+  memoize :subject_node
 
   def sorn_xml_parser
     SornXmlParser.new(bulkdata_node.to_xml)

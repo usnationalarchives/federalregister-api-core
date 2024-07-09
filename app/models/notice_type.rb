@@ -8,6 +8,11 @@ class NoticeType < ActiveHash::Base
       :name                       => "SORN",
       :identifier                 => "sorn",
     },
+    {
+      :id                         => 2,
+      :name                       => "Sunshine Act Meeting",
+      :identifier                 => "sunshine_act_meeting",
+    },
   ]
 
 end
