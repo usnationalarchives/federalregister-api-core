@@ -43,9 +43,10 @@ class SpellChecker
     end
   end
 
+  WORD_EXCEPTIONS = ['sorn']
   def spell_check(string)
     string.gsub(/[a-zA-Z][a-zA-Z\']*[a-zA-Z]+/) do |word|
-      if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words[word.capitalize_first]
+      if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words[word.capitalize_first] && WORD_EXCEPTIONS.exclude?(word.downcase)
         yield(word)
       else
         word
