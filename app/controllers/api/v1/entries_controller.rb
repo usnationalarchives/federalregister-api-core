@@ -223,6 +223,10 @@ class Api::V1::EntriesController < ApiController
   def search_suggestions(search)
     suggestions = {}
 
+    if search.explanatory_suggestion_attributes
+      suggestions[:explanatory] = search.explanatory_suggestion_attributes
+    end
+
     if search.suggestion && search.suggestion.count > 0
       suggestions[:search_refinement] = {
         :count => search.suggestion.count,

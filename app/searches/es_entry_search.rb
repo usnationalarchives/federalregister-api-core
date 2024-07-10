@@ -459,6 +459,26 @@ class EsEntrySearch < EsApplicationSearch
     return nil
   end
 
+  def explanatory_suggestion_attributes
+    if sorn_filter_applied?
+      text = "Searching for descriptions of systems of records as published in the Federal Register?"
+
+      if agency_filter_applied?
+        year = Date.current.year + 1
+        privacy_act_issuance_identifier = agencies.first #TODO: Make dynamic by using the PAI identifier
+        {
+          link_url: "https://www.govinfo.gov/content/pkg/PAI-#{year}-#{privacy_act_issuance_identifier}-interim/xml/PAI-#{year}-AID-interim.xml",
+          text: text,
+        }
+      else
+        {
+          link_url: "https://www.govinfo.gov/app/collection/pai/interim",
+          text: text,
+        }
+      end
+    end
+  end
+
   def suggestion
     if !defined?(@suggestion)
       @suggestion = [
@@ -544,6 +564,14 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   private
+
+  def sorn_filter_applied?
+    (notice_type || []).include? "sorn"
+  end
+
+  def agency_filter_applied?
+    (agencies || []).present?
+  end
 
   def default_search_type
     SearchType::LEXICAL
