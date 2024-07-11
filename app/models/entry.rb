@@ -44,6 +44,8 @@ class Entry < ApplicationModel
     foreign_key: :federal_register_document_number
   has_many :regs_dot_gov_dockets, through: :regs_dot_gov_documents
 
+  has_many :system_of_record_assignments, dependent: :destroy
+  has_many :system_of_records, through: :system_of_record_assignments
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
 

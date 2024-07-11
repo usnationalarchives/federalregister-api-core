@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_02_183452) do
+ActiveRecord::Schema.define(version: 2024_07_10_213420) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -691,7 +691,23 @@ ActiveRecord::Schema.define(version: 2024_07_02_183452) do
     t.string "name", collation: "utf8_general_ci"
   end
 
-  create_table "topic_assignments", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "system_of_record_assignments", id: false, charset: "utf8", force: :cascade do |t|
+    t.bigint "system_of_record_id"
+    t.bigint "entry_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_system_of_record_assignments_on_entry_id"
+    t.index ["system_of_record_id"], name: "index_system_of_record_assignments_on_system_of_record_id"
+  end
+
+  create_table "system_of_records", charset: "utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "identifier"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "topic_assignments", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "topic_id"
     t.integer "entry_id"
     t.datetime "created_at"
