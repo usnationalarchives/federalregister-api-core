@@ -41,7 +41,17 @@ class SornXmlParser
   def get_system_number
     number = find_section('NUMBER')
     if number and @system_name
-      parse_system_name_from_number
+      parse_system_name_from_number(@system_name)
+    end
+  end
+
+  def get_system_metadata
+    system_descriptions = get_sections(add_p_tags: false).first.last
+    system_descriptions.map do |system_description|
+      OpenStruct.new(
+        name: system_description,
+        identifier: parse_system_name_from_number(system_description)
+      )
     end
   end
 
@@ -59,7 +69,6 @@ class SornXmlParser
     # clean the contents of the array
     # add p tags if needed and return a single string
     paragraph_content = paragraph_content.map { |node| cleanup_xml_element_to_string(node) }
-
     add_p_tags(paragraph_content).join(" ")
   end
 
@@ -73,7 +82,7 @@ class SornXmlParser
 
   private
 
-  def get_sections
+  def get_sections(add_p_tags: true)
     # Gather the named sections of the PRIACT tag
     sections = {}
     current_header = nil
@@ -93,7 +102,11 @@ class SornXmlParser
     # discard the rare nil keys
     sections.except!(nil)
     # Change arrays of section content into paragraphs.
-    sections.transform_values! { |values| add_p_tags(values).join(" ") }
+    if add_p_tags
+      sections.transform_values! { |values| add_p_tags(values).join(" ") }
+    else
+      sections
+    end
   end
 
   def cleanup_xml_element_to_string(element)
@@ -122,8 +135,6 @@ class SornXmlParser
   end
 
   def add_p_tags(content)
-    return content #NOTE: For our purposes, don't add additional paragraph tags
-
     if content.length > 1
       content.map{|paragraph| "<p>#{paragraph}</p>" }
     else
@@ -131,10 +142,10 @@ class SornXmlParser
     end
   end
 
-  def parse_system_name_from_number
+  def parse_system_name_from_number(string)
     digit_regex = Regexp.new('\d')
-    if @system_name.match(digit_regex)
-      precleaned = strip_known_patterns(@system_name)
+    if string.match(digit_regex)
+      precleaned = strip_known_patterns(string)
       regex_captures = collect_regex_captures(precleaned)
       if regex_captures.length > 0
         cleaned_capture(regex_captures)
