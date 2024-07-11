@@ -44,9 +44,9 @@ namespace :content do
           subject_node_text = bulkdata_node.css('PREAMB SUBJECT')&.text
 
           if priact_node || Content::EntryImporter::SornDetails::SUNSHINE_ACT_SUBJECT_REGEX.match?(subject_node_text)
-            attrs = [:notice_type_id].tap do |attrs|
+            attrs = ["notice_type_id"].tap do |attrs|
               if priact_node
-                attrs << :system_of_record_assignments
+                attrs << "system_of_records"
               end
             end
 
@@ -54,8 +54,7 @@ namespace :content do
               entry: entry,
               bulkdata_node: bulkdata_node
             )
-            puts attrs
-            importer.update_attributes(**attrs)
+            importer.update_attributes(*attrs)
           end
         rescue StandardError => e
           bad_entries << entry
@@ -63,8 +62,10 @@ namespace :content do
       end
 
       ElasticsearchIndexer.reindex_modified_entries
-      puts "The following document numbers could not be reimported:"
-      puts bad_entries.map(&:document_number).join(' ')
+      if bad_entries.present?
+        puts "The following document numbers could not be reimported:"
+        puts bad_entries.map(&:document_number).join(' ')
+      end
     end
 
 

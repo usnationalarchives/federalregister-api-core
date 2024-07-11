@@ -1,18 +1,16 @@
 module Content::EntryImporter::SornDetails
   extend Content::EntryImporter::Utils
   extend Memoist
-  provides "notice_type_id", "system_of_record_assignments"
-
-  def system_of_record_assignments
-    entry.system_of_record_assignments = []
+  provides "notice_type_id",  "system_of_records"
+  
+  def system_of_records
+    return [] unless sorn?
 
     sorn_xml_parser.get_system_metadata.map do |system|
-      system_of_record = SystemOfRecord.find_or_create_by(
+      SystemOfRecord.find_or_create_by(
         name: system.name,
         identifier: system.identifier
       )
-
-      SystemOfRecordAssignment.new(system_of_record: system_of_record)
     end
   end
 
