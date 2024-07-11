@@ -34,6 +34,40 @@ namespace :content do
       end
     end
 
+    desc "Update notice types based on already-downloaded bulk XML"
+    task :update_notice_types => :environment do
+      bad_entries = []
+      Entry.where("publication_date >= '2000-01-01'").each do |entry|
+        begin
+          bulkdata_node     = Nokogiri::XML(open(entry.full_xml_file_path)).root
+          priact_node       = bulkdata_node.css('PRIACT P').first
+          subject_node_text = bulkdata_node.css('PREAMB SUBJECT')&.text
+
+          if priact_node || Content::EntryImporter::SornDetails::SUNSHINE_ACT_SUBJECT_REGEX.match?(subject_node_text)
+            attrs = [:notice_type_id].tap do |attrs|
+              if priact_node
+                attrs << :system_of_record_assignments
+              end
+            end
+
+            importer = Content::EntryImporter.new(
+              entry: entry,
+              bulkdata_node: bulkdata_node
+            )
+            puts attrs
+            importer.update_attributes(**attrs)
+          end
+        rescue StandardError => e
+          bad_entries << entry
+        end
+      end
+
+      ElasticsearchIndexer.reindex_modified_entries
+      puts "The following document numbers could not be reimported:"
+      puts bad_entries.map(&:document_number).join(' ')
+    end
+
+
     desc "Recompile all pre-compiled ToC pages for a set of dates"
     task :recompile_all_toc => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
