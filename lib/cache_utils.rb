@@ -16,7 +16,7 @@ module CacheUtils
       rescue SocketError => e
         Rails.logger.warn("Couldn't connect to varnish to expire '#{regexp}'")
         Honeybadger.notify(e)
-      rescue Varnish::BrokenConnection, Errno::EPIPE, Errno::ETIMEDOUT
+      rescue Varnish::BrokenConnection, Errno::EPIPE, Errno::ETIMEDOUT, Timeout::Error
         if retries < MAX_RETRIES
           refresh_client!
           retry
