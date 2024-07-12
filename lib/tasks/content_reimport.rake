@@ -37,7 +37,7 @@ namespace :content do
     desc "Update notice types based on already-downloaded bulk XML"
     task :update_notice_types => :environment do
       bad_entries = []
-      Entry.where("publication_date >= '2000-01-01'").each do |entry|
+      Entry.where("publication_date >= '2000-01-01'").find_each do |entry|
         begin
           bulkdata_node     = Nokogiri::XML(open(entry.full_xml_file_path)).root
           priact_node       = bulkdata_node.css('PRIACT P').first
