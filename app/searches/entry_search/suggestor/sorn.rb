@@ -3,7 +3,7 @@ class EntrySearch::Suggestor::Sorn < EntrySearch::Suggestor::Base
   private
 
   def pattern
-    /(sorn|privacy act|statement of records|statement of records notice)/i
+    /(sorn|privacy act|system of records)/i
   end
 
   def handle_match(all,*type_names)
