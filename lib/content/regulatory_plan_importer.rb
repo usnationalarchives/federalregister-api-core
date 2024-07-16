@@ -40,6 +40,9 @@ module Content
       end
     end
 
+     
+    RIN_MINIMUM_SANITY_CHECK_COUNT = 100 #We've seen a failure scenario where Reginfo.gov was experiencing issues and the agency rule list table was completely missing
+    REGINFO_TECHNICAL_DIFFICULTIES_REGEX = /Reginfo.gov is currently experiencing technical difficulties/i
     def self.import_all_by_publication_date(issue)
       url = "https://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
       path = "#{FileSystemPathManager.data_file_path}/regulatory_plans/xml/#{issue}/index.html"
@@ -47,6 +50,12 @@ module Content
       doc = Nokogiri::HTML(File.read(path))
 
       regulation_id_numbers = doc.css('td a.pageSubNavTxt').map{|a| a.content().gsub(/\s*/, '') }
+
+      if regulation_id_numbers.count < RIN_MINIMUM_SANITY_CHECK_COUNT ||
+        REGINFO_TECHNICAL_DIFFICULTIES_REGEX.match?(doc.css("#messageBox").text)
+        raise "The Unified Agenda XML appears to be invalid.  Inspect #{url} to confirm RINs are available and consider re-running the UA import."
+      end
+
       regulation_id_numbers.each do |regulation_id_number|
         RegulatoryPlanImporter.new(issue, regulation_id_number).perform
       end
