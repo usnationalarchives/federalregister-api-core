@@ -461,21 +461,21 @@ class EsEntrySearch < EsApplicationSearch
 
   def explanatory_suggestion_attributes
     if sorn_filter_applied?
-      text = "Searching for descriptions of systems of records as published in the Federal Register?"
-
       if agency_filter_applied?
-        year = Date.current.year + 1
-        privacy_act_issuance_identifier = agencies.first #TODO: Make dynamic by using the PAI identifier
-        {
-          link_url: "https://www.govinfo.gov/content/pkg/PAI-#{year}-#{privacy_act_issuance_identifier}-interim/xml/PAI-#{year}-AID-interim.xml",
-          text: text,
-        }
-      else
-        {
-          link_url: "https://www.govinfo.gov/app/collection/pai/interim",
-          text: text,
-        }
+        agency = Agency.where(slug: agencies.first).first
+
+        if agency && agency.pai_compilation_url
+          return {
+            link_url: agency.pai_compilation_url,
+            text: "Searching for descriptions of systems of records as published in the Federal Register for #{agency.name}?",
+          }
+        end
       end
+
+      {
+        link_url: "https://www.govinfo.gov/app/collection/pai/interim",
+        text: "Searching for descriptions of systems of records as published in the Federal Register?",
+      }
     end
   end
 

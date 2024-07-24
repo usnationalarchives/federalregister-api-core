@@ -10,6 +10,11 @@ namespace :content do
       Content::NameMatcher::Agencies.new.perform
     end
 
+    desc "Update most recent pai_year attribute based on what is available at GovInfo"
+    task :update_pai_years => :environment do
+      PrivacyActUpdater.update_agency_pai_years!
+    end
+
     namespace :import do
       desc "Update agencies"
       task :update => :environment do

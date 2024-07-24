@@ -1,28 +1,58 @@
 class GovInfoClient
+  class PaiPackage < OpenStruct
 
-  def self.last_modified_fr_collections(args={last_modified_start_date: Date.current - 1.day})
-    new.fr_collections(args)
+    def year
+      title.split(',').last.strip.to_i
+    end
+
+    def agency_name
+      title.
+        gsub(/privacy act issuanc(e|es) for the /i,"").
+        gsub(/,\s*\d{4}$/, "")
+    end
+
+    def pai_identifier
+      packageId.
+        gsub(/^PAI-\d{4}-/, '').
+        gsub(/-interim/, "") # ignore whether package is an interim collection
+    end
+
   end
 
-  def fr_collections(args={})
-    # eg "https://api.govinfo.gov/collections/FR/2023-05-01T00%3A00%3A00Z?pageSize=100&offsetMark=*&api_key=DEMO_KEY"
-    raise "Please provide a last modified start date" unless args[:last_modified_start_date]
 
-    last_modified_start_date = args[:last_modified_start_date].is_a?(Date) ? args.delete(:last_modified_start_date) : Date.parse(args.delete(:last_modified_start_date))
+  def self.last_modified_fr_collections(url_params:, result_klass:)
+    new.collections('FR', url_params: url_params, result_klass: result_klass)
+  end
+
+  def collections(collection_identifier, url_params: {}, result_klass:)
+    # eg "https://api.govinfo.gov/collections/FR/2023-05-01T00%3A00%3A00Z?pageSize=100&offsetMark=*&api_key=DEMO_KEY"
+    raise "Please provide a last modified start date" unless url_params[:last_modified_start_date]
+
+    last_modified_start_date = url_params[:last_modified_start_date].is_a?(Date) ? url_params.delete(:last_modified_start_date) : Date.parse(url_params.delete(:last_modified_start_date))
 
     response = connection.get(
-      "collections/FR/#{last_modified_start_date.to_time.utc.iso8601}",
-      standard_options.merge(args)
+      "collections/#{collection_identifier}/#{last_modified_start_date.to_time.utc.iso8601}",
+      standard_options.merge(url_params)
     )
 
+    collection = []
     if response.success?
-      JSON.parse(response.body, object_class: OpenStruct).packages || []
+      packages = JSON.parse(response.body, object_class: result_klass).packages || []
+      collection = collection + packages
+      next_page = JSON.parse(response.body)["nextPage"]
+      while next_page
+        response = connection.get("#{next_page}&api_key=#{api_key}")
+        next_page = JSON.parse(response.body)["nextPage"]
+        packages = JSON.parse(response.body, object_class: PaiPackage).packages || []
+        collection = collection + packages
+      end
     else
       body = JSON.parse(response.body, object_class: OpenStruct)
 
       Honeybadger.notify("Govinfo API error: #{response.status}: #{body.error}")
-      []
     end
+
+    collection
   end
 
   private

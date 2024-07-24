@@ -58,7 +58,7 @@ class ReprocessedIssueRunnerEnqueuer
   end
 
   def packages
-    GovInfoClient.last_modified_fr_collections(last_modified_start_date: Date.current - 2.days)
+    GovInfoClient.last_modified_fr_collections(url_params: {last_modified_start_date: Date.current - 2.days}, result_klass: OpenStruct)
   end
 
   def already_enqueued_dates

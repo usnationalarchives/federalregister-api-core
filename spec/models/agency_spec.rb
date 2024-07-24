@@ -48,4 +48,22 @@ describe Agency do
     expect(result).to start_with(host)
   end
 
+  describe "#pai_compilation_url" do
+    it "adds an '-interim' suffix if the latest year is the interim year" do
+      agency = Agency.new(pai_year: 2025, pai_identifier: "SSA")
+      expect(agency.pai_compilation_url).to eq("https://www.govinfo.gov/content/pkg/PAI-2025-SSA-interim/xml/PAI-2025-SSA-interim.xml")
+    end
+
+    it "links 2007 post URLs to XML links" do
+      agency = Agency.new(pai_year: 2023, pai_identifier: "FDIC")
+      expect(agency.pai_compilation_url).to eq("https://www.govinfo.gov/content/pkg/PAI-2023-FDIC/xml/PAI-2023-FDIC.xml")
+    end
+
+    it "links pre-2007 URLs to text links since XML does not exist" do
+      agency = Agency.new(pai_year: 2005, pai_identifier: "ARCHITEC")
+      expect(agency.pai_compilation_url).to eq("https://www.govinfo.gov/content/pkg/PAI-2005-ARCHITEC/html/PAI-2005-ARCHITEC.html")
+    end
+
+  end
+
 end

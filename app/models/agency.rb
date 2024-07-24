@@ -91,6 +91,19 @@ class Agency < ApplicationModel
     slug
   end
 
+  def pai_compilation_url
+    if pai_identifier && pai_year
+      interim_year = Date.current.year.even? ? (Date.current.year + 1) : Date.current.year
+      pai_identifier_with_interim = "#{pai_identifier}#{"-interim" if pai_year == interim_year}"
+
+      if pai_year < 2007
+        "https://www.govinfo.gov/content/pkg/PAI-#{pai_year}-#{pai_identifier_with_interim}/html/PAI-2005-#{pai_identifier_with_interim}.html"
+      else
+        "https://www.govinfo.gov/content/pkg/PAI-#{pai_year}-#{pai_identifier_with_interim}/xml/PAI-#{pai_year}-#{pai_identifier_with_interim}.xml"
+      end
+    end
+  end
+
   def name_and_short_name
     if short_name.present?
       "#{name} (#{short_name})"
@@ -126,4 +139,5 @@ class Agency < ApplicationModel
       []
     end
   end
+
 end
