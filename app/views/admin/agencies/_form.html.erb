@@ -5,6 +5,9 @@
   <% if local_assigns[:display_slug_field] %>
     <%= f.input :slug,       :hint => "make sure to notify Critical Juncture if changed so the appropriate reprocessing occurs" %>
   <% end %>
+  <%= f.input :pai_identifier,
+        label: "PAI Identifier",
+        hint: "used to link SORN searches to privacy act compilations" %>
   <%= f.input :pseudonym,    :hint => "'See Also' name for FR Index" %>
   <%= f.input :parent_id, :as => :select, :collection => Agency.alphabetically, :label => "Parent Agency" %>
   <%= f.input :description %>

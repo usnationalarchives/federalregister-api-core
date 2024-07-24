@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_10_213420) do
+ActiveRecord::Schema.define(version: 2024_07_24_191113) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2024_07_10_213420) do
     t.text "cfr_citation", collation: "utf8_general_ci"
     t.string "display_name", collation: "utf8_general_ci"
     t.string "pseudonym", collation: "utf8_general_ci"
+    t.string "pai_identifier"
+    t.integer "pai_year"
     t.index ["name", "parent_id"], name: "index_agencies_on_name_and_parent_id"
     t.index ["parent_id", "name"], name: "index_agencies_on_parent_id_and_name"
   end
