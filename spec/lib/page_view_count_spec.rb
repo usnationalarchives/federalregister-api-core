@@ -129,6 +129,7 @@ describe PageViewCount do
   end
 
   context "#date_ranges calculates periods correctly" do
+    after(:each) { Timecop.return }
 
     it "calculates periods correctly" do
       Timecop.freeze(Time.local(2020, 10, 15, 10, 5, 0))
