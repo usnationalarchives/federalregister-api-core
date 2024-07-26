@@ -31,3 +31,12 @@ services:
   fr:
     web:
       base_url: https://dev-fr2.criticaljuncture.org
+
+
+####################################
+# DEVELOPMENT ONLY SETTINGS
+####################################
+
+development_flags:
+  # below are stubs - set these in development.local.yml if you need them
+  permitted_hosts: ""
