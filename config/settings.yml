@@ -68,6 +68,7 @@ elasticsearch:
 # feature flags should ideally be short lived switches before full rollout
 # long-lived switches should placed in the `app` settings block
 feature_flags:
+  autocomplete_spike: false
   # TODO: this is now the default and we should be able to remove all the old code
   use_carrierwave_images_in_api: true
   include_pre_1994_docs: true

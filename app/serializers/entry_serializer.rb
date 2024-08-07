@@ -20,9 +20,11 @@ class EntrySerializer < ApplicationSerializer
 
   attributes :id, :title, :abstract, :action, :dates, :document_number,  :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :start_page, :executive_order_number, :notice_type_id, :not_received_for_publication, :presidential_document_number, :proclamation_number, :toc_doc, :toc_subject, :volume
 
-  attribute :search_term_completion do |entry|
-    if entry.document_number
-      entry.title
+  if Settings.feature_flags.autocomplete_spike
+    attribute :search_term_completion do |entry|
+      if entry.document_number
+        entry.title
+      end
     end
   end
 

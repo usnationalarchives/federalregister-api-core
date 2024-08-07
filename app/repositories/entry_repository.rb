@@ -63,11 +63,13 @@ class EntryRepository < BaseRepository
         }
       }
     }
-    indexes :search_term_completion, {
-      type: "text",
-      analyzer: "autocomplete",
-      search_analyzer: "standard",
-    }
+    if Settings.feature_flags.autocomplete_spike
+      indexes :search_term_completion, {
+        type: "text",
+        analyzer: "autocomplete",
+        search_analyzer: "standard",
+      }
+    end
     indexes :abstract, {
       type:        'text',
       analyzer:    'custom_english',
