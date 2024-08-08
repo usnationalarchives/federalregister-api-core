@@ -5,7 +5,7 @@ class NoticeType < ActiveHash::Base
   self.data = [
     {
       :id                         => 1,
-      :name                       => "SORN",
+      :name                       => "System of Records Notice (SORN)",
       :identifier                 => "sorn",
     },
     {
