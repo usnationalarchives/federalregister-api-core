@@ -467,7 +467,7 @@ class EsEntrySearch < EsApplicationSearch
         if agency && agency.pai_compilation_url
           return {
             link_url: agency.pai_compilation_url,
-            text: "Searching for descriptions of systems of records as published in the Federal Register for #{agency.name}?",
+            text: "Searching for descriptions of systems of records as published in the Federal Register for the #{agency.name}?",
           }
         end
       end
