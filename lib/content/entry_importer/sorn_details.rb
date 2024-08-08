@@ -32,7 +32,7 @@ module Content::EntryImporter::SornDetails
   end
 
   def subject_node
-    @bulkdata_node.css('PREAMB SUBJECT')
+    @bulkdata_node && @bulkdata_node.css('PREAMB SUBJECT')
   end
   memoize :subject_node
 
