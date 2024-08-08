@@ -2,7 +2,7 @@ class EsEntrySearch < EsApplicationSearch
 
   def self.autocomplete(search_term)
     return [] unless search_term.present?
- 
+
     host = Rails.application.credentials.dig(:elasticsearch, :host) || Settings.elasticsearch.host
     url = "#{host}/#{EntryRepository.index_name}/_search"
     response = Faraday.get(url) do |req|
@@ -19,9 +19,9 @@ class EsEntrySearch < EsApplicationSearch
           }
         }
       }
-      req.body = payload.to_json 
+      req.body = payload.to_json
     end
-  
+
     JSON.parse(response.body).dig("hits","hits").map{|x| x.dig("_source","search_term_completion")}.uniq
   end
 
@@ -146,7 +146,7 @@ class EsEntrySearch < EsApplicationSearch
                 :es_attribute => :executive_order_number do |eo_numbers|
                   eo_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
-          
+
   define_filter :president,
                 :es_type => :with,
                 :es_attribute => :president_id,
@@ -467,14 +467,14 @@ class EsEntrySearch < EsApplicationSearch
         if agency && agency.pai_compilation_url
           return {
             link_url: agency.pai_compilation_url,
-            text: "Searching for descriptions of systems of records as published in the Federal Register for the #{agency.name}?",
+            text: "Interested in the interim (compiled monthly) Privacy Act Issuances for the #{agency.name}?",
           }
         end
       end
 
       {
         link_url: "https://www.govinfo.gov/app/collection/pai/interim",
-        text: "Searching for descriptions of systems of records as published in the Federal Register?",
+        text: "Interested in the interim (compiled monthly) Privacy Act Issuances?",
       }
     end
   end
@@ -586,12 +586,12 @@ class EsEntrySearch < EsApplicationSearch
     when 'newest', 'date'
       [
         {publication_date: {order: "desc"}},
-        {document_number: {order: "desc"}}, 
+        {document_number: {order: "desc"}},
       ]
     when 'oldest'
       [
         {publication_date: {order: "asc"}},
-        {document_number: {order: "asc"}}, 
+        {document_number: {order: "asc"}},
       ]
     when 'executive_order_number'
       painless_script = <<-PAINLESS
