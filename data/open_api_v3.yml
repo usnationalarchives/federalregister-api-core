@@ -242,7 +242,7 @@ paths:
       summary: Fetch counts of matching Federal Register Documents grouped by a facet
       parameters:
       - name: facet
-        description: What to group the returned documents by for counting
+        description: What to group the returned documents by for counting (using the "daily" grouping may require limiting your request to smaller date ranges)
         in: path
         required: true
         schema:
