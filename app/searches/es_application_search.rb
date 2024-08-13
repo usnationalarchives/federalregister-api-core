@@ -139,10 +139,6 @@ class EsApplicationSearch
         @errors[key] = "is not a valid field"
       end
     end.with_indifferent_access
-
-    if options[:facet] == 'daily' && options[:conditions].blank?
-      @errors[:facet] =  "More than 10,000 days of grouping were requested.  Please limit your request."
-    end
   end
 
   def conditions=(conditions)

@@ -59,7 +59,19 @@ class Api::V1::EntriesController < ApiController
       wants.json do
         if search_result
           if date_facets.include?(params[:facet])
-            results = search_result.results
+            begin
+              results = search_result.results
+              render_json_or_jsonp(results)
+            rescue Elasticsearch::Transport::Transport::Errors::ServiceUnavailable => e
+              if date_facets.include?("daily")
+                render_json_or_jsonp({
+                  :errors => {
+                    :facet => "More than 10,000 days of grouping were requested.  Please limit your request."},
+                  },
+                  :status => 400
+                )
+              end
+            end
           else
             results = search_result.each_with_object(Hash.new) do |facet, hsh|
               hsh[facet.identifier] = {
@@ -67,9 +79,8 @@ class Api::V1::EntriesController < ApiController
                 :name => facet.name
               }
             end
+            render_json_or_jsonp(results)
           end
-
-          render_json_or_jsonp(results)
         else
           render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
         end
