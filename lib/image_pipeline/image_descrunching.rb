@@ -13,7 +13,7 @@ module ImagePipeline::ImageDescrunching
     # SIGTERM after 10s, SIGKILL after an additional 5s
     timeout_cmd = "timeout -k 5 10"
 
-    line = Terrapin::CommandLine.new("#{timeout_cmd} dynamite", ":input_path :output_path :offset")
+    line = Terrapin::CommandLine.new("#{timeout_cmd} bin/pkware-exploder", "--input :input_path --output :output_path --byte-offset :offset")
     possible_offsets.each do |offset|
       begin
         Tempfile.create do |tempfile|
