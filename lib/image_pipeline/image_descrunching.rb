@@ -9,6 +9,7 @@ module ImagePipeline::ImageDescrunching
     output.include? 'GPO'
   end
 
+  EXPECTED_BYTE_OFFSETS = [18, 14]
   def descrunch!(input_path)
     # SIGTERM after 10s, SIGKILL after an additional 5s
     timeout_cmd = "timeout -k 5 10"
@@ -24,6 +25,9 @@ module ImagePipeline::ImageDescrunching
           )
           # Mutate original file with descrunched version
           IO.copy_stream(tempfile.path, input_path)
+        end
+        if EXPECTED_BYTE_OFFSETS.exclude?(offset)
+          Honeybadger.notify("Unexpected byte offset of #{offset} used to descrunch #{tempfile.path}")
         end
 
         break
@@ -43,7 +47,8 @@ module ImagePipeline::ImageDescrunching
   private
 
   def possible_offsets
-    (0..40).to_a
+    # We expect 18 to be the primary offset used, though 14 has occasionally been used
+    (EXPECTED_BYTE_OFFSETS + (0..40).to_a).uniq
   end
 
 end
