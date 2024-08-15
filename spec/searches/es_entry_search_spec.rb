@@ -4,8 +4,10 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
 
   before(:context) do
     # The ML setup should only be run in the context of this spec to avoid errors with the parallel_tests gem
-    OpenSearchMlModelRegistrar.perform
-    OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
+    if Settings.feature_flags.open_search_version_supports_vectors
+      OpenSearchMlModelRegistrar.perform
+      OpenSearchIngestPipelineRegistrar.create_chunking_ingest_pipeline!(OpenSearchMlModelRegistrar.model_id)
+    end
   end
 
   def build_entry_double(hsh)
@@ -501,7 +503,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
 
     end
 
-    context "hybrid searches" do
+    context "hybrid searches", no_ci: !Settings.feature_flags.open_search_version_supports_vectors do
 
       it "if a non-existent pipeline is specified on bulk index, an error is thrown"
 
