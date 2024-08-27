@@ -27,7 +27,7 @@ feature_flags:
 
 prince:
   # expected to be set by helm/deployment
-  host: http://prince-xml-14.ofr.svc.cluster.local
+  host: http://prince-xml-15.ofr.svc.cluster.local
   port: 3000
 
 redis:
