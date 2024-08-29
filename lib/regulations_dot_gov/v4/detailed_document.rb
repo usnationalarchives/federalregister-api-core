@@ -5,4 +5,8 @@ class RegulationsDotGov::V4::DetailedDocument
     @raw_attributes = raw_attributes
   end
 
+  def allow_late_comments
+    raw_attribute_value('allowLateComments')
+  end
+
 end

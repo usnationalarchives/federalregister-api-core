@@ -115,6 +115,11 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         end
 
       end
+
+      EntryRegulationsDotGovAllowLateCommentImporter.perform_async(
+        api_doc.regulations_dot_gov_document_id,
+        api_doc.last_modified_datetime.to_s(:iso)
+      )
     end
   end
 

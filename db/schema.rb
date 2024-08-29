@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_24_191113) do
+ActiveRecord::Schema.define(version: 2024_08_29_213154) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -604,8 +604,10 @@ ActiveRecord::Schema.define(version: 2024_07_24_191113) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "regulations_dot_gov_open_for_comment"
+    t.datetime "allow_late_comments_updated_at"
     t.index ["docket_id"], name: "index_regs_dot_gov_documents_on_docket_id"
     t.index ["federal_register_document_number", "deleted_at"], name: "[:document_number_deleted_at]"
+    t.index ["regulations_dot_gov_document_id"], name: "index_regs_dot_gov_documents_on_regulations_dot_gov_document_id"
   end
 
   create_table "regs_dot_gov_supporting_documents", id: :string, charset: "latin1", force: :cascade do |t|

@@ -674,7 +674,14 @@ class Entry < ApplicationModel
   end
 
   def calculated_comment_url
-    comment_url_override.present? ? comment_url_override : comment_url
+    if comment_url_override.present?
+      comment_url_override
+    elsif comment_url?
+      comment_url
+    elsif regs_dot_gov_documents_allowing_late_comment.present? 
+      # NOTE: We need to take into account this check because setting of the entry `comment_url` and `allow_late_comment` attributes are done asynchronously since they are retrieved from separate endpoints
+      regs_dot_gov_documents_allowing_late_comment.first.comment_url
+    end
   end
 
   def documents_path
@@ -703,6 +710,10 @@ class Entry < ApplicationModel
     if entry_change.nil? && new_or_changed?
       build_entry_change
     end
+  end
+
+  def regs_dot_gov_documents_allowing_late_comment
+    @regs_dot_gov_documents_allowing_late_comment ||= regs_dot_gov_documents.where(allow_late_comments: true)
   end
 
   def new_or_changed?

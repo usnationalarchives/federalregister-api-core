@@ -9,11 +9,13 @@ class RegulationsDotGov::V4::Client
   end
 
   def find_detailed_document(regulations_dot_gov_id)
-    response = connection.get(
-      "documents/#{regulations_dot_gov_id}",
-      'api_key'          => api_key
-    )
-    data = JSON.parse(response.body).fetch('data')
+    data = request_with_retry do
+      connection.get(
+        "documents/#{regulations_dot_gov_id}",
+        'api_key'          => api_key
+      )
+    end.fetch('data')
+
     RegulationsDotGov::V4::DetailedDocument.new(data)
   end
 
