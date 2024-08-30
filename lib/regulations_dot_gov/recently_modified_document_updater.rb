@@ -1,6 +1,7 @@
 class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   extend Memoist
   include CacheUtils
+  include InvalidDocumentNumberIdentifier
   
   class MissingDocumentNumber < StandardError; end
   class NoDocumentFound < StandardError; end
@@ -150,9 +151,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   def updated_documents
     regulations_dot_gov_client.
       find_documents_updated_within(days, document_type_identifiers.join(",")).
-      reject{|doc| DIGITS_ONLY_REGEX.match?(doc.federal_register_document_number) }. #filter out document numbers like like "88" or "7486"
-      reject{|doc| /^(90|91|92|93|Vol)/.match?(doc.federal_register_document_number) }.
-      reject{|doc| /^[^0-9][^0-9]/.match?(doc.federal_register_document_number) } #reject document numbers if the first two characters are both not numbers (eg "CDC-2024-0015"), but ensure we still allow for valid numbers like "C1-2010-31877" or "E9-5927"
+      reject{|doc| invalid_document_number?(doc.federal_register_document_number) }
   end
   memoize :updated_documents
 
