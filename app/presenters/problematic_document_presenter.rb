@@ -111,6 +111,18 @@ class ProblematicDocumentPresenter
     end
   end
 
+  REQUEST_FOR_COMMENT_REGEX = /request for comment/i
+  # Direct final rule; request for comments. (eg 2024-06817)
+  def rules_with_requests_for_comment
+    rules.each_with_object({}) do |doc, hsh|
+      action_text = extract_action(doc, date)
+
+      if action_text && REQUEST_FOR_COMMENT_REGEX.match?(action_text)
+        hsh[doc.document_number] = doc.xml_based_dates
+      end
+    end
+  end
+
   def proposed_rules_with_date_text
     proposed_rules.each_with_object({}) do |doc, hsh|
 
@@ -206,10 +218,21 @@ class ProblematicDocumentPresenter
       end
   end
 
-  def extract_dates(doc, date)
+  def extract_action(doc, date)
     mods_node = Content::EntryImporter::ModsFile.new(date, false).
       find_entry_node_by_document_number(doc.document_number)
-    date_text = mods_node.css('dates').first.try(:content)
+    mods_node.css('action').first.try(:content)
+  end
+
+  def extract_dates(doc, date)
+    if doc.xml_based_dates
+      date_text = doc.xml_based_dates
+    else
+      mods_node = Content::EntryImporter::ModsFile.new(date, false).
+        find_entry_node_by_document_number(doc.document_number)
+      date_text = mods_node.css('dates').first.try(:content)
+    end
+
     extracted_dates = PotentialDateExtractor.extract(date_text)
 
     return date_text, extracted_dates
