@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_29_213154) do
+ActiveRecord::Schema.define(version: 2024_09_05_185415) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 2024_08_29_213154) do
     t.string "sorn_system_name"
     t.string "sorn_system_number"
     t.integer "notice_type_id"
+    t.text "xml_based_dates"
     t.index ["citation"], name: "index_entries_on_citation"
     t.index ["citing_entries_count"], name: "index_entries_on_citing_entries_count"
     t.index ["correction_of_id"], name: "index_entries_on_correction_of"

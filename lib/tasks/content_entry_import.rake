@@ -47,7 +47,7 @@ namespace :content do
 
       desc "Extract Basic data"
       task :basic_data => :environment do
-        entry_importer(:volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id)
+        entry_importer(:volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id, :xml_based_dates)
       end
 
       desc "Extract full text"

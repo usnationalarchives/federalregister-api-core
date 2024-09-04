@@ -1,6 +1,6 @@
 module Content::EntryImporter::BasicData
   extend Content::EntryImporter::Utils
-  provides :volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id
+  provides :volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id, :xml_based_dates
 
   def volume
     mods_file.volume
@@ -65,6 +65,39 @@ module Content::EntryImporter::BasicData
     simple_node_value('dates')
   end
 
+  def xml_based_dates
+    log_unexpected_date_structure
+    if bulkdata_node
+      node = (
+        bulkdata_node.css('DATES').first || bulkdata_node.css('EFFDATE').first
+      ).dup
+
+      return unless node
+
+      hd_node = node.css('HD')
+      if hd_node && /^DATES/.match?(hd_node.text.strip)
+        node.css('HD').remove
+      end
+
+      node.
+        elements.
+        map do |el|
+          el.content = el.text.gsub("\n","").lstrip.rstrip.squeeze(" ")
+          if el.name == "P"
+            el.content = "#{el.content}\n\n"
+          else
+            el.content
+          end
+
+          el
+        end.
+        map(&:text).
+        join("").
+        lstrip.
+        rstrip
+    end
+  end
+
   def action
     simple_node_value('action')
   end
@@ -86,6 +119,13 @@ module Content::EntryImporter::BasicData
   end
 
   private
+
+  def log_unexpected_date_structure
+    if bulkdata_node && bulkdata_node.css("EFFDATE DATES").present?
+      puts "EFFDATE node comes before DATE node"
+      Honeybadger.notify("#{document_number}: EFFDATE node comes before DATE node")
+    end
+  end
 
   def simple_node_value(css_selector)
     mods_node.css(css_selector).first.try(:content)
