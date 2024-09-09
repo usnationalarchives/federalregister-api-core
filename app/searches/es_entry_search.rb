@@ -8,7 +8,7 @@ class EsEntrySearch < EsApplicationSearch
     response = Faraday.get(url) do |req|
       req.headers['Content-Type'] = 'application/json' # Set the content type if necessary
       payload = {
-        "_source": ["search_term_completion"],
+        "_source": ["document_number", "search_term_completion"],
         "size": 10,
         "query": {
           "match": {
@@ -22,7 +22,15 @@ class EsEntrySearch < EsApplicationSearch
       req.body = payload.to_json
     end
 
-    JSON.parse(response.body).dig("hits","hits").map{|x| x.dig("_source","search_term_completion")}.uniq
+    JSON.parse(response.body).
+      dig("hits","hits").
+      map do |attrs|
+        puts attrs
+        {
+          document_number: attrs["_source"]["document_number"],
+          search_term_completion: attrs["_source"]["search_term_completion"],
+        }
+      end
   end
 
   class CFR < Struct.new(:title, :part)
