@@ -1,0 +1,13 @@
+--- /home/app/data/efs/document_issues/xml/2024/08/2024-08-14.xml	2024-09-10 12:35:07.789990774 -0400
++++ tmp/2024-08-14_modified_tmp.xml	2024-09-10 12:37:27.191811628 -0400
+@@ -6039,8 +6039,8 @@
+                 <P>A public meeting on September 17, 2024 will inform BIFAD recommendations to shape the next steps in USAID's strategic thinking and policy prioritization towards the objective of achieving healthy diets for all. This meeting will address evidence and evidence gaps, areas for additional research, and prioritized approaches and actions for USAID, centered around demand-side interventions and approaches to improve the processing, storage, distribution, sale, purchase, and consumption of safe and nutritious food.</P>
+                 <P>
+                     Also relevant is the interplay between businesses and consumers, including building strong relationships of trust, positive business behaviors, and informed consumer purchasing behaviors and preferences. The geographic focus will be on low- and middle-income contexts in Feed the Future Target Countries. The meeting will include a presentation of key findings from a review prepared for BIFAD and an expert roundtable event, to be posted publicly on September 3, 2024 at 
+-                    <E T="03">https://www.usaid.gov/bifa</E>
+-                    d prior to the public meeting.
++                    <E T="03">https://www.usaid.gov/bifad</E>
++                     prior to the public meeting.
+                 </P>
+                 <P>Key questions to be addressed at the meeting include:</P>
+                 <P>1. How can USAID work better with communities, national governments and private sector stakeholders to enhance consumer demand for safe and nutritious foods in ways that improve the diets of whole households, including women and children?</P>
