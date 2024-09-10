@@ -398,15 +398,16 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
     context "autocomplete" do
       it "retrieves a basic autocomplete string and exludes one appropriately" do
         pending unless Settings.feature_flags.autocomplete_spike
-        entry_1 = build_entry_double(id: 1, document_number: "8888-8888", search_term_completion: 'Fish are an aquatic species', )
-        entry_2 = build_entry_double(id: 2, document_number: "9999-9999", search_term_completion: 'Whales are an aquatic species', )
+        entry_1 = build_entry_double(id: 1, document_number: "8888-8888", search_term_completion: 'Fish are an aquatic species', entry_type: 'NOTICE')
+        entry_2 = build_entry_double(id: 2, document_number: "9999-9999", search_term_completion: 'Whales are an aquatic species', entry_type: 'PRORULE')
         Entry.bulk_index([entry_1, entry_2], refresh: true)
 
         result = EsEntrySearch.autocomplete("fish")
         expect(result).to eq([{
           document_number: "8888-8888",
-          search_term_completion: "Fish are an aquatic species"
-          }])
+          entry_type: "NOTICE",
+          search_term_completion: "<match>Fish</match> are an aquatic species",
+        }])
       end
     end
 

@@ -8,16 +8,30 @@ class EsEntrySearch < EsApplicationSearch
     response = Faraday.get(url) do |req|
       req.headers['Content-Type'] = 'application/json' # Set the content type if necessary
       payload = {
-        "_source": ["document_number", "search_term_completion"],
+        "_source": ["document_number", "search_term_completion", "entry_type"],
         "size": 10,
         "query": {
-          "match": {
+          "match_phrase": {
             "search_term_completion": {
               "query": search_term,
               "analyzer": "standard"
             }
           }
-        }
+        },
+        "sort": [
+          {
+            "publication_date": {
+              "order": "desc"
+            }
+          }
+        ],
+        "highlight": {
+          "fields": {
+            "search_term_completion": {}
+          },
+          "pre_tags": ["<match>"],
+          "post_tags": ["</match>"]
+        },
       }
       req.body = payload.to_json
     end
@@ -25,10 +39,10 @@ class EsEntrySearch < EsApplicationSearch
     JSON.parse(response.body).
       dig("hits","hits").
       map do |attrs|
-        puts attrs
         {
           document_number: attrs["_source"]["document_number"],
-          search_term_completion: attrs["_source"]["search_term_completion"],
+          search_term_completion: attrs["highlight"]["search_term_completion"].first,
+          entry_type: attrs["_source"]["entry_type"],
         }
       end
   end
