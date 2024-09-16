@@ -115,10 +115,10 @@ class IssueReportMonthlyPresenter
       "Presidential Documents",
       "Rules",
       "Proposed Rules",
-      "Notices",
+      "Notices*",
       "Unknown",
-      "Corrections*",
-      "FR Documents†",
+      "Corrections†",
+      "FR Documents‡",
     ]
 
     sql_results([
@@ -198,8 +198,9 @@ class IssueReportMonthlyPresenter
 
   def document_type_footnotes
     [
-      "* Beginning Jan. 1, 2009, Correction documents were published within the document category of the document being corrected.",
-      "† The first Federal Register was issued on March 14, 1936",
+      '* Before Jan. 1, 2000, notices were categorized as "Other" in prior statistics reporting, and as such are classifed as "Uknown" in this table.',
+      "† Beginning Jan. 1, 2009, Correction documents were published within the document category of the document being corrected.",
+      "‡ The first Federal Register was issued on March 14, 1936"
     ]
   end
 
