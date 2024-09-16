@@ -117,8 +117,8 @@ class IssueReportMonthlyPresenter
       "Proposed Rules",
       "Notices",
       "Unknown",
-      "Corrections",
-      "FR Documents*",
+      "Corrections*",
+      "FR Documents†",
     ]
 
     sql_results([
@@ -198,7 +198,8 @@ class IssueReportMonthlyPresenter
 
   def document_type_footnotes
     [
-      "* The first Federal Register was issued on March 14, 1936",
+      "* Beginning Jan. 1, 2009, Correction documents were published within the document category of the document being corrected.",
+      "† The first Federal Register was issued on March 14, 1936",
     ]
   end
 
