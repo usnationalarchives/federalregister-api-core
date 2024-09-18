@@ -109,10 +109,11 @@ class Api::V1::EntriesController < ApiController
 
   def search_details
     search = entry_search(deserialized_params)
+    omit_spelling_suggestions = ActiveRecord::Type::Boolean.new.cast(params[:omit_spelling_suggestions])
 
     if search.valid?
       render_json_or_jsonp(
-        :suggestions => search_suggestions(search),
+        :suggestions => search_suggestions(search, omit_spelling_suggestions),
         :filters => search_filters(search)
       )
     else
@@ -241,18 +242,19 @@ class Api::V1::EntriesController < ApiController
     api_v1_documents_url(options.permit!.except(:controller, :action))
   end
 
-  def search_suggestions(search)
+  def search_suggestions(search, omit_spelling_suggestions)
     suggestions = {}
 
     if search.explanatory_suggestion_attributes
       suggestions[:explanatory] = search.explanatory_suggestion_attributes
     end
 
-    if search.suggestion && search.suggestion.count > 0
+    suggestion = search.suggestion(omit_spelling_suggestions: omit_spelling_suggestions)
+    if suggestion && suggestion.count > 0
       suggestions[:search_refinement] = {
-        :count => search.suggestion.count,
-        :search_conditions => search.suggestion.conditions,
-        :search_summary => view_context.search_suggestion_title(search.suggestion, search, :semantic => true)
+        :count => suggestion.count,
+        :search_conditions => suggestion.conditions,
+        :search_summary => view_context.search_suggestion_title(suggestion, search, :semantic => true),
       }
     end
 

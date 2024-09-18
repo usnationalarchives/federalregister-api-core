@@ -501,7 +501,7 @@ class EsEntrySearch < EsApplicationSearch
     end
   end
 
-  def suggestion
+  def suggestion(omit_spelling_suggestions: false)
     if !defined?(@suggestion)
       @suggestion = [
         EntrySearch::Suggestor::Agency,
@@ -511,7 +511,10 @@ class EsEntrySearch < EsApplicationSearch
         EntrySearch::Suggestor::RegulationIdNumber,
         EntrySearch::Suggestor::Sorn,
         EntrySearch::Suggestor::Spelling,
-      ].reduce(self) {|suggestion, suggestor| suggestor.new(suggestion).suggestion || suggestion }
+      ].reject do |suggestor_klass|
+        omit_spelling_suggestions && (suggestor_klass == EntrySearch::Suggestor::Spelling)
+      end.
+      reduce(self) {|suggestion, suggestor| suggestor.new(suggestion).suggestion || suggestion }
       @suggestion = nil if @suggestion == self
     end
 
