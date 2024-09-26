@@ -3,7 +3,9 @@ class EntrySearch::Suggestor::EntryType < EntrySearch::Suggestor::Base
   TYPE_NAMES = {
     'rule' => 'RULE',
     'proposed rule' => 'PRORULE',
+    'prorule' => 'PRORULE',
     'notice' => 'NOTICE',
+    'presdoc' => 'PRESDOCU',
     'presidential document' => 'PRESDOCU',
     'president' => 'PRESDOCU',
     'presidential' => 'PRESDOCU',
