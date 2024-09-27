@@ -256,6 +256,14 @@ class Api::V1::EntriesController < ApiController
         :search_conditions => suggestion.conditions,
         :search_summary => view_context.search_suggestion_title(suggestion, search, :semantic => true),
       }
+
+      agency_slugs = suggestion.conditions["agency"]
+      if agency_slugs.present?
+        suggestions[:agency] = {
+          agency_slug: agency_slugs.first,
+          agency_name: Agency.find_by_slug(agency_slugs.first).name
+        }
+      end
     end
 
     public_inspection_search = PublicInspectionDocument.search_klass.new_if_possible(
