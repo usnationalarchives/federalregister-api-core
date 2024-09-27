@@ -257,13 +257,21 @@ class Api::V1::EntriesController < ApiController
         :search_summary => view_context.search_suggestion_title(suggestion, search, :semantic => true),
       }
 
-      agency_slugs = suggestion.conditions["agency"]
+      agency_slugs = suggestion.conditions[:agencies]
       if agency_slugs.present?
         suggestions[:agency] = {
           agency_slug: agency_slugs.first,
           agency_name: Agency.find_by_slug(agency_slugs.first).name
         }
       end
+
+      date = suggestion.conditions.dig(:publication_date, :is)
+      if date
+        suggestions[:issue] = {
+          date: Date.strptime(date, '%m/%d/%Y').to_s(:iso)
+        }
+      end
+
     end
 
     public_inspection_search = PublicInspectionDocument.search_klass.new_if_possible(
