@@ -499,6 +499,14 @@ class EsEntrySearch < EsApplicationSearch
         text: "Interested in the interim (compiled monthly) Privacy Act Issuances?",
       }
     end
+
+    if pil_search_terms?
+      {
+        link_url: "/public-inspection/current",
+        text: "Current Public Inspection Issue",
+        citation: PublicInspectionIssue.current.publication_date.to_s(:default)
+      }
+    end
   end
 
   def suggestion(omit_spelling_suggestions: false)
@@ -589,6 +597,10 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   private
+
+  def pil_search_terms?
+    term.present? && term.match?(/(pil)|(public inspection)/i)
+  end
 
   def sorn_filter_applied?
     (notice_type || []).include? "sorn"
