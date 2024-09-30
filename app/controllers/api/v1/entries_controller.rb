@@ -259,9 +259,11 @@ class Api::V1::EntriesController < ApiController
 
       agency_slugs = suggestion.conditions[:agencies]
       if agency_slugs.present?
+        agency = Agency.find_by_slug(agency_slugs.first)
         suggestions[:agency] = {
-          agency_slug: agency_slugs.first,
-          agency_name: Agency.find_by_slug(agency_slugs.first).name
+          agency_short_name: agency.short_name,
+          agency_slug:       agency.slug,
+          agency_name:       agency.name,
         }
       end
 
