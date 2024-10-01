@@ -411,6 +411,19 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
       end
     end
 
+    context "citation pre-processing" do
+
+      it "if a simple citation is detected via regex, that portion of the search is treated as a quotable string" do
+        entry_1 = build_entry_double({full_text: '10 CFR 1.1', id: 1})
+        entry_2 = build_entry_double({full_text: 'CFR arbitrary 10 arbitrary 1.1', id: 2})
+        Entry.bulk_index([entry_1, entry_2], refresh: true)
+        search = EsEntrySearch.new(conditions: {term: "10 CFR 1.1"})
+
+        expect(search.results.es_ids).to match_array [1]
+      end
+
+    end
+
     context "full object characteristics" do
 
       it "does not retrieve nil document numbers by default" do

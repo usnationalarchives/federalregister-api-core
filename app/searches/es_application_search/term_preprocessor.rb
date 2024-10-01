@@ -10,6 +10,7 @@ module EsApplicationSearch::TermPreprocessor
     processed_term = replace_ampersand_with_plus(processed_term)
     processed_term = replace_exclamation_points_with_minus(processed_term)
     processed_term = reduce_phrase_slop_count_by_one(processed_term)
+    processed_term = quote_citations_with_spaces(processed_term)
     processed_term
   end
 
@@ -107,6 +108,24 @@ module EsApplicationSearch::TermPreprocessor
         (?:[^"]*"[^"]*")*[^"]*"[^"]*$     (?#   an odd number of quotes afterwards )
       )
     /x, '\1 \2')
+  end
+
+  def self.quote_citations_with_spaces(term)
+    processed_term = term
+    citation_regexes = [
+      Citation::CITATION_TYPES.fetch('CFR'),
+      Citation::CITATION_TYPES.fetch('FR'),
+    ]
+
+    citation_regexes.each do |regex|
+      processed_term = processed_term.gsub(regex) do |match|
+        # Escape existing quotes in the matched term
+        escaped_match = match.gsub('"', '\"')
+        "\"#{escaped_match}\""
+      end
+    end
+
+    processed_term
   end
 
 end
