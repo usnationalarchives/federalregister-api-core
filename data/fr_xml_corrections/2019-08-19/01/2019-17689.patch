@@ -1,0 +1,12 @@
+--- /home/app/data/efs/document_issues/xml/2019/08/2019-08-19.xml	2024-10-02 12:14:06.247816757 -0400
++++ tmp/2019-08-19_modified_tmp.xml	2024-10-02 12:19:22.279560314 -0400
+@@ -15704,8 +15704,7 @@
+         </NOTICE>
+         <NOTICE>
+             <PREAMB>
+-                <AGENCY TYPE="S"/>
+-                <SUBJECT>DEPARTMENT OF HEALTH AND HUMAN SERVICES</SUBJECT>
++                <AGENCY TYPE="S">DEPARTMENT OF HEALTH AND HUMAN SERVICES</AGENCY>
+                 <SUBJECT>Meeting of the Tick-Borne Disease Working Group</SUBJECT>
+                 <AGY>
+                     <HD SOURCE="HED">AGENCY:</HD>
