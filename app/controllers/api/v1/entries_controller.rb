@@ -30,7 +30,17 @@ class Api::V1::EntriesController < ApiController
         find_options = EntrySerializer.find_options_for(fields)
 
         search = entry_search(
-          deserialized_params.merge(order: 'newest', per_page: 200),
+          deserialized_params.
+            merge(order: 'newest', per_page: 200).
+            tap do |d_params|
+              if d_params[:conditions].blank?
+                d_params[:conditions] = {}
+              end
+              # Intentionally limit RSS results to last 30 days
+              d_params[:conditions][:publication_date] = {
+                gte: (Date.current - 30.days).to_s(:iso)
+              }
+            end,
           fields
         )
         documents = search.results(find_options)
