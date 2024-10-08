@@ -484,7 +484,11 @@ class EsApplicationSearch
   attr_reader :aggregation_field, :date_histogram_interval, :search_type
 
   def default_search_type
-    SearchType::LEXICAL
+  end
+
+  MULTI_WORD_REGEX = /^\s*\w+\s+\w+.*$/
+  def multiple_terms?
+    MULTI_WORD_REGEX.match?(es_term)
   end
 
   def neural_search_appropriate?
@@ -649,7 +653,7 @@ class EsApplicationSearch
         q[:query][:function_score][:query][:bool][:should] = [
           simple_query_string
         ].tap do |should_options|
-          if search_type.includes_multi_match_query
+          if search_type.includes_multi_match_query && multiple_terms? # Use a simple query string for single-word searches
             should_options << multi_match_query
           end
         end

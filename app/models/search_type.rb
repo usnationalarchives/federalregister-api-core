@@ -6,7 +6,7 @@ class SearchType < ActiveHash::Base
     {
       id: 1,
       identifier: "lexical",
-      name: "Lexical (Current)",
+      name: "Lexical",
       es_scoring_functions: [
         {
           "gauss": {
@@ -41,8 +41,28 @@ class SearchType < ActiveHash::Base
           "gauss": {
               "publication_date": {
                   "origin": "now",
+                  "scale":  "365d",
+                  "offset": "30d",
+                  "decay":  "0.5" #0.5 is the default
+              }
+          },
+        }
+      ],
+      supports_explain: true,
+      supports_pagination: true,
+    },
+    {
+      id: 6,
+      identifier: "lexical_optimized_with_expansive_decay",
+      includes_multi_match_query: true,
+      name: "Lexical Optimized (with larger decay)",
+      es_scoring_functions: [
+        {
+          "gauss": {
+              "publication_date": {
+                  "origin": "now",
                   "scale":  "1095d",
-                  "offset": "365d",
+                  "offset": "90d",
                   "decay":  "0.3" #0.5 is the default
               }
           },
