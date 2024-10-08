@@ -150,7 +150,7 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
   private
 
   def default_search_type
-    SearchType::LEXICAL
+    SearchType::LEXICAL_OPTIMIZED
   end
 
   def es_sort_order

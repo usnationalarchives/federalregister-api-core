@@ -484,6 +484,7 @@ class EsApplicationSearch
   attr_reader :aggregation_field, :date_histogram_interval, :search_type
 
   def default_search_type
+    SearchType::LEXICAL_OPTIMIZED_WITH_DECAY
   end
 
   MULTI_WORD_REGEX = /^\s*\w+\s+\w+.*$/

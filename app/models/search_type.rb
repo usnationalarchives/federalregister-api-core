@@ -62,7 +62,7 @@ class SearchType < ActiveHash::Base
               "publication_date": {
                   "origin": "now",
                   "scale":  "1095d",
-                  "offset": "90d",
+                  "offset": "60d",
                   "decay":  "0.3" #0.5 is the default
               }
           },

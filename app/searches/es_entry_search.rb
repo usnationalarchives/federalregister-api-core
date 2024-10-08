@@ -574,7 +574,7 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   def default_search_type
-    SearchType::LEXICAL
+    SearchType::LEXICAL_OPTIMIZED_WITH_EXPANSIVE_DECAY
   end
 
   def index_has_neural_querying_enabled?

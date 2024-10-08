@@ -317,7 +317,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
               :functions=>
                [{:gauss=>
                   {:publication_date=>
-                    {:origin=>"now", :scale=>"365d", :offset=>"30d", :decay=>"0.5"}}}],
+                    {:origin=>"now", :scale=>"1095d", :offset=>"60d", :decay=>"0.3"}}}],
               :boost_mode=>"multiply"}},
               :sort => [
                 {:_score=>{:order=>"desc"}},
@@ -344,7 +344,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
               :functions=>
                [{:gauss=>
                   {:publication_date=>
-                    {:decay=>"0.5", :offset=>"30d", :origin=>"now", :scale=>"365d"}}}],
+                    {:decay=>"0.3", :offset=>"60d", :origin=>"now", :scale=>"1095d"}}}],
               :query=>
                {:bool=>
                  {:filter=>
@@ -371,7 +371,7 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
               :functions=>
                [{:gauss=>
                   {:publication_date=>
-                    {:decay=>"0.5", :offset=>"30d", :origin=>"now", :scale=>"365d"}}}],
+                    {:decay=>"0.3", :offset=>"60d", :origin=>"now", :scale=>"1095d"}}}],
               :query=>
                {:bool=>
                  {:filter=>

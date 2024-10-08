@@ -523,6 +523,7 @@ class SearchEvaluationPresenter
       SearchType::LEXICAL,
       SearchType::LEXICAL_OPTIMIZED,
       SearchType::LEXICAL_OPTIMIZED_WITH_DECAY,
+      SearchType::LEXICAL_OPTIMIZED_WITH_EXPANDED_DECAY,
     ].tap do |options|
       if Settings.feature_flags.open_search_version_supports_vectors
         options << SearchType::HYBRID
