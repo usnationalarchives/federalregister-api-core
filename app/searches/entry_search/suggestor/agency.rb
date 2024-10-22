@@ -31,8 +31,8 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
   end
 
   def agency_regexes
-    # NOTE: Building up this regex at every run is slow and seems to add > 200-600ms+ to each omni-search request.  Using ActiveSupport::Cache::RedisCacheStore may be better longer-term, but benchmarking suggests the in-memory cache will be faster for the initial rollout.
-    MEMORY_STORE.fetch('agency_regexes') do
+    # NOTE: Building up this regex at every run is slow and seems to add > 200-600ms+ to each omni-search request.
+    MEMORY_STORE.fetch('agency_regexes', expires_in: 1.hour) do
       Agency.
         find_as_arrays(
           Agency.active.select("id, slug, name, short_name, display_name").to_sql
