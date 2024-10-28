@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_05_185415) do
+ActiveRecord::Schema.define(version: 2024_10_28_221337) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(version: 2024_09_05_185415) do
     t.string "event_type", collation: "utf8_general_ci"
     t.boolean "delta", default: true, null: false
     t.index ["delta"], name: "index_events_on_delta"
+    t.index ["entry_id"], name: "index_events_on_entry_id"
     t.index ["event_type", "entry_id", "date"], name: "index_events_on_event_type_and_entry_id_and_date"
     t.index ["event_type", "entry_id", "place_id"], name: "index_events_on_event_type_and_entry_id_and_place_id"
     t.index ["event_type", "place_id", "entry_id"], name: "index_events_on_event_type_and_place_id_and_entry_id"
