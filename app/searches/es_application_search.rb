@@ -335,6 +335,9 @@ class EsApplicationSearch
       es_search_invocation = repository.search(search_options)
     end
 
+    # Record time spent in ES
+    RequestStore.store[:es_duration] = es_search_invocation.raw_response['took']
+
     results = es_search_invocation.results
 
     ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, results, page, per_page)

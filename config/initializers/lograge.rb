@@ -39,6 +39,10 @@ Rails.application.configure do
     end
 
     custom_options[:memory_usage] = RequestStore[:memory_usage]
+    es_duration = RequestStore[:es_duration]
+    if es_duration
+      custom_options[:es_duration] = es_duration
+    end
     custom_options[:queue_time] = RequestStore[:request_queue_tracking]&.time_in_queue
 
     custom_options
