@@ -39,7 +39,7 @@ class Content::PublicInspectionImporter::CacheManager
     # purge issue html cache
     purge_cache "esi/public_inspection_issues/#{issue.publication_date.strftime('%Y')}/#{issue.publication_date.strftime('%m')}"
     purge_cache 'esi/layouts/navigation/public-inspection'
-    purge_cache 'esi/issues/summary'
+    purge_cache('/', operator: "==") # Make sure the issue summary is purged since no longer served via ESI
     
     purge_cache public_inspection_documents_by_date_path(issue.publication_date)
     purge_cache public_inspection_documents_path
