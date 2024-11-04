@@ -1,6 +1,6 @@
 module CacheUtils
-  def purge_cache(regexp)
-    Client.instance.purge(regexp)
+  def purge_cache(regexp, operator: "~")
+    Client.instance.purge(regexp, operator: operator)
   end
   module_function :purge_cache
 
@@ -8,13 +8,13 @@ module CacheUtils
     include Singleton
 
     MAX_RETRIES = 1
-    def purge(regexp)
-      Rails.logger.info("Expiring from varnish: '#{regexp}'...")
+    def purge(regexp, operator: "~")
+      Rails.logger.info("Expiring from varnish: #{operator} '#{regexp}'...")
       retries = 0
       begin
-        client.send(:cmd, "ban req.url ~ #{regexp}")
+        client.send(:cmd, "ban req.url #{operator} #{regexp}")
       rescue SocketError => e
-        Rails.logger.warn("Couldn't connect to varnish to expire '#{regexp}'")
+        Rails.logger.warn("Couldn't connect to varnish to expire '#{operator} #{regexp}'")
         Honeybadger.notify(e)
       rescue Varnish::BrokenConnection, Errno::EPIPE, Errno::ETIMEDOUT, Timeout::Error
         if retries < MAX_RETRIES
