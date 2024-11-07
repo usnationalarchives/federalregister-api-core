@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_28_221337) do
+ActiveRecord::Schema.define(version: 2024_11_07_183831) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 2024_10_28_221337) do
     t.index ["publication_date"], name: "index_entries_on_agency_id_and_publication_date"
     t.index ["raw_text_updated_at"], name: "index_entries_on_raw_text_updated_at"
     t.index ["significant"], name: "index_entries_on_significant"
+    t.index ["volume", "end_page", "start_page"], name: "index_entries_on_volume_and_end_page_and_start_page"
     t.index ["volume", "start_page", "id"], name: "index_entries_on_volume_and_start_page_and_id"
   end
 
