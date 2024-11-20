@@ -9,7 +9,7 @@ class EntryRegulationsDotGovImporter
 
   def self.resync_regulations_dot_gov_document!(api_doc, existing_doc)
     base_attributes = {
-      # allow_late_comments:                     TODO: When reg.gov changes their API, make sure we set this attribute
+      allow_late_comments:                       api_doc.allow_late_comments,
       comment_end_date:                          api_doc.comment_due_date,
       comment_start_date:                        api_doc.comment_start_date,
       deleted_at:                                nil,
