@@ -50,12 +50,6 @@ class EntryRegulationsDotGovImporter
           DocketImporter.new.perform(docket.id) # immediately download docket metadata if new docket
         end
       end
-
-      # Since this is a new RegsDotGovDocument, assume we need to update allowLateComments
-      EntryRegulationsDotGovAllowLateCommentImporter.perform_async(
-        api_doc.regulations_dot_gov_document_id,
-        Date.new(2100,1,1).to_s(:iso)
-      )
     end
   end
 
