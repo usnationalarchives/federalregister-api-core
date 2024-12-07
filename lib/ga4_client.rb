@@ -31,8 +31,12 @@ class Ga4Client
   end
 
   def credentials
+    google_credentials = Rails.application.credentials.dig(:google, :ga4_credentials)
+    raise "Google GA4 credentials not found in Rails credentials" unless google_credentials
+
+
     Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open('config/google_analytics_4_credentials.json'),
+      json_key_io: StringIO.new(google_credentials.to_json),
       scope: 'https://www.googleapis.com/auth/analytics.readonly'
     )
   end
