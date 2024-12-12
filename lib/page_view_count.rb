@@ -76,7 +76,7 @@ class PageViewCount
       # and then move those counts into yesterdays counts
       update_counts(Date.yesterday, Date.yesterday, page_view_type.today_set)
       move_today_to_yesterday
-    elsif Time.current.hour == 6
+    elsif Time.current.hour == page_view_type.hour_for_finalizing_yesterday_set
       # at 6 am we finalize yesterdays counts (GA applies post processing, etc)
       # and then merge those into the historical counts
       update_counts(Date.yesterday, Date.yesterday, page_view_type.yesterday_set)
