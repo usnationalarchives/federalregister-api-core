@@ -5,11 +5,6 @@ class RegulationsDotGov::V4::BasicDocument
     @raw_attributes = raw_attributes
   end
 
-  def allow_late_comments
-    # NOTE: The document-search endpoint has a singular attribute name but the document-details endpoint has a plural attribute name.
-    raw_attribute_value('allowLateComment')
-  end
-
   def last_modified_datetime
     Time.parse(raw_attribute_value('lastModifiedDate'))
   end

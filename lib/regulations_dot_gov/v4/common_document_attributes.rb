@@ -7,6 +7,10 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
     raw_attribute_value('agencyId')
   end
 
+  def allow_late_comments
+    raw_attribute_value('allowLateComments')
+  end
+
   def comment_due_date
     val = raw_attribute_value("commentEndDate")
     if val.present?
