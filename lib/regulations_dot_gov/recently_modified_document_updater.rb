@@ -127,7 +127,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   def reindex_updated_documents
     Entry.
       pre_joined_for_es_indexing.
-      where(document_number: updated_documents.map(&:federal_register_document_number)).
+      where(document_number: updated_documents.map(&:federal_register_document_number).compact).
       find_in_batches(batch_size: ElasticsearchIndexer::BATCH_SIZE) do |entry_batch|
         Entry.bulk_index(entry_batch, refresh: false)
       end
