@@ -81,7 +81,13 @@ module Content::EntryImporter::PresidentialDocumentDetails
 
       if president_node.present?
         president_id = president_node.attr('id').try(:value)
-        President.find_by_mods_file_id(president_id)&.id
+
+        presidents = President.find_all_by_mods_file_id(president_id)
+
+        return nil unless presidents.present?
+        return presidents.first.id if presidents.count == 1
+
+        presidents.find{|p| p.in_office_on(signing_date)}&.id
       end
     end
   end

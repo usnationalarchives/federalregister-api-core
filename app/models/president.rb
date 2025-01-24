@@ -110,6 +110,14 @@ class President < ActiveHash::Base
       :starts_on => Date.new(2021,1,20),
       :ends_on => Date.new(2025,1,19)
     },
+    {
+      :id => 47,
+      :identifier => 'donald-trump',
+      :full_name => "Donald Trump",
+      :mods_file_id => "DJT",
+      :starts_on => Date.new(2025,1,20),
+      :ends_on => Date.new(2029,1,19)
+    },
   ]
 
   def year_ranges
@@ -134,6 +142,11 @@ class President < ActiveHash::Base
   end
 
   def self.in_office_on(date)
-    all.find{|p| p.starts_on <= date && p.ends_on >= date} if date
+    all.find{|p| p.in_office_on(date)}
+  end
+
+  def in_office_on(date)
+    return nil unless date
+    starts_on <= date && ends_on >= date
   end
 end
