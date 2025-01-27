@@ -955,6 +955,25 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
       expect(search.results.count).to eq 1
     end
 
+    it "handles multiple presidential terms" do
+      entries = [
+        entry,
+        Factory(:entry, granule_class: "PRESDOCU", president_id: 47, presidential_document_type_id: PresidentialDocumentType::DETERMINATION.id),
+        Factory(:entry, granule_class: "PRESDOCU", president_id: 4, presidential_document_type_id: PresidentialDocumentType::DETERMINATION.id),
+        Factory(:entry, granule_class: "PRESDOCU", president_id: 3, presidential_document_type_id: PresidentialDocumentType::DETERMINATION.id)
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(
+        conditions: {
+          president: ['donald-trump'],
+        }
+      )
+
+      assert_valid_search(search)
+      expect(search.results.count).to eq 2
+    end
+
     it "handles executive_order_number search" do
       entries = [
         entry,

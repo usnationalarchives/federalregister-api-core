@@ -192,6 +192,7 @@ class EsApplicationSearch
       if filter.multi
         with[filter.es_attribute] ||= []
         with[filter.es_attribute] << filter.es_value
+        with[filter.es_attribute].flatten!
       else
         with[filter.es_attribute] = filter.es_value
       end
@@ -341,7 +342,7 @@ class EsApplicationSearch
     results = es_search_invocation.results
 
     ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, results, page, per_page)
-  
+
     if explain_results?
       explanations = es_search_invocation.raw_response.dig("hits","hits")
       ar_collection_with_metadata.each_with_index do |result, i|
@@ -426,7 +427,7 @@ class EsApplicationSearch
         fetch("hits").
         fetch("total").
         fetch("value")
-    else  
+    else
       @count ||= repository.count(count_search_options)
     end
   end
@@ -804,7 +805,7 @@ class EsApplicationSearch
     {
       :simple_query_string=> {
         :query=> es_term,
-        :fields=> es_fields_with_boosts, 
+        :fields=> es_fields_with_boosts,
         :default_operator=>"and",
         :quote_field_suffix=>".exact",
         :lenient=> false

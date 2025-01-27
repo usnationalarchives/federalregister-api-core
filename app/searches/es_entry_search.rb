@@ -174,7 +174,10 @@ class EsEntrySearch < EsApplicationSearch
                 :es_attribute => :president_id,
                 :model_id_method=> :identifier,
                 :model_es_method => :id,
-                :model_label_method => :full_name
+                :model_label_method => :full_name,
+                :es_value_processor => Proc.new {|president_identifier| President.find_all_by_identifier(president_identifier).map(&:id)} do |president_identifier|
+                  President.find_by_identifier(president_identifier.first).full_name
+                end
 
   define_filter :section_ids,
                 :es_type => :with,
