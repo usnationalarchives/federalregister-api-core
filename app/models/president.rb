@@ -147,6 +147,21 @@ class President < ActiveHash::Base
 
   def in_office_on(date)
     return nil unless date
+
+    date = cast_date(date)
     starts_on <= date && ends_on >= date
+  end
+
+  private
+
+  def cast_date(date)
+    return date if date.is_a?(Date)
+
+    begin
+      Date.parse(date)
+    rescue => e
+      Honeybadger.notify(e)
+      nil
+    end
   end
 end
