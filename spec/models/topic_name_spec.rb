@@ -39,7 +39,7 @@ describe TopicName do
       topic_name.update!(:topic_ids => [topic_1.id,topic_2.id])
       topic_name.reload
       entry.reload
-      entry.topics.should == [topic_1,topic_2]
+      entry.topics.sort.should == [topic_1,topic_2]
     end
   end
 end
