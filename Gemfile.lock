@@ -291,6 +291,7 @@ GEM
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
+    humanize (3.1.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -647,6 +648,7 @@ DEPENDENCIES
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
   httparty
+  humanize
   indefinite_article
   jquery-rails
   json

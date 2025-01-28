@@ -159,6 +159,10 @@ gem 'fast_jsonapi'
 
 group :test do
   gem 'factory_girl', '~> 2.5.2'
+
+  # used by factory sequences, see topic_factory
+  gem 'humanize'
+
   gem 'timecop'
   gem 'mock_redis'
   gem 'vcr'

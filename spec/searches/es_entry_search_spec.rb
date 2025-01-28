@@ -1208,40 +1208,57 @@ describe EsEntrySearch, es: true, type: :request do #NOTE: Only one spec in this
         expect(search.results.es_ids).to eq([999, 997])
       end
 
-      it "can search by topic_ids" do
-        topic_a = Factory(:topic)
-        topic_b = Factory(:topic)
-        entry_a = Factory(:entry).tap do |e|
-          e.topic_assignments.create(topic: topic_a)
+      context "topics" do
+        let(:topic_a) { Factory(:topic) }
+        let(:topic_b) { Factory(:topic) }
+        let(:entry_a) {
+          Factory(:entry).tap do |e|
+            e.topic_assignments.create(topic: topic_a)
+          end
+        }
+        let(:entry_b) {
+          Factory(:entry).tap do |e|
+            e.topic_assignments.create(topic: topic_b)
+          end
+        }
+
+        before(:each) do
+          entries = [entry_a, entry_b]
+          Entry.bulk_index(entries, refresh: true)
         end
-        entry_b = Factory(:entry).tap do |e|
-          e.topic_assignments.create(topic: topic_b)
+
+        it "can search by topic_ids" do
+          search = EsEntrySearch.new(
+            conditions: {topic_ids: [topic_a.id]}
+          )
+
+          assert_valid_search(search)
+          expect(search.results.es_ids).to eq([entry_a.id])
         end
-        entries = [entry_a, entry_b]
-        Entry.bulk_index(entries, refresh: true)
 
-        search = EsEntrySearch.new(conditions: {topic_ids: [topic_a.id] })
+        it "can search by topic (slug)" do
+          search = EsEntrySearch.new(conditions: {topics: [topic_a.slug] })
 
-        assert_valid_search(search)
-        expect(search.results.es_ids).to eq([entry_a.id])
-      end
-
-      it "can search by topic (slug)" do
-        topic_a = Factory(:topic)
-        topic_b = Factory(:topic)
-        entry_a = Factory(:entry).tap do |e|
-          e.topic_assignments.create(topic: topic_a)
+          assert_valid_search(search)
+          expect(search.results.es_ids).to eq([entry_a.id])
         end
-        entry_b = Factory(:entry).tap do |e|
-          e.topic_assignments.create(topic: topic_b)
+
+        # these are mostly old subscriptions that ended up a mix
+        # before we switched to slugs as well as sometimes getting
+        # created with conditions[topics] instead of the correct conditions[topics][]
+        # TODO: current implentation isn't correct - should return both docs
+        #  spec is to prevent regression in with block of EsApplicationSearch line 195 (flatten!)
+        it "handles mixed id/slug searches properly" do
+          search = EsEntrySearch.new(
+            conditions: {
+              topic_ids: [topic_b.id],
+              topics: topic_a.slug
+            },
+          )
+
+          assert_valid_search(search)
+          expect(search.results.es_ids).to eq([entry_a.id])
         end
-        entries = [entry_a, entry_b]
-        Entry.bulk_index(entries, refresh: true)
-
-        search = EsEntrySearch.new(conditions: {topics: [topic_a.slug] })
-
-        assert_valid_search(search)
-        expect(search.results.es_ids).to eq([entry_a.id])
       end
 
       context "Stemming" do

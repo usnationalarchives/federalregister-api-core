@@ -1,3 +1,5 @@
 Factory.define :topic do |e|
-  e.sequence(:name) {|n| "Topic #{n}" }
+  # humanize the number so that slugs are unique
+  # the slug creation in the class removes numbers
+  e.sequence(:name) {|n| "Topic #{n.humanize}" }
 end
