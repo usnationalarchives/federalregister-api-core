@@ -192,7 +192,7 @@ class EsApplicationSearch
       if filter.multi
         with[filter.es_attribute] ||= []
         with[filter.es_attribute] << filter.es_value
-        with[filter.es_attribute].flatten!
+        with[filter.es_attribute].flatten! if with[filter.es_attribute].is_a?(Array)
       else
         with[filter.es_attribute] = filter.es_value
       end
